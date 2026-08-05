@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f1520">
+<title>Peloponéz 2026 – mapa plánu (16.–30. 8.)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"
+      crossorigin="anonymous">
+<style>
+  :root{
+    --bg:#0f1520; --panel:#161f2e; --panel2:#1d283a; --line:#2a3648;
+    --ink:#e8edf5; --ink-dim:#9aa8bd; --accent:#4fb3d9; --gold:#e0b354;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-text-size-adjust:100%;
+    overscroll-behavior:none}
+  #app{display:flex;height:100%;height:100dvh;overflow:hidden}
+
+  /* ---------------- sidebar ---------------- */
+  #side{width:340px;flex:0 0 340px;background:var(--panel);border-right:1px solid var(--line);
+    display:flex;flex-direction:column;overflow:hidden}
+  #side header{padding:14px 16px 12px;border-bottom:1px solid var(--line);position:relative}
+  #side h1{margin:0;font-size:16px;letter-spacing:.2px}
+  #closeSide{display:none;position:absolute;top:11px;right:11px;width:36px;height:36px;
+    place-items:center;background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+    border-radius:10px;font-size:16px;line-height:1;cursor:pointer}
+  #backdrop{position:fixed;inset:0;z-index:1150;background:rgba(6,10,16,.55);display:none}
+  #side .sub{color:var(--ink-dim);font-size:12px;margin-top:4px}
+  .scroll{overflow-y:auto;flex:1;padding:12px 12px 40px}
+  .sec{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-dim)}
+  .sec span{text-transform:none;letter-spacing:0}
+
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+  .chip{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink-dim);
+    border-radius:8px;padding:4px 9px;font-size:12px;user-select:none;transition:.12s}
+  .chip:hover{border-color:var(--accent);color:var(--ink)}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#08131b;font-weight:600}
+
+  .day{border:1px solid var(--line);border-radius:10px;margin-bottom:7px;overflow:hidden;background:var(--panel2)}
+  .day.dim{opacity:.34}
+  .day.open{border-color:#3c5573}
+  .day > .head{display:flex;gap:9px;align-items:flex-start;padding:9px 10px;cursor:pointer}
+  .day .num{flex:0 0 27px;height:27px;border-radius:8px;display:grid;place-items:center;
+    font-weight:800;font-size:13px;color:#0c1119;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+  .day .t{flex:1;min-width:0}
+  .day .t b{display:block;font-size:13px;font-weight:600}
+  .day .t span{display:block;color:var(--ink-dim);font-size:11.5px;margin-top:2px}
+  .day .body{display:none;padding:0 10px 10px 46px}
+  .day.open .body{display:block}
+  .day .body ul{margin:0;padding:0;list-style:none}
+  .day .body li{padding:3px 0;font-size:12.5px;border-top:1px dashed var(--line);cursor:pointer}
+  .day .body li:hover{color:var(--accent)}
+  .day .body li em{color:var(--gold);font-style:normal;font-variant-numeric:tabular-nums;margin-right:6px}
+  .day .body li.alt{color:#7f8b9e}
+  .day .leg{margin:7px 0 0;font-size:11.5px;color:var(--ink-dim);border-top:1px solid var(--line);padding-top:6px}
+  .badge{display:inline-block;font-size:10.5px;padding:1px 5px;border-radius:5px;margin-right:4px;
+    background:#2b364a;color:var(--ink-dim)}
+  .badge.move{background:#3a2f18;color:var(--gold)}
+  .badge.star{background:#1c3a2b;color:#67d39a}
+
+  .note{color:var(--ink-dim);font-size:11.5px;border-top:1px solid var(--line);padding-top:10px;margin-top:6px}
+  .note b{color:var(--ink)}
+
+  /* ---------------- map ---------------- */
+  #mapwrap{flex:1;position:relative;min-width:0}
+  #map{position:absolute;inset:0;background:#dfe3e8}
+  #toggle{position:absolute;z-index:1000;top:10px;left:10px;display:none;
+    background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;
+    padding:8px 11px;font-size:13px;cursor:pointer}
+
+  /* stepper */
+  #step{position:absolute;z-index:1000;top:10px;left:50%;transform:translateX(-50%);
+    display:flex;align-items:stretch;gap:1px;background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.35);max-width:92%}
+  #step button{background:none;border:0;color:var(--ink);font:inherit;cursor:pointer;padding:7px 11px}
+  #step button:hover{background:var(--panel2)}
+  #step .lbl{padding:7px 12px;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    display:flex;align-items:center;gap:7px;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+  #step .dot{width:18px;height:18px;border-radius:5px;flex:0 0 18px;display:grid;place-items:center;
+    font-size:11px;font-weight:800;color:#0c1119}
+  #step .all{color:var(--accent)}
+
+  .leaflet-container{font:inherit}
+  .leaflet-popup-content-wrapper{background:var(--panel);color:var(--ink);border-radius:10px;
+    box-shadow:0 10px 34px rgba(0,0,0,.45)}
+  .leaflet-popup-tip{background:var(--panel)}
+  .leaflet-popup-content{margin:11px 13px;font-size:13px;line-height:1.5;max-width:255px}
+  .leaflet-popup-content h3{margin:0 0 3px;font-size:14px}
+  .leaflet-popup-content .meta{color:var(--gold);font-size:11.5px;margin-bottom:6px}
+  .leaflet-popup-content p{margin:0;color:#c3ccdb;font-size:12.5px}
+  .leaflet-popup-content a{color:var(--accent)}
+  .leaflet-bar a{background:var(--panel);color:var(--ink);border-color:var(--line)}
+  .leaflet-bar a:hover{background:var(--panel2);color:#fff}
+  .leaflet-control-attribution{background:rgba(255,255,255,.78)!important;font-size:10px}
+
+  /* pins */
+  .pinwrap{position:relative}
+  .pin{display:grid;place-items:center;border-radius:50% 50% 50% 4px;transform:rotate(45deg);
+    border:2px solid #fff;box-shadow:0 2px 7px rgba(0,0,0,.45)}
+  .pin > span{transform:rotate(-45deg);font-size:13px;line-height:1;filter:drop-shadow(0 0 1px rgba(0,0,0,.4))}
+  .pin.camp{border-radius:9px;transform:none;border-width:3px}
+  .pin.camp > span{transform:none;font-size:15px}
+  .pin.alt{border-style:dashed;opacity:.9}
+  .pin.ghost{opacity:.62;border-style:dashed}
+  .dnum{position:absolute;right:-5px;bottom:-3px;min-width:15px;height:15px;padding:0 3px;
+    background:#111a26;color:#fff;border:1.5px solid #fff;border-radius:8px;
+    font-size:9.5px;font-weight:800;line-height:12px;text-align:center;
+    box-shadow:0 1px 3px rgba(0,0,0,.5)}
+  .camplbl{background:#111a26;color:#fff;border:1.5px solid #fff;border-radius:7px;
+    padding:1px 6px;font-size:10.5px;font-weight:700;white-space:nowrap;
+    box-shadow:0 1px 5px rgba(0,0,0,.45);text-align:center}
+  .arw{font-size:0}
+  .arw svg{display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+
+  /* legend */
+  .legend{background:rgba(17,26,38,.92);border:1px solid #33445c;border-radius:9px;
+    padding:9px 11px;font-size:11.5px;color:#c3ccdb;line-height:1.65;backdrop-filter:blur(3px);
+    max-width:min(74vw,264px)}
+  .legend b{color:#fff;display:block;margin:0 0 4px;font-size:10.5px;
+    text-transform:uppercase;letter-spacing:.1em}
+  .lhead{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+    background:none;border:0;padding:0;color:#fff;font:inherit;font-size:10.5px;cursor:pointer;
+    text-transform:uppercase;letter-spacing:.1em}
+  .lhead .car{transition:transform .18s;color:var(--accent);font-size:11px}
+  .legend.col .lhead .car{transform:rotate(-90deg)}
+  .legend.col .lbody{display:none}
+  .lbody{margin-top:7px;max-height:54vh;overflow-y:auto;overscroll-behavior:contain}
+  .legend .cats{columns:2;column-gap:12px;margin-bottom:7px}
+  .legend .ramp{display:flex;height:9px;border-radius:3px;overflow:hidden;margin:3px 0 2px}
+  .legend .ramp i{flex:1}
+  .legend .rlbl{display:flex;justify-content:space-between;font-size:10px;color:#9aa8bd}
+  .legend hr{border:0;border-top:1px solid #33445c;margin:7px 0 6px}
+
+  @media (max-width:820px){
+    #side{position:fixed;z-index:1200;inset:0 auto 0 0;width:88%;max-width:340px;
+      transform:translateX(-101%);transition:transform .22s}
+    #side.show{transform:none;box-shadow:0 0 40px rgba(0,0,0,.6)}
+    #side h1{padding-right:44px}
+    #closeSide{display:grid}
+    #backdrop.show{display:block}
+    #toggle{display:block;padding:10px 14px;font-size:14px}
+
+    /* zoom +/− nesmie sedieť na tlačidle ☰ Plán */
+    .leaflet-top.leaflet-left .leaflet-control-zoom{margin-top:56px}
+    /* legenda a attribution nad spodnou lištou dní */
+    .leaflet-bottom.leaflet-right{margin-bottom:calc(64px + env(safe-area-inset-bottom, 0px))}
+
+    /* prepínač dní = spodná lišta na celú šírku, palcom dosiahnuteľná */
+    #step{top:auto;bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+      left:10px;right:10px;transform:none;max-width:none}
+    #step .lbl{flex:1;min-width:0;justify-content:center}
+    #step button{padding:10px 15px;font-size:17px}
+
+    /* väčšie dotykové cieľe v zozname */
+    .chip{padding:7px 11px;font-size:13px}
+    .day > .head{padding:11px 10px}
+    .day .body li{padding:8px 0;font-size:13px}
+    .legend .cats{columns:1}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <header>
+      <button id="closeSide" aria-label="Zavrieť plán" title="Zavrieť">✕</button>
+      <h1>Peloponéz karavanom · mapa plánu</h1>
+      <div class="sub">16. – 30. 8. 2026 · 8 kempov · ~1 300 km · 15 dní</div>
+    </header>
+    <div class="scroll">
+      <div class="sec">Podkladová mapa</div>
+      <div class="chips" id="baseChips"></div>
+
+      <div class="sec">Zobraziť</div>
+      <div class="chips" id="viewChips">
+        <div class="chip on" data-view="all">Celý okruh</div>
+        <div class="chip" data-view="camps">Len kempy a presuny</div>
+      </div>
+
+      <div class="sec">Kategórie</div>
+      <div class="chips" id="catChips"></div>
+
+      <div class="sec">Dni <span>(klik = priblíž deň, ← → prepína)</span></div>
+      <div id="days"></div>
+
+      <div class="note">
+        <b>Súradnice sú približné</b> – kempy a menšie zastávky som umiestnil podľa vlastných znalostí,
+        bez internetu; presnosť je na úrovni obce alebo pláže, nie GPS bodu kempu.
+        Over najmä <b>kemp pri Monemvasii</b> a adresu požičovne karavanov (na mape je zatiaľ letisko).
+        Línie sú vzdušné spojnice zastávok, nie reálna trasa po ceste – kilometre a časy v popiskoch
+        sú z plánu.
+      </div>
+    </div>
+  </aside>
+  <div id="backdrop"></div>
+
+  <div id="mapwrap">
+    <button id="toggle">☰ Plán</button>
+    <div id="step">
+      <button id="prev" title="Predchádzajúci deň">‹</button>
+      <div class="lbl" id="stepLbl"><span class="all">Celý okruh · 15 dní</span></div>
+      <button id="next" title="Ďalší deň">›</button>
+    </div>
+    <div id="map"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"
+        crossorigin="anonymous"></script>
+<script>
+/* ==========================================================================
+   DATA – z plan-opus5-peloponez-2026.md (verzia 3)
+   c: camp | monument | beach | town | nature | cave | fun | transport
+   alt:true = alternatíva / varovanie – nekreslí sa do trasy dňa
+   ========================================================================== */
+const CATS = {
+  camp:      {label:'Kemp / nocľah', icon:'⛺'},
+  monument:  {label:'Pamiatka, hrad', icon:'🏛'},
+  beach:     {label:'Pláž, kúpanie',  icon:'🏖'},
+  town:      {label:'Mesto, dedina',  icon:'🏘'},
+  nature:    {label:'Príroda',        icon:'🌿'},
+  cave:      {label:'Jaskyňa',        icon:'🕯'},
+  fun:       {label:'Pre deti',       icon:'🚂'},
+  transport: {label:'Letisko, cesta', icon:'✈'}
+};
+
+const DAYS = [
+{ n:1, date:'ne 16. 8.', title:'Atény → Drepano', drive:'180 km / 2 h 20', move:true, sleep:'Drepano',
+  stops:[
+   {t:'11:55', name:'Letisko Atény (ATH)', ll:[37.9364,23.9445], c:'transport',
+    d:'Pristátie FR5889. Preberanie karavanu ~1,5 h, protokol o poškodeniach, foto dookola aj strechu. Natankovať ešte v Aténach.'},
+   {t:'16:10', name:'Korintský kanál (Isthmia)', ll:[37.9312,22.9863], c:'monument',
+    d:'80 m hlboký zárez, lode, bungee skokani. 30 min, prvé „wow“. Ak ste o 16:00 ešte v požičovni, vynechajte – uvidíte to 29. 8.'},
+   {t:'18:00', name:'Camping Lefka Beach, Drepano', ll:[37.5197,22.9058], c:'camp',
+    d:'3 noci (16.–19. 8.). Plochá zátoka na kúpanie. Prvý deň nevarte – večera v taverne kempu 19:30. Rezerváciu treba predĺžiť na 3 noci.'}
+  ]},
+{ n:2, date:'po 17. 8.', title:'Nafplio 🍽', drive:'90 km · bez presunu', sleep:'Drepano',
+  stops:[
+   {t:'09:00', name:'Zátoka pri kempe', ll:[37.5215,22.9015], c:'beach',
+    d:'Voda plochá 20 m od brehu – ideálny rozbeh so Zuzkou.'},
+   {t:'11:30', name:'Nafplio – veľký nákup', ll:[37.5675,22.8003], c:'town',
+    d:'20 min od kempu. Prvý veľký nákup (Lidl aj veľké supermarkety), zásoby na 4–5 dní, zoberte chladiaci box.'},
+   {t:'16:30', name:'Nafplio – prístav a staré mesto', ll:[37.5690,22.7960], c:'town',
+    d:'Stará parná lokomotíva na liezanie, detské ihrisko pri mori, promenáda bez áut, zmrzlina Antica Gelateria di Roma. Uličky v tieni.'},
+   {t:'18:00', name:'Palamidi (nepovinne)', ll:[37.5648,22.8104], c:'monument',
+    d:'K hornej bráne autom – 999 schodov nemusíte. Bastióny, tmavé chodby, kanóny. €8, posledný vstup ~19:30 [OVERIŤ].'},
+   {t:'19:15', name:'🍽 Večera v prístave', ll:[37.5683,22.7947], c:'town',
+    d:'Odporúčaná výnimka č. 1. Návrat do kempu ~20:45. Alternatíva: vynechať Palamidi, vrátiť sa o 18:45 a variť.'}
+  ]},
+{ n:3, date:'ut 18. 8.', title:'EPIDAURUS + potopené mesto', drive:'110 km · bez presunu', sleep:'Drepano', star:true,
+  stops:[
+   {t:'10:45', name:'Antický Epidaurus – divadlo', ll:[37.5961,23.0794], c:'monument',
+    d:'Najlepšie zachované antické divadlo sveta, 14 000 miest. Trik: Máťa dolu šepká a trhá papier, deti to hore počujú. Malé múzeum – antické chirurgické nástroje.'},
+   {t:'12:15', name:'Potopené mesto, zátoka Kalamaki', ll:[37.6297,23.1553], c:'beach',
+    d:'Palaia Epidavros. Šnorchlovanie nad rímskymi múrmi a podlahami 1–3 m pod hladinou. Potápačské okuliare kúpte 4 ks doma!'},
+   {t:'16:15', name:'Camping Lefka Beach', ll:[37.5197,22.9058], c:'camp',
+    d:'Siesta, kúpanie v zátoke. Varíme 19:00, večera 19:30 – najpokojnejší deň v pláne.'}
+  ]},
+{ n:4, date:'st 19. 8.', title:'MYKÉNY → Paralio Astros', drive:'150 km / 2 h 30', move:true, star:true, sleep:'Astros',
+  stops:[
+   {t:'11:45', name:'Mykény', ll:[37.7306,22.7564], c:'monument',
+    d:'Poradie s deťmi: Atreova pokladnica (36 m chodba do tmy, chládok, ozvena) → Levia brána → tajná cisterna (99 schodov, čelovky!) → kyklopské hradby. €20, deti do 18 zdarma.'},
+   {t:'13:30', name:'Kefalari (prameň pri Argose)', ll:[37.5847,22.6903], c:'nature',
+    d:'Prameň priamo zo skaly pod platanmi, kaplnka v jaskyni, kačky, ľadová voda, kaviareň v tieni. Presne to, čo po Mykénach treba.'},
+   {t:'15:30', name:'Camping Kastraki, Paralio Astros', ll:[37.4136,22.7442], c:'camp',
+    d:'1 noc. Priamo na dlhej piesočnej pláži – choďte 300 m na juh od Grékov a ste sami.'},
+   {t:'18:15', name:'Mokrina Moustos (nepovinne)', ll:[37.3944,22.7444], c:'nature',
+    d:'Chránené jazero, cestička v tieni trstiny: volavky, korytnačky, žaby, vážky. Vezmite ďalekohľad.'}
+  ]},
+{ n:5, date:'št 20. 8.', title:'Astros → Monemvasia (najkrajšia jazda)', drive:'150 km / 3 h', move:true, sleep:'Monemvasia',
+  stops:[
+   {t:'11:00', name:'Plaka Leonidiou', ll:[37.1519,22.8781], c:'beach',
+    d:'Prístav pod obrovskými červenými skalnými stenami – svetová meka lezcov. S ďalekohľadom hľadajte lezcov v stene. Kúpanie, obed v taverne.'},
+   {t:'14:45', name:'Kosmas (1 150 m)', ll:[37.0806,22.7278], c:'town',
+    d:'Námestie s obrovskými platanmi, ľadová voda z fontány, o 10 °C menej než dole. ⚠️ 25 km serpentín na 30–40 km/h. Alternatíva bez zákrut: Tripoli – Sparta (Múzeum olív).'},
+   {t:'16:45', name:'Kemp pri Monemvasii / Gefyra', ll:[36.6950,23.0380], c:'camp',
+    d:'2 noci. ⚠️ Najslabšie miesto plánu – OVERIŤ AKO PRVÉ, ktoré kempy tu fungujú. Poloha je len orientačná. Ak nič nezoženiete, Variant B = Neapoli / Pounta.'},
+   {t:'17:30', name:'Pláž Pori', ll:[36.7139,23.0472], c:'beach',
+    d:'Obrovská piesočná pláž severne od skaly, poloprázdna.'}
+  ]},
+{ n:6, date:'pi 21. 8.', title:'MONEMVASIA 🍽', drive:'20 km · bez presunu', star:true, sleep:'Monemvasia',
+  stops:[
+   {t:'10:30', name:'Pori / Xifias – piknik', ll:[36.7139,23.0472], c:'beach',
+    d:'Čistá voda, piesočné dno, dopoludnia je more ako sklo.'},
+   {t:'17:00', name:'Gefyra – parkovanie', ll:[36.6889,23.0453], c:'town',
+    d:'Karavan nechajte na pevnine, na skalu vedie kilometrová hrádza – minibuska alebo pešo.'},
+   {t:'17:30', name:'Monemvasia – mesto na skale', ll:[36.6853,23.0553], c:'monument',
+    d:'Dolné mesto bez áut: kamenné uličky, klenuté priechody, hradby nad morom, desiatky mačiek, byzantský kostol, delá. Vstup zadarmo. Horné mesto s päťročnou nechajte.'},
+   {t:'19:15', name:'🍽 Večera v meste / piknik na hradbách', ll:[36.6858,23.0548], c:'monument',
+    d:'Odporúčaná výnimka č. 2 – najkrajšie mesto Peloponézu. Najlepší variant: večera z boxu o 18:45 na hradbách, v kempe 19:45.'}
+  ]},
+{ n:7, date:'so 22. 8.', title:'Plytra → Gythio', drive:'105 km / 1 h 50', move:true, sleep:'Gythio',
+  stops:[
+   {t:'11:00', name:'Plytra – potopené mesto Asopos', ll:[36.6842,22.8506], c:'beach',
+    d:'Zvyšky rímskeho mesta vo vode, miestami pol metra pod hladinou. „Hľadáme mesto pod morom, druhá časť.“ Plochá chránená zátoka. Gumové sandále – ježovky.'},
+   {t:'15:10', name:'Kemp Gythion Bay / Meltemi, Mavrovouni', ll:[36.7333,22.5544], c:'camp',
+    d:'2 noci, priamo na 5 km piesočnej pláži. Rezervujte skoro – pri predošlom hľadaní boli obsadené.'},
+   {t:'17:15', name:'Gythio + ostrovček Marathonisi', ll:[36.7597,22.5678], c:'town',
+    d:'Farebné domy nad prístavom. Po hrádzi pešo na Marathonisi – podľa mýtu tu Paris a Helena strávili prvú noc. Borovice, veža s múzeom Mani, žiadne autá. Zmrzlina na promenáde.'}
+  ]},
+{ n:8, date:'ne 23. 8.', title:'Vrak lode Dimitrios', drive:'30 km · bez presunu', star:true, sleep:'Gythio',
+  stops:[
+   {t:'10:00', name:'Pláž Mavrovouni – hniezda korytnačiek', ll:[36.7278,22.5500], c:'nature',
+    d:'5 km piesku. Hniezdna pláž karety – hľadajte ohradené hniezda, koniec augusta = čas liahnutia. [OVERIŤ] stanicu ARCHELON. Mierny príboj – pri Zuzke vždy dospelý vo vode.'},
+   {t:'16:45', name:'Vrak Dimitrios (Valtaki)', ll:[36.7017,22.5525], c:'fun',
+    d:'Zrezavená nákladná loď leží celá na piesku pár metrov od brehu – dá sa k nej prebrodiť a obísť ju. Legenda o pašerákoch. Podvečerné svetlo je na fotky najlepšie, kúpanie priamo tam.'},
+   {t:'večer', name:'Panigiri – Enniamera tis Panagias', ll:[36.7480,22.5760], c:'town', alt:true,
+    d:'23. 8. sa v Mani a Lakónii konajú dedinské oslavy: živá hudba, dlhé stoly, tanec. Začínajú ~21:00 – ak nájdete jedno blízko (spýtajte sa v kempe), dajte deťom dlhšiu siestu a choďte. Poloha na mape je len symbolická.'}
+  ]},
+{ n:9, date:'po 24. 8.', title:'JASKYNE DIROS → Stoupa ⏰9:00', drive:'120 km / 2 h 45', move:true, star:true, sleep:'Stoupa',
+  stops:[
+   {t:'09:45', name:'Jaskyne Diros', ll:[36.6386,22.3808], c:'cave',
+    d:'Jediný skorý budíček. Loďkou 25 min po podzemnej rieke medzi stalaktitmi, strop pár desiatok cm nad hlavou. Vnútri 19 °C – mikiny a topánky! €15. [OVERIŤ posledný vstup – volať 23. 8.]'},
+   {t:'11:15', name:'Limeni', ll:[36.6753,22.3775], c:'beach',
+    d:'Tyrkysová zátoka pod Areopoli, krištáľová voda, obed v taverne nad morom. [OVERIŤ] parkovanie – s veľkým karavanom zaparkujte hore pri hlavnej ceste.'},
+   {t:'14:00', name:'Areopoli', ll:[36.6667,22.3833], c:'town',
+    d:'Kamenné mesto Mani s vežovými domami. Do jadra sa autom takmer nedá – deti sa môžu preháňať uličkami. Frappé, koláč, obchod s medom.'},
+   {t:'17:15', name:'Kemp Kalogria, Stoupa', ll:[36.8494,22.2564], c:'camp',
+    d:'2 noci. Pláž, kde zo dna vyvierajú studené sladkovodné pramene – deti striedavo trafia ľadový a teplý pás vody, hrajú sa s tým hodiny. Tu žil predobraz Zorbu.'}
+  ]},
+{ n:10, date:'ut 25. 8.', title:'Kardamyli a kaňon Viros', drive:'25 km · bez presunu', sleep:'Stoupa',
+  stops:[
+   {t:'10:00', name:'Kalogria / Ritsa – SUP', ll:[36.8478,22.2578], c:'beach',
+    d:'Piesok, plocho, tieň aj ležadlá, požičovňa kanoe a SUP.'},
+   {t:'16:45', name:'Ano Kardamyli – vežové domy', ll:[36.8883,22.2336], c:'town',
+    d:'Staré horné mesto rodu Mourtzinos, kostol sv. Spyridona, obnovené kamenné uličky, v ktorých nikto nie je – dokonalé „objavovanie hradu“.'},
+   {t:'17:30', name:'Kaňon Viros', ll:[36.8792,22.2417], c:'nature',
+    d:'Vyschnuté kamenné riečisko medzi stenami, v tieni platanov, plné okrúhlych bielych balvanov. 20–30 min do kaňonu, deti skáču po kameňoch.'},
+   {t:'alt.', name:'Foneas (alternatíva)', ll:[36.8175,22.2681], c:'beach', alt:true,
+    d:'Malá zátoka s obrovskou skalou v mori, z ktorej sa skáče. Nádherná, ale parkovanie sa plní – buďte tam do 10:15.'}
+  ]},
+{ n:11, date:'st 26. 8.', title:'ŽELEZNIČNÝ PARK KALAMATA → Gialova', drive:'130 km / 2 h 20', move:true, star:true, sleep:'Gialova',
+  stops:[
+   {t:'11:00', name:'Kalamata – mestský železničný park', ll:[37.0294,22.1131], c:'fun',
+    d:'Pravé parné lokomotívy, vagóny a dreziny, po ktorých deti môžu liezť a chodiť dovnútra. Veľké ihrisko, veľa tieňa, kaviareň s toaletami. Vstup voľný. Vydržia tam 2–3 h.'},
+   {t:'13:00', name:'Kalamata – veľký nákup', ll:[37.0350,22.1120], c:'town',
+    d:'Posledné veľké supermarkety pred Messéniou – nakúpte na 3 dni.'},
+   {t:'15:30', name:'Camping Erodios, Gialova', ll:[36.9528,21.6947], c:'camp',
+    d:'2 noci. Tieň, bazén, pri lagúne, 3 km od Voidokilie.'},
+   {t:'16:30', name:'Pláž Divari', ll:[36.9611,21.6822], c:'beach', d:'Plochá chránená voda pod lagúnou.'},
+   {t:'⚠️', name:'Polylimnio – s karavanom neriskovať', ll:[37.0489,21.8250], c:'nature', alt:true,
+    d:'Krásne vodopády, ale posledný kilometer je úzka cesta s malým parkoviskom – so 7-metrovým karavanom to neriskujte.'}
+  ]},
+{ n:12, date:'št 27. 8.', title:'VOIDOKILIA + hrad METHONI 🍽', drive:'90 km · bez presunu', star:true, sleep:'Gialova',
+  stops:[
+   {t:'10:00', name:'Voidokilia', ll:[36.9575,21.6597], c:'beach',
+    d:'Pláž v tvare dokonalého kruhu (omega), duny, voda plochá a teplá ako vo vaničke. Najkrajšia pláž Peloponézu. ⚠️ Karavan na oficiálne parkovisko od Gialovy – Natura 2000, státie sa pokutuje.'},
+   {t:'10:15', name:'Nestorova jaskyňa', ll:[36.9556,21.6608], c:'cave',
+    d:'Najprv, kým nie je horúco: 10–15 min po kameňoch, Zuzku za ruku. Hermes tu skryl Apolónove kravy; stalaktity ako zvieracie kože na strope.'},
+   {t:'12:45', name:'Lávka okolo lagúny Gialova', ll:[36.9558,21.6750], c:'nature',
+    d:'Chránená mokrina: vodné vtáky, korytnačky, pri prelete plameniaky. Rovná cesta v tieni trstiny.'},
+   {t:'17:00', name:'Hrad Methoni + veža Bourtzi', ll:[36.8181,21.7042], c:'monument',
+    d:'Ideálny hrad pre deti: obrovská prázdna venecianska pevnosť, vstup po kamennom moste nad priekopou, hektáre voľného priestoru – a zadnou bránou po hrádzi do osemhrannej veže stojacej v mori. €4, deti zdarma, do 20:00.'},
+   {t:'18:30', name:'Pláž Methoni', ll:[36.8203,21.7092], c:'beach',
+    d:'Kúpanie s výhľadom na hradby, potom 🍽 večera v Methoni, návrat ~21:00. Jediná poobedná výnimka z pravidla 25 minút (35 min).'},
+   {t:'alt.', name:'Niokastro, Pylos (alternatíva)', ll:[36.9111,21.6947], c:'monument', alt:true,
+    d:'15 min od kempu – tiež veľká otvorená pevnosť, vedľa platanové námestie so zmrzlinou a ihrisko pri prístave. Odchod 16:45, návrat 18:45, varíte v kempe.'}
+  ]},
+{ n:13, date:'pi 28. 8.', title:'Kaiafas → BEH NA STADIÓNE V OLYMPII', drive:'145 km / 2 h 30', move:true, star:true, sleep:'Olympia',
+  stops:[
+   {t:'11:30', name:'Pláž Zacharo / Kaiafas', ll:[37.4547,21.6169], c:'beach',
+    d:'10 km úplne prázdneho piesku za borovicovým lesom – a tieň borovíc priamo za plážou, takže sa tam dá stráviť aj poludnie. Obed z chladničky.'},
+   {t:'12:30', name:'Jazero Kaiafas', ll:[37.4453,21.6425], c:'nature',
+    d:'Termálny prameň v jaskyni, labute, šliapacie loďky.'},
+   {t:'14:35', name:'Camping Alphios, Olympia', ll:[37.6425,21.6403], c:'camp',
+    d:'1 noc, bazén s výhľadom do doliny. Alternatíva Camping Diana – priamo v Olympii, pešo k areálu aj do múzea a taverny pod nosom.'},
+   {t:'15:45', name:'Kotsanasovo múzeum antickej technológie', ll:[37.6447,21.6303], c:'fun',
+    d:'Klimatizované, presne na najteplejšiu hodinu: funkčné antické automaty a „roboty“, katapulty, hydraulické hodiny, Antikythérsky mechanizmus. Pre sedemročného najlepšie múzeum v Grécku. [OVERIŤ hodiny]'},
+   {t:'17:00', name:'Antická Olympia – stadión', ll:[37.6383,21.6300], c:'monument',
+    d:'Zeusov chrám (spadnuté stĺpy ako domino), Feidiova dielňa, klenutý tunel na stadión – a 🏅 beh 192 m od originálnej kamennej štartovacej línie. Urobte im olympiádu: rozbehy, finále, veniec z olivovej vetvičky. Otvorené do 20:00.'}
+  ]},
+{ n:14, date:'so 29. 8.', title:'Potápací most → odovzdanie karavanu → hotel', drive:'320 km / 3 h 50', move:true, sleep:'Artemida',
+  stops:[
+   {t:'10:00', name:'Patras – diaľnica A8', ll:[38.2466,21.7346], c:'transport',
+    d:'Pred odchodom v kempe: vypustiť odpadové nádrže a chemické WC, vysať, vyprázdniť chladničku. V Pyrgose natankovať naftu do plna. Mýto ~€20.'},
+   {t:'12:30', name:'Potápací most v Isthmii', ll:[37.9166,23.0000], c:'fun',
+    d:'Priamo pri diaľnici, zadarmo. Celý cestný most sa spustí 8 m pod vodu, aby preplávala loď, a potom sa vynorí. Kaviareň vedľa – obed a čakanie na loď pri frappé.'},
+   {t:'15:15', name:'Požičovňa – odovzdanie karavanu', ll:[37.9364,23.9445], c:'transport',
+    d:'Protokol, porovnanie s fotkami zo 16. 8., rátajte 45–60 min. [OVERIŤ] či berú vrátenie v sobotu popoludní a dokedy majú otvorené. Poloha = letisko, uprav podľa reálnej adresy.'},
+   {t:'16:45', name:'Hotel/apartmán Artemida (Loutsa)', ll:[37.9647,23.9694], c:'camp',
+    d:'Poslednú noc nespíte v karavane – kľúčové rozhodnutie plánu. 10–15 min od letiska, pláž a taverny pri mori, ~€90–150. Posledná grécka večera pri mori, balenie v pokoji.'}
+  ]},
+{ n:15, date:'ne 30. 8.', title:'Odlet 12:20', drive:'15 km', sleep:'—', end:true,
+  stops:[
+   {t:'10:00', name:'Check-out, taxi na letisko', ll:[37.9647,23.9694], c:'transport',
+    d:'Raňajky 09:00, check-out 10:00, taxi 10–15 min.'},
+   {t:'12:20', name:'Odlet ATH → Bratislava', ll:[37.9364,23.9445], c:'transport',
+    d:'FR5888, v BTS 13:45.'}
+  ]}
+];
+
+/* ========================= farby dní: sekvenčná rampa ===================== */
+const RAMP = ['#2b5fd9','#1f8fd0','#17a9a9','#2ab36a','#6ebd35','#b8c72c',
+              '#e8c22a','#f2a02a','#ef7a26','#e65226','#cf2f2f','#a81f28'];
+const hex2rgb = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16));
+const lerpHex = (a,b,t) => '#' + hex2rgb(a).map((v,i) =>
+  Math.round(v + (hex2rgb(b)[i]-v)*t).toString(16).padStart(2,'0')).join('');
+function dayColor(i){                        // i = 0..14
+  const x = i/(DAYS.length-1)*(RAMP.length-1);
+  const k = Math.min(Math.floor(x), RAMP.length-2);
+  return lerpHex(RAMP[k], RAMP[k+1], x-k);
+}
+const COLORS = DAYS.map((_,i) => dayColor(i));
+
+/* ============ trasy: doplní úsek z včerajšieho kempu a späť do kempu ====== */
+const same = (a,b) => Math.abs(a[0]-b[0])<1e-6 && Math.abs(a[1]-b[1])<1e-6;
+let prevNight = null;
+DAYS.forEach(d => {
+  const core = d.stops.filter(s => !s.alt);
+  const campStop = [...core].reverse().find(s => s.c === 'camp');
+  const night = campStop ? campStop.ll : prevNight;
+  const pts = [];
+  const push = ll => { if (!pts.length || !same(pts[pts.length-1], ll)) pts.push(ll); };
+  if (prevNight) push(prevNight);                       // ⟵ chýbajúci úsek kemp → prvá zastávka
+  core.forEach(s => push(s.ll));
+  if (night && !d.end) push(night);                     // ⟵ návrat do kempu na noc
+  d._route = pts;
+  d._night = night;
+  d._from = prevNight;
+  prevNight = night;
+});
+
+/* noci podľa kempu: „Noc 1–3“ atď. */
+const nightsByCamp = new Map();
+DAYS.forEach(d => {
+  if (!d._night || d.end) return;
+  const k = d._night.join(',');
+  if (!nightsByCamp.has(k)) nightsByCamp.set(k, {ll:d._night, days:[], name:''});
+  nightsByCamp.get(k).days.push(d.n);
+  const cs = d.stops.find(s => s.c === 'camp');
+  if (cs) nightsByCamp.get(k).name = cs.name;
+});
+
+/* ================================= MAPA ================================== */
+const BASES = {
+  topo: {label:'Topo + relief', layer:() => L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+    {maxZoom:19, attribution:'&copy; Esri'})},
+  osm:  {label:'OSM – mestá a cesty', layer:() => L.tileLayer(
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {maxZoom:19, attribution:'&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>'})},
+  otm:  {label:'Hory – vrstevnice', layer:() => L.tileLayer(
+    'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+    {maxZoom:17, subdomains:'abc', attribution:'&copy; <a href="https://opentopomap.org">OpenTopoMap</a>, OSM, SRTM'})},
+  sat:  {label:'Satelit', layer:() => L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    {maxZoom:19, attribution:'&copy; Esri, Maxar'})}
+};
+/* narrow = telefón: menší priestor, prsty namiesto kurzora */
+const narrow = () => window.innerWidth <= 820;
+/* Väčšie piny na dotyk. Ikony sa tvoria raz pri načítaní, takže je to konštanta;
+   berieme aj šírku, nie len pointer – niektoré Androidy hlásia pointer nepresne. */
+const TOUCH = window.matchMedia('(pointer: coarse)').matches || narrow();
+
+/* zoomSnap 0.25 – na vysokom displeji telefónu sa okruh zmestí o ~1,7× väčší
+   než pri celočíselnom zoome (inak sa zaokrúhli dolu a zvyšok obrazovky je more) */
+const map = L.map('map', {zoomControl:true, minZoom:6, worldCopyJump:false, zoomSnap:.25})
+  .setView([37.05,22.3], 8);
+let baseLayer = BASES.topo.layer().addTo(map);
+const arrowsLayer = L.layerGroup().addTo(map);
+const campLabels  = L.layerGroup();
+
+function setBase(key){
+  map.removeLayer(baseLayer);
+  baseLayer = BASES[key].layer().addTo(map);
+  baseLayer.bringToBack();
+}
+
+/* ---------- ikony ---------- */
+function pinIcon(stop, color, dayNum){
+  const camp = stop.c === 'camp';
+  const s = camp ? (TOUCH ? 36 : 30) : (TOUCH ? 32 : 26);
+  return L.divIcon({
+    className:'', iconSize:[s,s], iconAnchor:[s/2, camp ? s/2 : s],
+    popupAnchor:[0, camp ? -s/2 : -s+2],
+    html:`<div class="pinwrap" style="width:${s}px;height:${s}px">
+            <div class="pin ${camp?'camp':''} ${stop.alt?'alt':''}"
+                 style="width:${s}px;height:${s}px;background:${color}">
+              <span style="font-size:${Math.round(s*.5)}px">${CATS[stop.c].icon}</span></div>
+            <div class="dnum">${dayNum}</div>
+          </div>`
+  });
+}
+
+/* ---------- vrstvy po dňoch ---------- */
+const layers = DAYS.map((d,i) => {
+  const col = COLORS[i];
+  const markers = d.stops.map((s,j) => {
+    const gm = `https://www.google.com/maps/search/?api=1&query=${s.ll[0]},${s.ll[1]}`;
+    const seq = s.alt ? 'alternatíva' : `zastávka ${d.stops.filter(x=>!x.alt).indexOf(s)+1}/${d.stops.filter(x=>!x.alt).length}`;
+    const m = L.marker(s.ll, {icon:pinIcon(s, col, d.n), riseOnHover:true})
+      .bindPopup(
+        `<div class="meta">Deň ${d.n} · ${d.date} · ${s.t} · ${seq}</div>
+         <h3>${s.name}</h3><p>${s.d}</p>
+         <p style="margin-top:7px"><a href="${gm}" target="_blank" rel="noopener">Otvoriť v Google Maps ↗</a></p>`);
+    return {m, cat:s.c, stop:s};
+  });
+  const line = L.polyline(d._route, {
+    color:col, weight: d.move ? 4.5 : 2.5, opacity: d.move ? .95 : .8,
+    dashArray: d.move ? null : '4 7', lineJoin:'round', lineCap:'round'
+  });
+  const halo = L.polyline(d._route, {color:'#fff', weight:(d.move?4.5:2.5)+3, opacity:.55, lineJoin:'round'});
+
+  /* odkiaľ sa v ten deň vyráža – bledý pin na včerajšom kempe (len pri vybranom dni) */
+  let ghost = null;
+  const first = d.stops.find(s => !s.alt);
+  if (d._from && first && !same(d._from, first.ll)){
+    const prev = DAYS[i-1];
+    const prevName = (DAYS.slice(0,i).reverse()
+      .flatMap(x => x.stops).find(s => s.c === 'camp' && same(s.ll, d._from)) || {}).name || prev.sleep;
+    const gs = TOUCH ? 34 : 28;
+    ghost = L.marker(d._from, {icon:L.divIcon({
+        className:'', iconSize:[gs,gs], iconAnchor:[gs/2,gs/2], popupAnchor:[0,-gs/2],
+        html:`<div class="pinwrap" style="width:${gs}px;height:${gs}px">
+                <div class="pin camp ghost" style="width:${gs}px;height:${gs}px;background:${COLORS[i-1]}">
+                  <span style="font-size:${Math.round(gs*.5)}px">⛺</span></div>
+                <div class="dnum">${prev.n}</div></div>`})})
+      .bindPopup(`<div class="meta">Odchod · deň ${d.n} · ${d.date}</div>
+                  <h3>${prevName}</h3>
+                  <p>Tu ste spali noc ${prev.n}. Odtiaľto sa v tento deň vyráža${d.move ? ' – presunový deň.' : ' a večer sa sem vraciate.'}</p>`);
+  }
+  return {markers, line, halo, ghost, col, day:d};
+});
+
+/* okruh kempov (režim „len kempy“) */
+const campSeq = [], campSeqDay = [];   // campSeqDay[k] = index dňa, keď sa do kempu k prichádza
+DAYS.forEach((d,i) => {
+  if (d._night && (!campSeq.length || !same(campSeq[campSeq.length-1], d._night))){
+    campSeq.push(d._night); campSeqDay.push(i);
+  }
+});
+const campLine  = L.polyline(campSeq, {color:'#c2410c', weight:4, opacity:.9});
+const campHalo  = L.polyline(campSeq, {color:'#fff', weight:7.5, opacity:.6});
+
+/* menovky nocí pri kempoch */
+nightsByCamp.forEach(v => {
+  const ds = v.days, rng = ds.length > 1 ? `${ds[0]}–${ds[ds.length-1]}` : `${ds[0]}`;
+  L.marker(v.ll, {interactive:false, zIndexOffset:-100, icon:L.divIcon({
+    className:'', iconSize:[70,16], iconAnchor:[35,-14],
+    html:`<div class="camplbl">🛏 noc ${rng}</div>`})}).addTo(campLabels);
+});
+
+/* smerové šípky – len pri vybranom dni */
+function mercY(lat){ const r = lat*Math.PI/180; return Math.log(Math.tan(Math.PI/4 + r/2)); }
+function drawSeq(pts, colFn){
+  for (let i=0; i<pts.length-1; i++){
+    const [a,b] = [pts[i], pts[i+1]], col = colFn(i);
+    const dx = b[1]-a[1], dy = mercY(b[0])-mercY(a[0]);
+    if (!dx && !dy) continue;
+    const ang = Math.atan2(dx, dy)*180/Math.PI;
+    const mid = [(a[0]+b[0])/2, (a[1]+b[1])/2];
+    L.marker(mid, {interactive:false, icon:L.divIcon({className:'', iconSize:[18,18], iconAnchor:[9,9],
+      html:`<div class="arw" style="transform:rotate(${ang}deg)">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 1.5 L15 15 L9 11.6 L3 15 Z"
+              fill="${col}" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>`})
+    }).addTo(arrowsLayer);
+  }
+}
+function updateArrows(){
+  arrowsLayer.clearLayers();
+  if (view === 'camps') drawSeq(campSeq, i => COLORS[campSeqDay[i+1]]);   // smer okruhu kempov
+  else if (activeDay !== null) drawSeq(DAYS[activeDay]._route, () => COLORS[activeDay]);
+}
+
+/* ================================ STAV =================================== */
+const activeCats = new Set(Object.keys(CATS));
+let view = 'all', activeDay = null;   // activeDay = index 0..14 alebo null
+
+/* Menovky „noc 1–3“: v režime kempov vždy (9 bodov, čitateľné), v celom okruhu
+   až od zoomu 8 – nižšie sa 60 pinov aj menoviek zliepa do nečitateľnej kaše. */
+function updateCampLabels(){
+  const want = view === 'camps' || (activeDay === null && map.getZoom() >= 8);
+  if (want && !map.hasLayer(campLabels)) campLabels.addTo(map);
+  if (!want && map.hasLayer(campLabels)) map.removeLayer(campLabels);
+}
+map.on('zoomend', updateCampLabels);
+
+function render(){
+  layers.forEach((L_, i) => {
+    const on = activeDay === null || activeDay === i;
+    L_.markers.forEach(({m, cat}) => {
+      const show = on && (view === 'camps' ? cat === 'camp' : activeCats.has(cat));
+      if (show && !map.hasLayer(m)) m.addTo(map);
+      if (!show && map.hasLayer(m)) map.removeLayer(m);
+    });
+    const lineOn = on && view !== 'camps';
+    [L_.halo, L_.line].forEach(l => {
+      if (lineOn && !map.hasLayer(l)) l.addTo(map);
+      if (!lineOn && map.hasLayer(l)) map.removeLayer(l);
+    });
+    if (lineOn){ L_.halo.bringToFront(); L_.line.bringToFront(); }
+    if (L_.ghost){
+      const g = activeDay === i && view !== 'camps';
+      if (g && !map.hasLayer(L_.ghost)) L_.ghost.addTo(map);
+      if (!g && map.hasLayer(L_.ghost)) map.removeLayer(L_.ghost);
+    }
+  });
+  [campHalo, campLine].forEach(l => {
+    if (view === 'camps' && !map.hasLayer(l)) l.addTo(map);
+    if (view !== 'camps' && map.hasLayer(l)) map.removeLayer(l);
+  });
+  updateCampLabels();
+  updateArrows();
+
+  document.querySelectorAll('#days .day').forEach((el,i) => {
+    el.classList.toggle('dim', activeDay !== null && i !== activeDay);
+    el.classList.toggle('open', i === activeDay);
+  });
+  const L_ = document.getElementById('stepLbl');
+  if (activeDay === null) L_.innerHTML = '<span class="all">Celý okruh · 15 dní</span>';
+  else {
+    const d = DAYS[activeDay];
+    L_.innerHTML = `<span class="dot" style="background:${COLORS[activeDay]}">${d.n}</span>
+                    <span>${d.date} · ${d.title}</span>`;
+  }
+}
+
+/* na telefóne nechaj miesto na ☰ / zoom (hore) a lištu dní + legendu (dole) */
+const fitOpts = () => narrow()
+  ? {paddingTopLeft:[26,60], paddingBottomRight:[26,108], maxZoom:14}
+  : {padding:[30,30], maxZoom:14};
+const allPoints = () => DAYS.flatMap(d => d.stops.map(s => s.ll));
+function fitAll(){ map.fitBounds(L.latLngBounds(allPoints()), fitOpts()); }
+function selectDay(i, zoom = true){
+  activeDay = i;
+  if (i !== null && view === 'camps'){
+    view = 'all';
+    document.querySelectorAll('#viewChips .chip').forEach(x => x.classList.toggle('on', x.dataset.view === 'all'));
+  }
+  render();
+  if (i === null) { if (zoom) fitAll(); return; }
+  if (zoom) map.fitBounds(L.latLngBounds(DAYS[i]._route), fitOpts());
+  const el = document.querySelectorAll('#days .day')[i];
+  if (el) el.scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+
+/* =============================== SIDEBAR ================================= */
+/* Na telefóne je panel výsuvný. Zavrieť sa dá ✕, tmavým pozadím aj tapnutím
+   do mapy – tlačidlo ☰ je pod panelom, takže samo o sebe nestačí. */
+const sideEl = document.getElementById('side'), backEl = document.getElementById('backdrop');
+function openSide(){  sideEl.classList.add('show');    backEl.classList.add('show'); }
+function closeSide(){ sideEl.classList.remove('show'); backEl.classList.remove('show'); }
+function toggleSide(){ sideEl.classList.contains('show') ? closeSide() : openSide(); }
+document.getElementById('toggle').onclick   = toggleSide;
+document.getElementById('closeSide').onclick = closeSide;
+backEl.onclick = closeSide;
+map.on('click', closeSide);
+
+const baseBox = document.getElementById('baseChips');
+Object.entries(BASES).forEach(([k,b],idx) => {
+  const el = document.createElement('div');
+  el.className = 'chip' + (idx===0 ? ' on' : ''); el.textContent = b.label;
+  el.onclick = () => {
+    baseBox.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
+    el.classList.add('on'); setBase(k);
+  };
+  baseBox.appendChild(el);
+});
+
+const catBox = document.getElementById('catChips');
+Object.entries(CATS).forEach(([k,c]) => {
+  const el = document.createElement('div');
+  el.className = 'chip on'; el.innerHTML = `${c.icon} ${c.label}`;
+  el.onclick = () => {
+    if (activeCats.has(k)) { activeCats.delete(k); el.classList.remove('on'); }
+    else { activeCats.add(k); el.classList.add('on'); }
+    render();
+  };
+  catBox.appendChild(el);
+});
+
+document.querySelectorAll('#viewChips .chip').forEach(el => {
+  el.onclick = () => {
+    document.querySelectorAll('#viewChips .chip').forEach(x => x.classList.remove('on'));
+    el.classList.add('on'); view = el.dataset.view; activeDay = null;
+    render();
+    map.fitBounds(L.latLngBounds(view === 'camps' ? campSeq : allPoints()), fitOpts());
+    closeSide();
+  };
+});
+
+const daysBox = document.getElementById('days');
+DAYS.forEach((d,i) => {
+  const el = document.createElement('div');
+  el.className = 'day';
+  const badges = (d.move ? '<span class="badge move">🚐 presun</span>' : '') +
+                 (d.star ? '<span class="badge star">🏆 top</span>' : '');
+  const legTxt = d.move && i > 0
+    ? `↳ presun: ${DAYS[i-1].sleep} → ${d.sleep} (${d.drive})`
+    : (d._from && !d.end ? '↳ výjazd z kempu a späť' : '');
+  el.innerHTML = `
+    <div class="head">
+      <div class="num" style="background:${COLORS[i]}">${d.n}</div>
+      <div class="t"><b>${d.date} · ${d.title}</b>
+        <span>${badges}${d.drive} · spíme: ${d.sleep}</span></div>
+    </div>
+    <div class="body">
+      <ul>${d.stops.map((s,j) =>
+        `<li data-j="${j}" class="${s.alt?'alt':''}"><em>${s.t}</em>${CATS[s.c].icon} ${s.name}</li>`).join('')}</ul>
+      ${legTxt ? `<div class="leg">${legTxt}</div>` : ''}
+    </div>`;
+  el.querySelector('.head').onclick = () => selectDay(activeDay === i ? null : i);
+  el.querySelectorAll('.body li').forEach(li => {
+    li.onclick = e => {
+      e.stopPropagation();
+      const {m} = layers[i].markers[+li.dataset.j];
+      if (activeDay !== i) selectDay(i, false);
+      closeSide();
+      map.setView(m.getLatLng(), 13, {animate:true});
+      m.openPopup();
+    };
+  });
+  daysBox.appendChild(el);
+});
+
+document.getElementById('prev').onclick = () =>
+  selectDay(activeDay === null ? DAYS.length-1 : (activeDay === 0 ? null : activeDay-1));
+document.getElementById('next').onclick = () =>
+  selectDay(activeDay === null ? 0 : (activeDay === DAYS.length-1 ? null : activeDay+1));
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight') document.getElementById('next').click();
+  if (e.key === 'ArrowLeft')  document.getElementById('prev').click();
+  if (e.key === 'Escape')     selectDay(null);
+});
+
+/* ================================ LEGENDA ================================ */
+/* Rozbaliteľná – rozložená zaberie na telefóne pol obrazovky, tak je tam
+   zbalená na jeden riadok a otvorí sa až na tapnutie. */
+const legend = L.control({position:'bottomright'});
+legend.onAdd = () => {
+  const div = L.DomUtil.create('div','legend' + (narrow() ? ' col' : ''));
+  L.DomEvent.disableClickPropagation(div);
+  L.DomEvent.disableScrollPropagation(div);
+  div.innerHTML =
+    '<button class="lhead" type="button">Legenda <span class="car">▾</span></button>' +
+    '<div class="lbody">' +
+      '<b>Poradie dní</b>' +
+      `<div class="ramp">${COLORS.map(c=>`<i style="background:${c}"></i>`).join('')}</div>` +
+      '<div class="rlbl"><span>deň 1 · prílet</span><span>deň 15 · odlet</span></div>' +
+      '<hr><b>Značky</b>' +
+      `<div class="cats">${Object.values(CATS).map(c=>`<div>${c.icon} ${c.label}</div>`).join('')}</div>` +
+      '<div>━ presunový deň (kemp → kemp)</div>' +
+      '<div>┄ výjazd z kempu a späť</div>' +
+      '<div>▲ smer jazdy · číslo v pine = deň</div>' +
+    '</div>';
+  div.querySelector('.lhead').onclick = () => div.classList.toggle('col');
+  return div;
+};
+legend.addTo(map);
+
+render(); fitAll();
+</script>
+</body>
+</html>
