@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0f1520">
-<title>Peloponéz 2026 – alternatívy po výpadku Erodiosu</title>
+<title>Peloponéz 2026 – nový plán a alternatívy (14 nocí)</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"
       crossorigin="anonymous">
@@ -76,6 +76,26 @@
   .chip:hover{border-color:var(--accent);color:var(--ink)}
   .chip.on{background:var(--accent);border-color:var(--accent);color:#08131b;font-weight:600}
 
+  .flights{display:flex;gap:6px;margin-top:8px}
+  .flights span{flex:1;background:#101828;border:1px solid var(--line);border-radius:7px;
+    padding:4px 7px;font-size:10.5px;color:var(--ink-dim);line-height:1.35}
+  .flights b{color:#a78bfa}
+  .sc.best{border-color:#3f7d5e}
+  .rec{font-style:normal;font-size:9.5px;background:#12352a;color:#6fdca4;
+    padding:1px 5px;border-radius:20px;margin-left:5px;vertical-align:1px}
+  .nite.frag{outline:2px solid #cf2f2f;outline-offset:-2px}
+  .pin.fragile{box-shadow:0 0 0 3px #cf2f2f,0 2px 7px rgba(0,0,0,.45)}
+  .stat{padding:5px 6px}
+  .stat b{font-size:14px}
+  .stat span{font-size:9px;line-height:1.2;display:block}
+  .legs{margin:2px 0 0;padding:0;list-style:none;counter-reset:n}
+  .legs li{display:grid;grid-template-columns:26px 8px 1fr;gap:5px;align-items:start;
+    padding:3px 0;border-top:1px dashed var(--line);font-size:11.5px}
+  .legs li em{font-style:normal;color:var(--gold);font-variant-numeric:tabular-nums;font-size:10.5px}
+  .legs li i{width:8px;height:8px;border-radius:2px;margin-top:4px;display:block}
+  .legs li>div{min-width:0}
+  .legs li b{font-weight:650;display:block;font-size:11.5px}
+  .legs li span{color:var(--ink-dim);display:block;font-size:11px;line-height:1.35}
   .note{color:var(--ink-dim);font-size:11.5px;border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
   .note b{color:var(--ink)}
   .key{display:flex;align-items:center;gap:7px;padding:2px 0;font-size:11.5px}
@@ -138,9 +158,12 @@
   <aside id="side">
     <header>
       <button id="closeSide" aria-label="Zavrieť">✕</button>
-      <h1>Čo teraz s juhom trasy?</h1>
-      <div class="sub">Erodios vypadol na 22.–25. 8. · 4 alternatívy a čo každá stojí ·
-        overené 12. 8. 2026</div>
+      <h1>Peloponéz 2026 · ktorý tvar trasy?</h1>
+      <div class="sub">14 nocí · karavan 5,95 × 2,32 × <b>3,14 m</b> · 2 dospelí + deti 5 a 7 r.</div>
+      <div class="flights">
+        <span><b>16. 8.</b> prílet 11:55 → karavan 13:30–15:30</span>
+        <span><b>30. 8.</b> odovzdanie 09:00–10:00 → odlet 12:20</span>
+      </div>
     </header>
     <div class="scroll">
       <div class="sec">Varianty <span style="text-transform:none;letter-spacing:0;color:#6d7c92">(klik = zobraz na mape)</span></div>
@@ -153,29 +176,36 @@
       </div>
 
       <div class="note">
-        <b>Ako čítať farby kempov</b>
-        <div class="key"><i class="sw" style="background:#67d39a"></i> zarezervované – Lefka Beach 16.–20. 8.</div>
-        <div class="key"><i class="sw" style="background:#4fb3d9"></i> overené online, dá sa kliknúť a zaplatiť</div>
-        <div class="key"><i class="sw" style="background:#e0b354"></i> len mail / formulár – dostupnosť sa online nedá zistiť</div>
+        <b>Prečo sa plán prekopal</b>
+        S obytným autom je výlet z kempu <b>drahší</b> než presun: zbalíte a postavíte sa
+        rovnako, ale navyše prejdete tú istú cestu dvakrát. Preto tu už nie sú základne
+        s výletmi, ale kotúľajúci sa okruh, kde je zážitok vždy po ceste.
+        <br><br>
+        <b>Ako čítať farby</b>
+        <div class="key"><i class="sw" style="background:#67d39a"></i> zaplatené – Lefka Beach 16.–20. 8.</div>
+        <div class="key"><i class="sw" style="background:#4fb3d9"></i> overené online, dá sa zabookovať</div>
+        <div class="key"><i class="sw" style="background:#e0b354"></i> len mail / formulár</div>
         <div class="key"><i class="sw" style="background:#ef7a26"></i> len telefón</div>
-        <div class="key"><i class="sw" style="background:#cf2f2f"></i> nedostupné alebo nedôveryhodné</div>
+        <div class="key"><i class="sw" style="background:#cf2f2f"></i> nedôveryhodné</div>
+        <div class="key"><i class="sw" style="background:#a78bfa"></i> požičovňa a camperstop</div>
         <br>
-        <b>Prečo je to celé v pohybe</b>
-        Erodios prišiel medzi 5. a 11. 8. o štyri noci. Prvý voľný karavanový termín má
-        až 26. 8. (B Zone, 46 €) a prvý 2–3-nočný blok 27.–30. 8.
-        (A&nbsp;Zone Large, 70–80 m², 49 €/noc – pre 5,95 m najlepšie miesto v kempe).
+        <b>Jediné krehké miesto: Stoupa</b>
+        Camping Kalogria je <b>jediný licencovaný kemp v celej západnej Mani</b>. Ak je plný,
+        najbližšie je Gythio (1 h 45 späť) alebo Petalidi (1 h dopredu). Na mape má červený
+        rám. Preto je to prvý telefonát – a preto existuje variant „Bez Stoupy“.
         <br><br>
-        <b>Kempy bez online rezervácie</b> sú na mape žlté a oranžové. Ich dostupnosť
-        nikto nezverejňuje – jediný spôsob je mail alebo telefonát. V bublinách sú
-        kontakty overené priamo na ich stránkach. Práve tieto kempy sú jediné, čo drží
-        pokope varianty C a D.
+        <b>Voľné státie už nie je záloha</b>
+        Grécko v roku 2026 zakázalo voľné kempovanie – na plážach, v lesoch, na mestských
+        parkoviskách aj odpočívadlách, pokuty od 300 € na osobu alebo vozidlo. Legálne sú
+        len licencované kempy a camperstopy. Parkovať obytným autom do 7,5 m sa smie ako
+        autom, ale bez markízy, stola a stoličiek. Záloha je teda vždy <b>iný kemp</b>,
+        nie improvizácia.
         <br><br>
-        <b>Koroni Camping</b> vyzerá, že má kalendár dostupnosti, ale za 16 mesiacov
-        vrátane špičky nemá ani jeden obsadený deň – nikto ho neudržiava. Preto je
-        červený, nie žltý.
+        <b>Airbnb</b> rieši jedinú vec: ak Rolling Turtles nepotvrdia odovzdanie v nedeľu
+        30. 8. o 09:00, auto sa vracia už v sobotu a treba posteľ pri letisku bez dopravy.
+        Ako záloha za kemp nefunguje – karavan treba aj tak niekam postaviť.
         <br><br>
-        Kilometre sú vzdušná vzdialenosť × 1,3, teda len orientačné.
-        Trasy sú spojnice, nie reálne cesty.
+        Kilometre sú vzdušná vzdialenosť × 1,3. Trasy sú spojnice, nie reálne cesty.
       </div>
     </div>
   </aside>
@@ -191,151 +221,198 @@
         integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"
         crossorigin="anonymous"></script>
 <script>
-/* ======================= KEMPY ======================= */
-/* ch: booked | online | mail | tel | dead
-   Súradnice: OpenStreetMap + vlastné stránky kempov (zhodné z dvoch zdrojov). */
+/* ======================= KEMPY =======================
+   ch: booked | online | mail | tel | dead | depot
+   fb: kľúče náhradných kempov v dosahu (prázdne = žiadna záloha)
+   Súradnice: OpenStreetMap krížovo overené s vlastnými stránkami kempov.
+   ==================================================== */
 const CAMPS = {
-  lefka:    {n:'Lefka Beach Camping', sh:'LEF', pl:'Vivari, Argolida', ll:[37.5197,22.9058], ch:'booked',
-             av:'✔ ZAREZERVOVANÉ 16.–20. 8. (Large Spot Row A, 180 € za 4 noci)',
+  lefka:    {n:'Lefka Beach Camping', sh:'LEF', pl:'Vivari, Argolida', ll:[37.5197,22.9058], ch:'booked', fb:['xeni'],
+             av:'✔ ZAPLATENÉ 16.–20. 8. · Large Spot Row A, 180 € za 4 noci.',
              url:'https://camping-lefka.book-onlinenow.net'},
-  meltemi:  {n:'Camping Meltemi', sh:'MEL', pl:'Mavrovouni pri Gythiu', ll:[36.73111,22.55295], ch:'online',
-             av:'Zóna pre obytné autá voľná 20.–31. 8. Cca 45 €/noc. Pláž s hniezdami karety, stanica ARCHELON.',
+  meltemi:  {n:'Camping Meltemi', sh:'MEL', pl:'Mavrovouni pri Gythiu', ll:[36.73111,22.55295], ch:'online', fb:['gbay','manibeach'],
+             av:'Zóna pre obytné autá voľná 20.–31. 8., cca 45 €/noc. Pláž s hniezdami karety, stanica ARCHELON. ⚠️ Miesta sú „pod prístreškom“ – pýtať sa na podjazdnú výšku kvôli 3,14 m alkovni.',
              url:'https://availabilityonline.com/availtable.php?un=campingmeltemi'},
-  gbay:     {n:'Camping Gythion Bay', sh:'GBAY', pl:'Mavrovouni', ll:[36.72751,22.54611], ch:'online',
-             av:'Voľná len Area B (9 × 6 m, bez tieňa) 22.–26. 8. Je to 3 km od Meltemi, ako presun nemá zmysel.',
+  gbay:     {n:'Camping Gythion Bay', sh:'GBAY', pl:'Mavrovouni', ll:[36.72751,22.54611], ch:'online', fb:['meltemi','manibeach'],
+             av:'Area B (9 × 6 m, bez tieňa) voľná 22.–26. 8. Záloha pre Meltemi, 3 km vedľa.',
              url:'https://gythion.campsaround.com'},
-  erodios:  {n:'Camping Erodios', sh:'ERO', pl:'Gialova pri Voidokilii', ll:[36.95287,21.69675], ch:'online',
-             av:'VYPREDANÉ 22.–25. 8. Voľné od 26. 8. (B Zone 46 €), blok 27.–30. 8. v A Zone Large (70–80 m², 49 €/noc). Detské ihrisko, pri lagúne.',
+  manibeach:{n:'Mani Beach Camping', sh:'MANI', pl:'Mavrovouni', ll:[36.7285,22.5419], ch:'mail', fb:['meltemi','gbay'],
+             av:'Len formulár „booking request“, dostupnosť neukazuje. Tretia možnosť pri Gythiu.',
+             url:'https://mani-beach.gr'},
+  kalogria: {n:'Camping Kalogria', sh:'KALO', pl:'Stoupa, západná Mani', ll:[36.84874,22.25932], ch:'tel', fb:[], fragile:true,
+             av:'⚠️ JEDINÝ licencovaný kemp v celej západnej Mani – ak je plný, niet kam uhnúť. Najbližšie sú Gythio (1 h 45 späť) alebo Petalidi (1 h dopredu). Rezervácia len telefonicky. Pláž, kde zo dna vyvierajú studené sladkovodné pramene.',
+             tel:'+30 27210 77319'},
+  tsapi:    {n:'Camping Tsapi', sh:'TSAP', pl:'Messénsky záliv', ll:[36.75566,21.85559], ch:'mail', fb:['petalidi','thines'],
+             av:'Náhradný smer, ak Kalogria nevyjde. Tichá zátoka na juh od Petalidi.',
+             mail:'campingtsapi@gmail.com'},
+  petalidi: {n:'Camping Petalidi', sh:'PETA', pl:'Petalidi', ll:[36.98189,21.92891], ch:'mail', fb:['tsapi','thines'],
+             av:'Náhradný smer, ak Kalogria nevyjde. Blízko Kalamaty.',
+             mail:'info@campingpetalidi.gr'},
+  thines:   {n:'Thines Camping', sh:'THIN', pl:'Finikounda', ll:[36.80518,21.79557], ch:'mail', fb:['ammos','finikes','methoni'],
+             av:'50 m od pláže Makrinammos s modrou vlajkou, oproti ostrovčekom Oinousses. V okolí sú ďalšie tri kempy – najbezpečnejšia nerezervovaná noc plánu.',
+             mail:'thines@otenet.gr', url:'https://www.camping-peloponnese.com'},
+  ammos:    {n:'Camping Ammos', sh:'AMM', pl:'Finikounda', ll:[36.80531,21.79138], ch:'mail', fb:['thines','finikes','methoni'],
+             av:'Susedí s Thines. Kontakt som neoveril – pýtať sa na mieste alebo cez Thines.'},
+  finikes:  {n:'Camping Finikes ≈', sh:'FINI', pl:'Finikounda (poloha približná)', ll:[36.8075,21.8130], ch:'mail', fb:['thines','ammos','methoni'],
+             av:'⚠️ Presnú polohu som neoveril, značka je orientačná.',
+             mail:'info@finikescamping.gr', url:'http://www.finikescamping.gr'},
+  methoni:  {n:'Camping Methoni', sh:'METH', pl:'Methoni', ll:[36.81803,21.71483], ch:'mail', fb:['thines','ammos'],
+             av:'20 minút od Finikoundy, priamo pod veneciánskou pevnosťou.',
+             mail:'info@campingmethoni.gr'},
+  koroni:   {n:'Koroni Camping', sh:'KOR', pl:'Koroni', ll:[36.79951,21.95094], ch:'dead', fb:['tsapi'],
+             av:'⚠️ Kalendár vyzerá živý, ale za 16 mesiacov vrátane júla a augusta nemá ani jeden obsadený deň – nikto ho neudržiava. Ako dôkaz dostupnosti neplatí.',
+             mail:'info@koronicamping.com', url:'https://www.koronicamping.com'},
+  erodios:  {n:'Camping Erodios', sh:'ERO', pl:'Gialova pri Voidokilii', ll:[36.95287,21.69675], ch:'online', fb:['navarino'],
+             av:'VYPREDANÉ 22.–25. 8. Voľné od 26. 8. (B Zone 46 €), blok 27.–30. 8. v A Zone Large (70–80 m², 49 €/noc – najlepšie miesto pre 5,95 m). Detské ihrisko, pri lagúne.',
              url:'https://erodioscamping.reserve-online.net'},
-  navarino: {n:'Camping Navarino Beach', sh:'NAV', pl:'Gialova', ll:[36.9468,21.70742], ch:'mail',
-             av:'Dostupnosť sa online nedá zistiť. Priamo na pláži Gialova, 4 km od Voidokilie – plnohodnotná náhrada Erodiosu.',
+  navarino: {n:'Camping Navarino Beach', sh:'NAV', pl:'Gialova', ll:[36.9468,21.70742], ch:'mail', fb:['erodios'],
+             av:'1,5 km od Erodiosu, priamo na pláži Gialova. Záloha aj doplnok pre Voidokiliu.',
              mail:'info@navarino-beach.gr', tel:'+30 2723 022973, +30 2723 023512',
              url:'https://www.navarino-beach.gr'},
-  proti:    {n:'Camping Proti', sh:'PRO', pl:'pri Marathopoli', ll:[37.06755,21.57844], ch:'mail',
-             av:'Dostupnosť len na dopyt. Na polceste medzi Gialovou a Kalo Nero, priamo pri mori oproti ostrovu Proti.',
+  proti:    {n:'Camping Proti', sh:'PRO', pl:'pri Marathopoli', ll:[37.06755,21.57844], ch:'mail', fb:['navarino','tholo'],
+             av:'Na polceste medzi Gialovou a Tholom, oproti ostrovu Proti.',
              mail:'info@camping-proti.gr', tel:'+30 27630 61211 (leto), +30 69 481 76 145',
              url:'https://www.camping-proti.gr'},
-  thines:   {n:'Thines Camping', sh:'THI', pl:'Finikounda', ll:[36.80518,21.79557], ch:'mail',
-             av:'Dostupnosť len na dopyt. 50 m od pláže Makrinammos s modrou vlajkou, oproti ostrovčekom Oinousses.',
-             mail:'thines@otenet.gr', url:'https://www.camping-peloponnese.com'},
-  ammos:    {n:'Camping Ammos', sh:'AMM', pl:'Finikounda', ll:[36.80531,21.79138], ch:'mail',
-             av:'Susedí s Thines. Kontakt som neoveril – pýtajte sa cez Thines alebo na mieste.'},
-  finikes:  {n:'Camping Finikes ≈', sh:'FIN', pl:'Finikounda (poloha približná)', ll:[36.8075,21.8130], ch:'mail',
-             av:'⚠️ Presnú polohu som neoveril, značka je orientačná. Dostupnosť len na dopyt.',
-             mail:'info@finikescamping.gr', url:'http://www.finikescamping.gr'},
-  kalogria: {n:'Camping Kalogria', sh:'KAL', pl:'Stoupa, západná Mani', ll:[36.84874,22.25932], ch:'tel',
-             av:'Jediný licencovaný kemp v západnej Mani. Web je len vitrína, rezervácia iba telefonicky. Pláž, kde zo dna vyvierajú studené sladkovodné pramene.',
-             tel:'+30 27210 77319'},
-  manibeach:{n:'Mani Beach Camping', sh:'MANI', pl:'Mavrovouni', ll:[36.7285,22.5419], ch:'mail',
-             av:'Len formulár „booking request“, dostupnosť neukazuje.', url:'https://mani-beach.gr'},
-  koroni:   {n:'Koroni Camping', sh:'KOR', pl:'Koroni', ll:[36.79951,21.95094], ch:'dead',
-             av:'⚠️ Kalendár tvári sa ako živý, ale za 16 mesiacov vrátane júla a augusta nemá ani jeden obsadený deň – neudržiavaný. Ako dôkaz dostupnosti neplatí, treba mail.',
-             mail:'info@koronicamping.com', url:'https://www.koronicamping.com'},
-  kalonero: {n:'Kemp pri Kalo Nero ≈', sh:'K.NERO', pl:'zátoka Kyparissia (poloha približná)', ll:[37.3011,21.7025], ch:'mail',
-             av:'⚠️ Orientačná značka pre oblasť. Kilometre prázdnych pláží, hniezdiská karety, stanica ARCHELON.'},
-  olympia:  {n:'Kemp v Olympii ≈', sh:'OLYM', pl:'Olympia (poloha približná)', ll:[37.6425,21.6403], ch:'tel',
-             av:'⚠️ Orientačná značka. Alfeios nemá web vôbec, Diana web má, ale bez rezervačného systému – oboje len telefón.'},
-  diakopto: {n:'Kemp pri Diakopte ≈', sh:'DIAK', pl:'Diakopto (poloha približná)', ll:[38.1930,22.2010], ch:'mail',
-             av:'⚠️ Orientačná značka pre nástup na zubačku do Kalavryty.'}
+  tholo:    {n:'Camping Tholo Beach', sh:'THOL', pl:'Tholo pri Zachare', ll:[37.41073,21.66843], ch:'mail', fb:['proti'],
+             av:'Náhrada za Kalo Nero, kde kemp NEEXISTUJE – v celej Messénii je najsevernejší Proti. Tá istá nekonečná piesočná pláž s hniezdami karety, a 30 minút od Olympie.',
+             mail:'campingtholo1@gmail.com', tel:'+30 2625 061689, +30 6974 064008',
+             url:'http://www.campingtholo.gr'},
+  diana:    {n:'Camping Diana', sh:'DIAN', pl:'Antická Olympia', ll:[37.64536,21.62285], ch:'tel', fb:['alfeios'],
+             av:'200 m od centra Olympie, 800 m pešo k areálu a múzeu – s 3,14 m alkovňou nemusíte riešiť parkovanie pri pamiatke. Borovicový tieň, bazén, otvorené celoročne. ⚠️ Na vlastnej stránke NEMAJÚ mail, len formulár a telefóny.',
+             tel:'+30 26240 22314, +30 6974145067', url:'https://campingdiana.gr'},
+  alfeios:  {n:'Alfeios Camping ≈', sh:'ALF', pl:'Antická Olympia (poloha približná)', ll:[37.6300,21.6250], ch:'tel', fb:['diana'],
+             av:'⚠️ Poloha orientačná. Záloha pre Dianu. Nemá web ani mail, len telefón. Otvorené 1. 4. – 30. 10.',
+             tel:'+30 26240 22951, +30 26240 22952'},
+  akrata:   {n:'Akrata Beach Camping', sh:'AKRA', pl:'Akrata, severné pobrežie', ll:[38.17326,22.3374], ch:'mail', fb:['tsolis'],
+             av:'20 km od Diakopta, odkiaľ ide zubačka do Kalavryty. Otvorené celoročne, a leží už smerom na Atény.',
+             mail:'info@akrata-beach-camping.gr', tel:'+30 2696 031988, +30 6974 761681',
+             url:'https://www.akrata-beach-camping.gr'},
+  tsolis:   {n:'Tsolis Camping', sh:'TSOL', pl:'Achaia', ll:[38.1400,22.0500], ch:'mail', fb:['akrata'],
+             av:'⚠️ Poloha orientačná. Záloha pre Akratu.', mail:'camping.tsolis@gmail.com'},
+  xeni:     {n:'Xeni Camp', sh:'XENI', pl:'Tolo, Argolida', ll:[37.5290,22.8660], ch:'online', fb:['lefka'],
+             av:'Overený booking engine, ale 18.–20. 8. „nothing found“. Záloha pri Nafpliu mimo špičky.',
+             url:'https://xeni.campsaround.com'},
+  rt:       {n:'Rolling Turtles', sh:'RT', pl:'35. km cesty na Porto Rafti', ll:[37.874541,23.939037], ch:'depot',
+             fb:[], depot:true,
+             av:'Požičovňa A ZÁROVEŇ camperstop – 7 km od letiska. Výlevky na šedú aj čiernu vodu, pitná voda, teplé sprchy, práčka so sušičkou, lounge s grilom, stráženie 24/7. Prespať sa dá.\\n\\nVYZDVIHNUTIE 13:30–15:30 · ODOVZDANIE 09:00–10:00 (zadarmo).\\nUpratať treba: kazetu WC, žiadne smeti, vyprázdnenú chladničku, čisté vnútro.\\n⚠️ Kancelária má hodiny PO–SO, ale odovzdanie inzerujú PO–NE. Vy odovzdávate v NEDEĽU – dať si to potvrdiť.',
+             url:'https://rolling-turtles.com'}
 };
 
 /* ======================= ZAUJÍMAVOSTI ======================= */
 const POIS = {
-  diros:     {n:'Jaskyne Diros', ll:[36.6386,22.3808], i:'🕯', d:'Loďkou po podzemnej rieke medzi stalaktitmi.'},
+  corinth:   {n:'Korintský prieplav a ponorný most', ll:[37.9166,23.0000], i:'🌉', d:'Celý cestný most sa potopí 8 m pod vodu, aby preplávala loď. Pre deti väčší zážitok než pohľad z výšky.'},
+  epidaurus: {n:'Divadlo Epidaurus', ll:[37.5961,23.0794], i:'🏛', d:'Jeden dole šepká a trhá papier, hore to počuť úplne jasne.'},
+  sunken:    {n:'Potopené mesto Epidavros', ll:[37.6297,23.1553], i:'🏖', d:'Múry rímskej vily 1–3 m pod hladinou. Deti plávajú nad antickými ruinami.'},
+  mycenae:   {n:'Mykény', ll:[37.7306,22.7564], i:'🏛', d:'Tajná cisterna: 99 schodov do úplnej tmy, treba čelovky.'},
+  nafplio:   {n:'Železničný park Nafplio', ll:[37.5680,22.7970], i:'🚂', d:'Parné rušne na liezanie, tienené ihrisko pri mori, zmrzlinárne.'},
+  sparta:    {n:'Sparta – múzeum olív', ll:[37.0736,22.4297], i:'🚂', d:'Klimatizované, funkčné repliky mlynov, ktoré sa dajú točiť.'},
   vrak:      {n:'Vrak Dimitrios', ll:[36.7017,22.5525], i:'🚢', d:'Zrezavená loď leží na piesočnej pláži, dá sa k nej prebrodiť.'},
   gythio:    {n:'Gythio a Kranai', ll:[36.7597,22.5678], i:'🏘', d:'Prístav, ostrovček s majákom, rybí trh.'},
-  kardamyli: {n:'Kardamyli a kaňon Viros', ll:[36.8883,22.2336], i:'🌿', d:'Vežové domy a vyschnuté kamenné riečisko medzi stenami.'},
+  diros:     {n:'Jaskyne Diros', ll:[36.6386,22.3808], i:'🕯', d:'Loďkou po podzemnej rieke medzi stalaktitmi, vnútri 19 °C.'},
+  areopoli:  {n:'Areopoli a Limeni', ll:[36.6667,22.3833], i:'🏘', d:'Kamenné mesto s vežovými domami a tyrkysová zátoka pod ním.'},
   stoupa:    {n:'Pláž Kalogria (Stoupa)', ll:[36.8478,22.2578], i:'🏖', d:'Zo dna vyvierajú ľadové sladkovodné pramene – deti sa s tým hrajú hodiny.'},
-  kalamata:  {n:'Železničný park Kalamata', ll:[37.0294,22.1131], i:'🚂', d:'Parné lokomotívy na liezanie, ihriská, tieň. Vstup voľný.'},
-  methoni:   {n:'Hrad Methoni', ll:[36.8181,21.7042], i:'🏛', d:'Obrovská prázdna venecianska pevnosť a veža stojaca v mori.'},
+  kardamyli: {n:'Kardamyli a kaňon Viros', ll:[36.8883,22.2336], i:'🌿', d:'Vežové domy a vyschnuté kamenné riečisko medzi stenami.'},
+  kalamata:  {n:'Železničný park Kalamata', ll:[37.0294,22.1131], i:'🚂', d:'Parné lokomotívy a dreziny, ihriská, jazierko, tieň. Vstup voľný.'},
+  methoniC:  {n:'Hrad Methoni', ll:[36.8181,21.7042], i:'🏛', d:'Prázdna venecianska pevnosť a osemhranná veža stojaca v mori.'},
   finikounda:{n:'Pláže Finikounda', ll:[36.8065,21.8100], i:'🏖', d:'Plytké piesočné zátoky oproti ostrovčekom.'},
   voidokilia:{n:'Voidokilia', ll:[36.9575,21.6597], i:'🏖', d:'Dokonalý polkruh, duny, plytká teplá voda. Bez slnečníkov a barov.'},
   nestor:    {n:'Nestorova jaskyňa', ll:[36.9556,21.6608], i:'🕯', d:'Hermes tu podľa mýtu skryl Apolónove kravy.'},
   lagoon:    {n:'Lagúna Gialova', ll:[36.9558,21.6750], i:'🌿', d:'Plameniaky a chameleón – jediné miesto v Európe, kde žije.'},
-  polilimnio:{n:'Kaskády Polilimnio', ll:[37.0489,21.8250], i:'🌿', d:'Tyrkysové jazierka v lese, kúpanie v sladkej vode.'},
-  turtles:   {n:'Korytnačky Kalo Nero', ll:[37.2950,21.6980], i:'🐢', d:'Koniec augusta = liahnutie. Ranné kontroly hniezd s ARCHELONom.'},
+  turtles:   {n:'Korytnačky Tholo / Kalo Nero', ll:[37.3800,21.6800], i:'🐢', d:'Koniec augusta = liahnutie. Kilometre prázdnej piesočnej pláže.'},
   olympiaP:  {n:'Antická Olympia', ll:[37.6383,21.6300], i:'🏛', d:'Beh 192 m od originálnej mramorovej štartovacej čiary.'},
-  vouraikos: {n:'Zubačka kaňonom Vouraikos', ll:[38.0322,22.1114], i:'🚂', d:'Úzkokoľajka tunelmi a mostíkmi divokým kaňonom do Kalavryty.'},
-  pefkias:   {n:'Borovicový les Pefkias', ll:[38.0776,22.6289], i:'🌿', d:'Borovice rastú až na oblázkovú pláž Korintského zálivu.'}
+  vouraikos: {n:'Zubačka kaňonom Vouraikos', ll:[38.0322,22.1114], i:'🚂', d:'Úzkokoľajka tunelmi a mostíkmi divokým kaňonom do Kalavryty. Jazda trvá 4 hodiny.'}
 };
 
 /* ======================= VARIANTY ======================= */
-/* nights: 13 nocí od 16. 8. do 29. 8., hodnota = kľúč kempu alebo null */
-/* pozor: nepomenovať premennú L – kolidovala by s Leafletom */
-const M = 'meltemi', E = 'erodios', LF = 'lefka';
+/* 14 nocí, 16. 8. → 30. 8. Prílet 16. 8. o 11:55, odlet 30. 8. o 12:20. */
 const SCEN = [
-{ id:'v5', label:'Pôvodný plán v5', tag:'✕', sub:'už neplatí – Erodios je 22.–25. 8. vypredaný',
+{ id:'NEW', label:'Nový plán', tag:'★', sub:'kotúľajúci sa okruh, výlet je vždy v presune',
+  risk:'3 dopyty', rc:'r1', best:true,
+  nights:['lefka','lefka','lefka','lefka','meltemi','meltemi','kalogria','kalogria','thines','thines','erodios','erodios','diana','rt'],
+  days:['prevzatie 13:30, rovno do kempu','pláž pri kempe – nikam sa nejde','Epidaurus: divadlo a potopené mesto',
+        'Mykény a železničný park Nafplio','presun cez Spartu a vrak Dimitrios','Mavrovouni a korytnačky – nikam sa nejde',
+        'presun cez Diros, Areopoli a Limeni','Kardamyli a kaňon Viros (15 min)','presun cez železničný park Kalamata',
+        'plytké zátoky – nikam sa nejde','presun cez hrad Methoni, večer Voidokilia','Voidokilia a lagúna – nikam sa nejde',
+        'presun pobrežím Tholo, poobede Olympia','presun cez Korintský prieplav, potom upratovanie'],
+  reach:['corinth','epidaurus','sunken','mycenae','nafplio','sparta','vrak','gythio','diros','areopoli','stoupa','kardamyli','kalamata','methoniC','finikounda','voidokilia','nestor','lagoon','turtles','olympiaP'],
+  rest:3, back:2,
+  gain:['Výlety tam-späť klesli zo siedmich na dva – a oba sú vynútené zaplatenou Lefkou.',
+        'Tri celé dni, keď sa vôbec nešoféruje. To sú skutočné oddychové dni.',
+        'Žiadny úsek sa neprechádza dvakrát, okruh sa uzatvára pri požičovni.',
+        'Posledná noc priamo v areáli Rolling Turtles – upratovanie s výlevkami po ruke, ráno len prejdete pár metrov.'],
+  loss:['Zubačka kaňonom Vouraikos sa nezmestila – je úplne na severe a jazda trvá 4 hodiny.'],
+  todo:['Kalogria, Stoupa 22.–24. 8. – ☎ +30 27210 77319 (PRVÝ telefonát, nemá zálohu)',
+        'Thines, Finikounda 24.–26. 8. – thines@otenet.gr',
+        'Camping Diana, Olympia 28.–29. 8. – ☎ +30 26240 22314',
+        'Rolling Turtles – potvrdiť odovzdanie v NEDEĽU 30. 8. o 09:00'] },
+
+{ id:'NOSTOUPA', label:'Bez Stoupy', tag:'B', sub:'plán B, ak Kalogria nevyjde',
+  risk:'2 dopyty', rc:'r1',
+  nights:['lefka','lefka','lefka','lefka','meltemi','meltemi','meltemi','tsapi','tsapi','thines','erodios','erodios','diana','rt'],
+  days:['prevzatie 13:30, rovno do kempu','pláž pri kempe – nikam sa nejde','Epidaurus: divadlo a potopené mesto',
+        'Mykény a železničný park Nafplio','presun cez Spartu a vrak Dimitrios','Mavrovouni a korytnačky – nikam sa nejde',
+        'Gythio, Kranai a zátoky Mani','dlhý presun cez Diros a Areopoli až do Messénskeho zálivu','zátoka – nikam sa nejde',
+        'presun cez železničný park Kalamata','presun cez hrad Methoni, večer Voidokilia','Voidokilia a lagúna – nikam sa nejde',
+        'presun pobrežím Tholo, poobede Olympia','presun cez Korintský prieplav, potom upratovanie'],
+  reach:['corinth','epidaurus','sunken','mycenae','nafplio','sparta','vrak','gythio','diros','areopoli','kalamata','methoniC','finikounda','voidokilia','nestor','lagoon','turtles','olympiaP'],
+  rest:3, back:3,
+  gain:['Obchádza jediné miesto plánu, ktoré nemá zálohu.',
+        'V Messénskom zálive sú štyri kempy vedľa seba – Tsapi, Petalidi, Fare, Anemomilos.',
+        'O jeden dopyt menej.'],
+  loss:['Kardamyli, kaňon Viros a pramene na pláži Kalogria – najkrajší kus západnej Mani.',
+        'Deň 8 je dlhý presun: Diros, Areopoli a potom ešte cesta okolo zálivu.'],
+  todo:['Camping Tsapi 23.–25. 8. – campingtsapi@gmail.com (alebo Petalidi: info@campingpetalidi.gr)',
+        'Thines, Finikounda 25.–26. 8. – thines@otenet.gr',
+        'Camping Diana, Olympia 28.–29. 8. – ☎ +30 26240 22314'] },
+
+{ id:'TRAIN', label:'So zubačkou', tag:'Z', sub:'Olympia von, Vouraikos dnu',
+  risk:'3 dopyty', rc:'r1',
+  nights:['lefka','lefka','lefka','lefka','meltemi','meltemi','kalogria','kalogria','thines','thines','erodios','erodios','akrata','rt'],
+  days:['prevzatie 13:30, rovno do kempu','pláž pri kempe – nikam sa nejde','Epidaurus: divadlo a potopené mesto',
+        'Mykény a železničný park Nafplio','presun cez Spartu a vrak Dimitrios','Mavrovouni a korytnačky – nikam sa nejde',
+        'presun cez Diros, Areopoli a Limeni','Kardamyli a kaňon Viros (15 min)','presun cez železničný park Kalamata',
+        'plytké zátoky – nikam sa nejde','presun cez hrad Methoni, večer Voidokilia','Voidokilia a lagúna – nikam sa nejde',
+        'dlhý presun na sever, cestou zubačka z Diakopta','krátky presun cez prieplav, potom upratovanie'],
+  reach:['corinth','epidaurus','sunken','mycenae','nafplio','sparta','vrak','gythio','diros','areopoli','stoupa','kardamyli','kalamata','methoniC','finikounda','voidokilia','nestor','lagoon','turtles','vouraikos'],
+  rest:3, back:2,
+  gain:['Zubačka kaňonom Vouraikos – vláčik tunelmi a mostíkmi nad divokou riekou.',
+        'Posledný presun k požičovni je najkratší zo všetkých variantov.'],
+  loss:['Antická Olympia a beh na originálnej štartovacej čiare.',
+        'Deň 13 je najdlhší v pláne: 300 km z Gialovy a k tomu 4-hodinová jazda vláčikom.'],
+  todo:['Kalogria, Stoupa 22.–24. 8. – ☎ +30 27210 77319',
+        'Thines, Finikounda 24.–26. 8. – thines@otenet.gr',
+        'Akrata Beach 28.–29. 8. – info@akrata-beach-camping.gr'] },
+
+{ id:'v5', label:'Pôvodný plán v5', tag:'✕', sub:'padol – Erodios aj zlý dátum návratu',
   risk:'padol', rc:'r3', broken:true,
-  nights:[LF,LF,LF,LF,M,M,E,E,'kalonero','kalonero','olympia','diakopto',null],
-  reach:['diros','vrak','gythio','kalamata','voidokilia','nestor','lagoon','polilimnio','turtles','olympiaP','vouraikos','pefkias'],
-  gain:[], loss:['Nedá sa uskutočniť – noci 22.–24. 8. v Erodiose neexistujú.'],
-  todo:[] },
-
-{ id:'A', label:'A · Istota', tag:'A', sub:'Meltemi 20.–26. · Erodios 26.–29.',
-  risk:'0 rizika', rc:'r0',
-  nights:[LF,LF,LF,LF,M,M,M,M,M,M,E,E,E],
-  reach:['diros','vrak','gythio','voidokilia','nestor','lagoon','kalamata'],
-  gain:['Všetko potvrdené online, nula telefonátov.','Voidokilia 3 noci v kuse.',
-        'Gythio ako základňa: Diros, Areopoli, Limeni, vrak, zátoky Mani.'],
-  loss:['Olympia a beh na antickom štadióne.','Zubačka kaňonom Vouraikos.',
-        'Korytnačky v Kalo Nero.','Kaskády Polilimnio.','Severné pobrežie a borovicové pláže.',
-        '6 nocí na jednom mieste – presne to, čomu ste sa chceli vyhnúť.'],
-  todo:[] },
-
-{ id:'B', label:'B · Jeden mail', tag:'B', sub:'Meltemi 20.–23. · Navarino 23.–26. · Erodios 26.–29.',
-  risk:'1 kemp mailom', rc:'r1',
-  nights:[LF,LF,LF,LF,M,M,M,'navarino','navarino','navarino',E,E,E],
-  reach:['diros','vrak','gythio','kalamata','voidokilia','nestor','lagoon','polilimnio','methoni'],
-  gain:['Messinia 6 nocí – Voidokilia, lagúna, Polilimnio aj hrad Methoni v pohode.',
-        'Gythio skrátené na 3 noci.',
-        'Navarino Beach je 1,5 km od Erodiosu – presun medzi nimi je 3 minúty.'],
-  loss:['Olympia a zubačka Vouraikos.','Korytnačky v Kalo Nero.','Severné pobrežie.'],
-  todo:['Napísať Camping Navarino Beach na 23.–26. 8.: info@navarino-beach.gr alebo +30 2723 022973.'] },
-
-{ id:'C', label:'C · Zachovaný okruh', tag:'C', sub:'celý pôvodný oblúk, tri kempy na dopyt',
-  risk:'3 kempy na dopyt', rc:'r2',
-  nights:[LF,LF,LF,LF,M,M,M,'navarino','navarino','navarino','kalonero','olympia','diakopto'],
-  reach:['diros','vrak','gythio','kalamata','voidokilia','nestor','lagoon','polilimnio','turtles','olympiaP','vouraikos'],
-  gain:['Zachová celý pôvodný oblúk vrátane Olympie, zubačky aj korytnačiek.',
-        'Žiadna zastávka z pôvodného plánu nevypadne.',
-        'Návrat do Atén je zo severu krátky, nie 4 hodiny z Gialovy.'],
-  loss:['Tri noclahy visia na tom, či odpíšu – bez potvrdenia sa nedá spoľahnúť.',
-        'Erodios úplne vynecháte, hoci od 27. 8. voľný je.'],
-  todo:['Navarino Beach 23.–26. 8. – info@navarino-beach.gr',
-        'Kemp pri Kalo Nero 26.–27. 8. – zistiť konkrétny kemp a napísať',
-        'Olympia 27.–28. 8. – Alfeios ☎ 2624022951 alebo Camping Diana',
-        'Diakopto 28.–29. 8. – na dopyt'] },
-
-{ id:'D', label:'D · Cez západnú Mani', tag:'D', sub:'Meltemi 20.–23. · Stoupa 23.–25. · Gialova 25.–29.',
-  risk:'2 kempy telefonicky', rc:'r2',
-  nights:[LF,LF,LF,LF,M,M,M,'kalogria','kalogria','navarino','navarino',E,E],
-  reach:['diros','vrak','gythio','stoupa','kardamyli','kalamata','voidokilia','nestor','lagoon','polilimnio'],
-  gain:['Najkrajší úsek Mani: Kardamyli, kaňon Viros, pramene na pláži Kalogria.',
-        'Presuny sú krátke a každý deň sa niekam ide – žiadne sedenie na jednom mieste.',
-        'Erodios stihnete v jeho voľnom termíne 27.–29. 8.'],
-  loss:['Olympia, zubačka a severné pobrežie.','Korytnačky v Kalo Nero.'],
-  todo:['Camping Kalogria, Stoupa 23.–25. 8. – ☎ +30 27210 77319 (len telefón, web nemá rezervácie)',
-        'Navarino Beach 25.–27. 8. – info@navarino-beach.gr'] }
+  nights:['lefka','lefka','lefka','lefka','meltemi','meltemi','erodios','erodios','tholo','tholo','diana','akrata',null,null],
+  days:['','','','','','','','','','','','','',''],
+  reach:['corinth','epidaurus','mycenae','nafplio','vrak','gythio','diros','kalamata','voidokilia','nestor','lagoon','turtles','olympiaP','vouraikos'],
+  rest:0, back:7,
+  gain:[],
+  loss:['Erodios je 22.–25. 8. vypredaný – noci 7 a 8 neexistujú.',
+        'Plán počítal s návratom 29. 8., ale letíte 30. 8. – chýbala celá jedna noc.',
+        'Sedem výletov tam-späť: pri obytnom aute je každý drahší než presun.'],
+  todo:[] }
 ];
 
-const CHCOL = {booked:'#67d39a', online:'#4fb3d9', mail:'#e0b354', tel:'#ef7a26', dead:'#cf2f2f'};
-const CHTXT = {booked:'✔ ZAREZERVOVANÉ', online:'● OVERENÉ ONLINE', mail:'✉ LEN MAIL / FORMULÁR',
-               tel:'☎ LEN TELEFÓN', dead:'✕ NEDÔVERYHODNÉ'};
-const CHICON= {booked:'🔒', online:'⛺', mail:'✉', tel:'☎', dead:'✕'};
-const DATES = ['16.','17.','18.','19.','20.','21.','22.','23.','24.','25.','26.','27.','28.'];
-
+const CHCOL = {booked:'#67d39a', online:'#4fb3d9', mail:'#e0b354', tel:'#ef7a26', dead:'#cf2f2f', depot:'#a78bfa'};
+const CHTXT = {booked:'✔ ZAPLATENÉ', online:'● OVERENÉ ONLINE', mail:'✉ LEN MAIL / FORMULÁR',
+               tel:'☎ LEN TELEFÓN', dead:'✕ NEDÔVERYHODNÉ', depot:'⚑ POŽIČOVŇA A CAMPERSTOP'};
+const CHICON= {booked:'🔒', online:'⛺', mail:'✉', tel:'☎', dead:'✕', depot:'⚑'};
+const DATES = ['16.','17.','18.','19.','20.','21.','22.','23.','24.','25.','26.','27.','28.','29.'];
 /* ======================= MAPA ======================= */
+const ATH = [37.9364,23.9445];
 const MAPOK = typeof L !== 'undefined';
 let map, layerCamps, layerRoute, layerPois;
 if (!MAPOK) {
   document.getElementById('map').innerHTML =
     '<div style="padding:26px;color:#0f1520;font:14px/1.6 system-ui;max-width:430px">' +
     '<b>Mapu sa nepodarilo načítať.</b><br><br>Knižnica Leaflet sa sťahuje z internetu ' +
-    '(unpkg.com) – bez signálu sa mapa nevykreslí. <b>Zoznam variantov aj s dopadmi ' +
-    'funguje aj bez nej</b> – otvorte ho tlačidlom ☰ Varianty. Keď budete mať signál, ' +
-    'načítajte stránku znova.</div>';
+    '(unpkg.com) – bez signálu sa mapa nevykreslí. <b>Zoznam variantov, denný rozpis aj ' +
+    'kontakty fungujú aj bez nej</b> – otvorte ich tlačidlom ☰ Varianty.</div>';
 } else {
-  map = L.map('map', {zoomControl:true, scrollWheelZoom:true}).setView([37.2,22.0], 8);
+  map = L.map('map', {zoomControl:true, scrollWheelZoom:true}).setView([37.4,22.2], 8);
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
     {maxZoom:19, attribution:'&copy; Esri · kempy © OpenStreetMap'}).addTo(map);
   layerCamps = L.layerGroup().addTo(map);
@@ -348,81 +425,81 @@ const dist = (a,b) => {
   const s=Math.sin(dLat/2)**2 + Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dLon/2)**2;
   return 2*R*Math.asin(Math.sqrt(s));
 };
-const campIcon = (key, ch, nights) => L.divIcon({
+const nights = n => n===1 ? 'noc' : n<5 ? 'noci' : 'nocí';
+const campIcon = (c, n) => L.divIcon({
   className:'', iconSize:[26,26], iconAnchor:[13,13], popupAnchor:[0,-13],
-  html:`<div style="position:relative"><div class="pin camp ${ch==='mail'||ch==='tel'?'dash':''}"
-        style="width:26px;height:26px;background:${CHCOL[ch]}"><span>${CHICON[ch]}</span></div>
-        ${nights?`<i class="nbadge">${nights}</i>`:''}</div>`});
+  html:`<div style="position:relative"><div class="pin camp ${c.ch==='mail'||c.ch==='tel'?'dash':''} ${c.fragile?'fragile':''}"
+        style="width:26px;height:26px;background:${CHCOL[c.ch]}"><span>${CHICON[c.ch]}</span></div>
+        ${n?`<i class="nbadge">${n}</i>`:''}</div>`});
 const poiIcon = (i, lost) => L.divIcon({className:'', iconSize:[22,22], iconAnchor:[11,22], popupAnchor:[0,-20],
   html:`<div class="pin ${lost?'ghost':''}" style="width:22px;height:22px;background:${lost?'#7a8798':'#2f6f96'}"><span>${i}</span></div>`});
 
-let current = SCEN.find(s => s.id === 'B') || SCEN[1];
-const showAll = () => document.querySelector('[data-v="all"]').classList.contains('on');
-const showLost = () => document.querySelector('[data-v="lost"]').classList.contains('on');
+let current = SCEN.find(s => s.id === 'NEW') || SCEN[0];
+const chipOn = v => document.querySelector(`[data-v="${v}"]`).classList.contains('on');
 
 function render(){
   const s = current;
-
-  // koľko nocí v ktorom kempe
   const used = {};
   s.nights.forEach(k => { if(k) used[k] = (used[k]||0)+1; });
 
-  // poradie kempov a orientačné kilometre (nezávislé od mapy)
+  // poradie kempov a orientačné kilometre
   const seq = [];
   s.nights.forEach(k => { if (k && seq[seq.length-1] !== k) seq.push(k); });
   const pts = seq.map(k => CAMPS[k].ll);
   let km = 0;
   for (let i=1;i<pts.length;i++) km += dist(pts[i-1], pts[i]) * 1.3;
-  if (pts.length) km += dist(pts[pts.length-1], [37.9364,23.9445]) * 1.3;   // návrat na letisko
+  if (pts.length && !CAMPS[seq[seq.length-1]].depot) km += dist(pts[pts.length-1], ATH) * 1.3;
 
   const lostN = Object.keys(POIS).length - s.reach.length;
   document.getElementById('banner').innerHTML =
-    `<b>${s.label}</b> · ${s.sub} · ~${Math.round(km/10)*10} km · ` +
+    `<b>${s.label}</b> · ~${Math.round(km/10)*10} km · ${s.rest} ${s.rest===1?'deň':s.rest>=2&&s.rest<=4?'dni':'dní'} bez šoférovania · ` +
     (lostN ? `prídete o ${lostN} ${lostN===1?'zastávku':lostN<5?'zastávky':'zastávok'}` : 'nič nestrácate');
   drawList(km);
 
   if (!MAPOK) return;
   layerCamps.clearLayers(); layerRoute.clearLayers(); layerPois.clearLayers();
 
-  // kempy
   Object.entries(CAMPS).forEach(([key,c]) => {
     const inScen = !!used[key];
-    if (!inScen && !showAll()) return;
-    const m = L.marker(c.ll, {icon: campIcon(key, c.ch, used[key]||0), opacity: inScen?1:0.72,
+    if (!inScen && !chipOn('all')) return;
+    const m = L.marker(c.ll, {icon: campIcon(c, used[key]||0), opacity: inScen?1:0.72,
                               zIndexOffset: inScen?600:0}).addTo(layerCamps);
     const contact = [
       c.mail ? `✉ <a href="mailto:${c.mail}">${c.mail}</a>` : '',
-      c.tel  ? `☎ ${c.tel}` : '',
+      c.tel  ? `☎ <a href="tel:${c.tel.split(',')[0].replace(/[^+\d]/g,'')}">${c.tel}</a>` : '',
       c.url  ? `🔗 <a href="${c.url}" target="_blank" rel="noopener">${c.url.replace(/^https?:\/\//,'').slice(0,34)}</a>` : ''
     ].filter(Boolean).join('<br>');
+    const fb = (c.fb||[]).filter(k => CAMPS[k]);
+    const fbTxt = c.depot ? '' : fb.length
+      ? `<p style="font-size:11.5px;color:#8fa2ba">Náhrady v okolí: ${fb.map(k=>CAMPS[k].n.replace(/^Camping |Kemp /,'')).join(', ')}</p>`
+      : `<p style="font-size:11.5px;color:#eb7676"><b>Žiadna náhrada v okolí</b> – jediný kemp v regióne.</p>`;
     m.bindPopup(`<h3>${c.n}</h3><div class="ch" style="color:${CHCOL[c.ch]}">${CHTXT[c.ch]} · ${c.pl}</div>
-      <p>${c.av}</p>${inScen?`<p style="color:${CHCOL[c.ch]}"><b>V tomto variante: ${used[key]} ${used[key]===1?'noc':used[key]<5?'noci':'nocí'}</b></p>`:''}
-      ${contact?`<p style="font-size:11.5px">${contact}</p>`:''}`);
+      <p>${c.av.replace(/\n/g,'<br>')}</p>
+      ${inScen?`<p style="color:${CHCOL[c.ch]}"><b>V tomto variante: ${used[key]} ${nights(used[key])}</b></p>`:''}
+      ${fbTxt}${contact?`<p style="font-size:11.5px">${contact}</p>`:''}`);
     if (inScen) m.bindTooltip(c.n.replace(/^Camping |Kemp /,'').replace(' ≈',''),
       {permanent:true, direction:'bottom', className:'plab', offset:[0,12]});
   });
 
-  // trasa medzi po sebe idúcimi kempmi
-  if (pts.length>1) {
-    L.polyline(pts, {color:'#4fb3d9', weight:4, opacity:.9}).addTo(layerRoute);
-    L.polyline([pts[pts.length-1], [37.9364,23.9445]],
-      {color:'#4fb3d9', weight:3, opacity:.55, dashArray:'7,7'}).addTo(layerRoute);
-  }
-  L.marker([37.9364,23.9445], {icon: L.divIcon({className:'', iconSize:[22,22], iconAnchor:[11,11],
+  if (pts.length>1) L.polyline(pts, {color:'#4fb3d9', weight:4, opacity:.9}).addTo(layerRoute);
+  if (pts.length) L.polyline([pts[pts.length-1], ATH],
+    {color:'#a78bfa', weight:3, opacity:.6, dashArray:'7,7'}).addTo(layerRoute);
+  L.marker(ATH, {icon: L.divIcon({className:'', iconSize:[22,22], iconAnchor:[11,11],
     html:'<div class="pin" style="width:22px;height:22px;background:#8a5ec9"><span>✈</span></div>'})})
-    .bindPopup('<h3>Letisko Atény</h3><p>Návrat 29. 8.</p>').addTo(layerRoute);
+    .bindPopup('<h3>Letisko Atény</h3><div class="ch" style="color:#a78bfa">PRÍLET A ODLET</div>' +
+      '<p>16. 8. prílet 11:55 → vyzdvihnutie karavanu 13:30–15:30.<br><br>' +
+      '30. 8. odovzdanie 09:00 → odlet 12:20. Z Rolling Turtles je to 7 km.</p>').addTo(layerRoute);
 
-  // zaujímavosti – dosiahnuteľné vs. stratené
   Object.entries(POIS).forEach(([key,p]) => {
     const ok = s.reach.includes(key);
-    if (!ok && !showLost()) return;
+    if (!ok && !chipOn('lost')) return;
     const m = L.marker(p.ll, {icon: poiIcon(p.i, !ok), zIndexOffset: ok?200:100}).addTo(layerPois);
     m.bindPopup(`<h3>${p.n}</h3><div class="ch" style="color:${ok?'#6fdca4':'#eb7676'}">${
       ok?'✔ V tomto variante stihnete':'✕ O toto v tomto variante prídete'}</div><p>${p.d}</p>`);
     if (!ok) m.bindTooltip(p.n, {permanent:true, direction:'bottom', className:'plab lost', offset:[0,2]});
   });
 
-  if (pts.length) map.fitBounds(L.latLngBounds(pts.concat([[37.9364,23.9445]])), {padding:[55,55]});
+  if (pts.length) map.fitBounds(L.latLngBounds(pts.concat([ATH])), {padding:[55,55]});
 }
 
 /* ======================= SIDEBAR ======================= */
@@ -432,39 +509,46 @@ function drawList(kmCur){
   SCEN.forEach(s => {
     const on = s.id === current.id;
     const el = document.createElement('div');
-    el.className = 'sc' + (on?' on':'') + (s.broken?' broken':'');
-    const nightsHtml = s.nights.map((k,i) => {
+    el.className = 'sc' + (on?' on':'') + (s.broken?' broken':'') + (s.best?' best':'');
+    const ribbon = s.nights.map((k,i) => {
       const c = k ? CAMPS[k] : null;
-      const col = c ? CHCOL[c.ch] : '#3a4457';
-      const nm = c ? c.sh : '–';
-      return `<div class="nite" style="background:${col};color:${c?'#0b1017':'#7d8798'}"
-                title="${DATES[i]}–${DATES[i+1]||'29.'} 8. · ${c?c.n:'nie je kde spať'}">${nm}</div>`;
+      return `<div class="nite${c&&c.fragile?' frag':''}" style="background:${c?CHCOL[c.ch]:'#3a4457'};color:${c?'#0b1017':'#7d8798'}"
+        title="${DATES[i]}–${DATES[i+1]||'30.'} 8. · ${c?c.n:'nie je kde spať'}${s.days&&s.days[i]?' · '+s.days[i]:''}">${c?c.sh:'–'}</div>`;
     }).join('');
     el.innerHTML = `
       <div class="h">
-        <div class="tag" style="background:${s.broken?'#cf2f2f':'#4fb3d9'};color:#0b1017">${s.tag}</div>
-        <div class="nm"><b>${s.label}</b><span>${s.sub}</span></div>
+        <div class="tag" style="background:${s.broken?'#cf2f2f':s.best?'#67d39a':'#4fb3d9'};color:#0b1017">${s.tag}</div>
+        <div class="nm"><b>${s.label}${s.best?' <i class="rec">odporúčam</i>':''}</b><span>${s.sub}</span></div>
         <div class="risk ${s.rc}">${s.risk}</div>
       </div>
       <div class="ribdays">${DATES.map(d=>`<span>${d}</span>`).join('')}</div>
-      <div class="ribbon">${nightsHtml}</div>
+      <div class="ribbon">${ribbon}</div>
       ${on ? impactHtml(s, kmCur) : ''}`;
-    el.onclick = () => { current = s; render(); };
+    el.onclick = (e) => { if (e.target.closest('a')) return; current = s; render(); };
     box.appendChild(el);
   });
 }
 function impactHtml(s, km){
-  const lostN = Object.keys(POIS).length - s.reach.length;
-  const req = s.todo.length;
+  const legs = s.days && s.days.some(Boolean) ? `<h4>Deň po dni</h4><ol class="legs">` +
+    s.nights.map((k,i) => {
+      const c = k ? CAMPS[k] : null;
+      const prev = i>0 ? s.nights[i-1] : null;
+      const moved = c && prev !== k;
+      return `<li><em>${DATES[i]}</em><i style="background:${c?CHCOL[c.ch]:'#3a4457'}"></i><div>
+        <b>${c?c.n.replace(/^Camping |Kemp /,'').replace(' ≈',''):'—'}</b>
+        <span>${moved?'':'↳ '}${s.days[i]||''}</span></div></li>`;
+    }).join('') + `</ol>` : '';
   return `<div class="imp">
     <div class="stats">
-      <div class="stat"><b>${Math.round(km/10)*10}</b><span>km spolu</span></div>
-      <div class="stat"><b style="color:${lostN?'#eb7676':'#6fdca4'}">${lostN}</b><span>stratených zastávok</span></div>
-      <div class="stat"><b style="color:${req?'#ecc75f':'#6fdca4'}">${req}</b><span>dopytov mailom</span></div>
+      <div class="stat"><b>${Math.round(km/10)*10}</b><span>km</span></div>
+      <div class="stat"><b style="color:#6fdca4">${s.rest}</b><span>dni bez šoférovania</span></div>
+      <div class="stat"><b style="color:${s.back>2?'#eb7676':'#ecc75f'}">${s.back}</b><span>výlety tam-späť</span></div>
+      <div class="stat"><b style="color:${s.todo.length?'#ecc75f':'#6fdca4'}">${s.todo.length}</b><span>dopytov</span></div>
     </div>
     ${s.gain.length?`<h4>Získate</h4><ul class="gain">${s.gain.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
     ${s.loss.length?`<h4>Prídete o</h4><ul class="loss">${s.loss.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
     ${s.todo.length?`<h4>Treba vybaviť</h4><ul class="todo">${s.todo.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+    ${legs}
   </div>`;
 }
 
@@ -478,8 +562,9 @@ const leg = L.control({position:'bottomright'});
 leg.onAdd = () => { const d = L.DomUtil.create('div','legend');
   d.innerHTML = '<b>Kempy podľa rezervácie</b>' +
     Object.entries(CHTXT).map(([k,v]) =>
-      `<div style="display:flex;gap:6px;align-items:center"><i style="width:10px;height:10px;border-radius:3px;background:${CHCOL[k]};display:inline-block"></i>${v.replace(/^. /,'')}</div>`).join('') +
+      `<div style="display:flex;gap:6px;align-items:center"><i style="width:10px;height:10px;border-radius:3px;background:${CHCOL[k]};display:inline-block"></i>${v.replace(/^\S ?/,'')}</div>`).join('') +
     '<div style="margin-top:5px;border-top:1px solid #33445c;padding-top:4px">' +
+    '<span style="color:#eb7676">červený rám</span> = jediný kemp v regióne<br>' +
     '<span style="opacity:.5">sivá prečiarknutá</span> = o toto prídete<br>' +
     'číslo pri kempe = počet nocí</div>';
   L.DomEvent.disableClickPropagation(d); return d; };
