@@ -192,7 +192,8 @@
         <b>Jediné krehké miesto: Stoupa</b>
         Camping Kalogria je <b>jediný licencovaný kemp v celej západnej Mani</b>. Ak je plný,
         najbližšie je Gythio (1 h 45 späť) alebo Petalidi (1 h dopredu). Na mape má červený
-        rám. Preto je to prvý telefonát – a preto existuje variant „Bez Stoupy“.
+        rám. Píše sa im na CampingKalogria@yahoo.gr, ale tri dni pred odchodom je rýchlejší
+        telefón. Preto je to prvý kontakt – a preto existuje variant „Bez Stoupy“.
         <br><br>
         <b>Voľné státie už nie je záloha</b>
         Grécko v roku 2026 zakázalo voľné kempovanie – na plážach, v lesoch, na mestských
@@ -239,9 +240,10 @@ const CAMPS = {
   manibeach:{n:'Mani Beach Camping', sh:'MANI', pl:'Mavrovouni', ll:[36.7285,22.5419], ch:'mail', fb:['meltemi','gbay'],
              av:'Len formulár „booking request“, dostupnosť neukazuje. Tretia možnosť pri Gythiu.',
              url:'https://mani-beach.gr'},
-  kalogria: {n:'Camping Kalogria', sh:'KALO', pl:'Stoupa, západná Mani', ll:[36.84874,22.25932], ch:'tel', fb:[], fragile:true,
-             av:'⚠️ JEDINÝ licencovaný kemp v celej západnej Mani – ak je plný, niet kam uhnúť. Najbližšie sú Gythio (1 h 45 späť) alebo Petalidi (1 h dopredu). Rezervácia len telefonicky. Pláž, kde zo dna vyvierajú studené sladkovodné pramene.',
-             tel:'+30 27210 77319'},
+  kalogria: {n:'Camping Kalogria', sh:'KALO', pl:'Stoupa, západná Mani', ll:[36.84981,22.25883], ch:'mail', fb:[], fragile:true,
+             av:'⚠️ JEDINÝ licencovaný kemp v celej západnej Mani – ak je plný, niet kam uhnúť. Najbližšie sú Gythio (1 h 45 späť) alebo Petalidi (1 h dopredu). Pláž, kde zo dna vyvierajú studené sladkovodné pramene.\n\nNikos Kazantzakis 29, 24024 Stoupa. Súradnice sú z ich vlastnej stránky.',
+             mail:'CampingKalogria@yahoo.gr', tel:'+30 27210 77319',
+             url:'https://campingkalogria.wixsite.com/home/contact'},
   tsapi:    {n:'Camping Tsapi', sh:'TSAP', pl:'Messénsky záliv', ll:[36.75566,21.85559], ch:'mail', fb:['petalidi','thines'],
              av:'Náhradný smer, ak Kalogria nevyjde. Tichá zátoka na juh od Petalidi.',
              mail:'campingtsapi@gmail.com'},
@@ -277,8 +279,9 @@ const CAMPS = {
              av:'Náhrada za Kalo Nero, kde kemp NEEXISTUJE – v celej Messénii je najsevernejší Proti. Tá istá nekonečná piesočná pláž s hniezdami karety, a 30 minút od Olympie.',
              mail:'campingtholo1@gmail.com', tel:'+30 2625 061689, +30 6974 064008',
              url:'http://www.campingtholo.gr'},
-  diana:    {n:'Camping Diana', sh:'DIAN', pl:'Antická Olympia', ll:[37.64536,21.62285], ch:'tel', fb:['alfeios'],
-             av:'200 m od centra Olympie, 800 m pešo k areálu a múzeu – s 3,14 m alkovňou nemusíte riešiť parkovanie pri pamiatke. Borovicový tieň, bazén, otvorené celoročne. ⚠️ Na vlastnej stránke NEMAJÚ mail, len formulár a telefóny.',
+  diana:    {n:'Camping Diana', sh:'DIAN', pl:'Antická Olympia', ll:[37.64536,21.62285], ch:'mail', fb:['alfeios'],
+             av:'200 m od centra Olympie, 800 m pešo k areálu a múzeu – s 3,14 m alkovňou nemusíte riešiť parkovanie pri pamiatke. Borovicový tieň, bazén, otvorené celoročne.\n\n⚠️ Písať sa dá len cez kontaktný formulár, mailovú adresu nezverejňujú – po odoslaní vám neostane kópia, tak si text uložte.',
+             form:'https://campingdiana.gr/contact/',
              tel:'+30 26240 22314, +30 6974145067', url:'https://campingdiana.gr'},
   alfeios:  {n:'Alfeios Camping ≈', sh:'ALF', pl:'Antická Olympia (poloha približná)', ll:[37.6300,21.6250], ch:'tel', fb:['diana'],
              av:'⚠️ Poloha orientačná. Záloha pre Dianu. Nemá web ani mail, len telefón. Otvorené 1. 4. – 30. 10.',
@@ -341,9 +344,9 @@ const SCEN = [
         'Žiadny úsek sa neprechádza dvakrát, okruh sa uzatvára pri požičovni.',
         'Posledná noc priamo v areáli Rolling Turtles – upratovanie s výlevkami po ruke, ráno len prejdete pár metrov.'],
   loss:['Zubačka kaňonom Vouraikos sa nezmestila – je úplne na severe a jazda trvá 4 hodiny.'],
-  todo:['Kalogria, Stoupa 22.–24. 8. – ☎ +30 27210 77319 (PRVÝ telefonát, nemá zálohu)',
+  todo:['Kalogria, Stoupa 22.–24. 8. – CampingKalogria@yahoo.gr alebo ☎ +30 27210 77319 (PRVÝ kontakt, nemá zálohu)',
         'Thines, Finikounda 24.–26. 8. – thines@otenet.gr',
-        'Camping Diana, Olympia 28.–29. 8. – ☎ +30 26240 22314',
+        'Camping Diana, Olympia 28.–29. 8. – formulár na campingdiana.gr/contact alebo ☎ +30 26240 22314',
         'Rolling Turtles – potvrdiť odovzdanie v NEDEĽU 30. 8. o 09:00'] },
 
 { id:'NOSTOUPA', label:'Bez Stoupy', tag:'B', sub:'plán B, ak Kalogria nevyjde',
@@ -363,7 +366,7 @@ const SCEN = [
         'Deň 8 je dlhý presun: Diros, Areopoli a potom ešte cesta okolo zálivu.'],
   todo:['Camping Tsapi 23.–25. 8. – campingtsapi@gmail.com (alebo Petalidi: info@campingpetalidi.gr)',
         'Thines, Finikounda 25.–26. 8. – thines@otenet.gr',
-        'Camping Diana, Olympia 28.–29. 8. – ☎ +30 26240 22314'] },
+        'Camping Diana, Olympia 28.–29. 8. – formulár na campingdiana.gr/contact alebo ☎ +30 26240 22314'] },
 
 { id:'TRAIN', label:'So zubačkou', tag:'Z', sub:'Olympia von, Vouraikos dnu',
   risk:'3 dopyty', rc:'r1',
@@ -379,7 +382,7 @@ const SCEN = [
         'Posledný presun k požičovni je najkratší zo všetkých variantov.'],
   loss:['Antická Olympia a beh na originálnej štartovacej čiare.',
         'Deň 13 je najdlhší v pláne: 300 km z Gialovy a k tomu 4-hodinová jazda vláčikom.'],
-  todo:['Kalogria, Stoupa 22.–24. 8. – ☎ +30 27210 77319',
+  todo:['Kalogria, Stoupa 22.–24. 8. – CampingKalogria@yahoo.gr alebo ☎ +30 27210 77319',
         'Thines, Finikounda 24.–26. 8. – thines@otenet.gr',
         'Akrata Beach 28.–29. 8. – info@akrata-beach-camping.gr'] },
 
@@ -466,6 +469,7 @@ function render(){
                               zIndexOffset: inScen?600:0}).addTo(layerCamps);
     const contact = [
       c.mail ? `✉ <a href="mailto:${c.mail}">${c.mail}</a>` : '',
+      c.form ? `📝 <a href="${c.form}" target="_blank" rel="noopener">kontaktný formulár</a>` : '',
       c.tel  ? `☎ <a href="tel:${c.tel.split(',')[0].replace(/[^+\d]/g,'')}">${c.tel}</a>` : '',
       c.url  ? `🔗 <a href="${c.url}" target="_blank" rel="noopener">${c.url.replace(/^https?:\/\//,'').slice(0,34)}</a>` : ''
     ].filter(Boolean).join('<br>');
