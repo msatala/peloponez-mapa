@@ -3,9 +3,21 @@
 Interaktívna mapa rodinnej dovolenky po Peloponéze (august 2026):
 kempy, zastávky a trasy po dňoch. Statické HTML, Leaflet + OSM.
 
-- **v5 – nový plán, 16.–29. 8., prvých 8 nocí overených:** https://msatala.github.io/peloponez-mapa/v5.html
+- **Alternatívy – čo teraz s juhom trasy:** https://msatala.github.io/peloponez-mapa/alternativy.html
+- v5 – plán 16.–29. 8.: https://msatala.github.io/peloponez-mapa/v5.html
 - v4 – predchádzajúca verzia, 16.–30. 8.: https://msatala.github.io/peloponez-mapa/v4.html
 - v3 – pôvodná verzia: https://msatala.github.io/peloponez-mapa/
+
+## Alternatívy
+
+Camping Erodios v Gialove sa medzi 5. a 11. 8. vypredal na 22.–25. 8. a rozbil tým
+juh plánu v5. Táto stránka porovnáva štyri možnosti, ako to prekopať, a pri každej
+ukazuje, čo stojí: pás 13 nocí zafarbený podľa toho, ako sa dá kemp zabookovať,
+zoznam „získate / prídete o / treba vybaviť“ a na mape zošednuté a prečiarknuté
+zastávky, o ktoré v danom variante prichádzate.
+
+Sú v nej aj kempy **bez online rezervácie** (žlté = mail, oranžové = telefón) aj
+s kontaktmi – práve tie držia pokope varianty C a D.
 
 ## Sprievodca na čítanie nahlas
 

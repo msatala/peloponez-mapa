@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f1520">
+<title>Peloponéz 2026 – alternatívy po výpadku Erodiosu</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"
+      crossorigin="anonymous">
+<style>
+  :root{
+    --bg:#0f1520; --panel:#161f2e; --panel2:#1d283a; --line:#2a3648;
+    --ink:#e8edf5; --ink-dim:#9aa8bd; --accent:#4fb3d9; --gold:#e0b354;
+    --ok:#2ab36a; --mail:#e0b354; --tel:#ef7a26; --bad:#cf2f2f; --booked:#67d39a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-text-size-adjust:100%;overscroll-behavior:none}
+  #app{display:flex;height:100%;height:100dvh;overflow:hidden}
+
+  #side{width:390px;flex:0 0 390px;background:var(--panel);border-right:1px solid var(--line);
+    display:flex;flex-direction:column;overflow:hidden}
+  #side header{padding:13px 15px 11px;border-bottom:1px solid var(--line);position:relative}
+  #side h1{margin:0;font-size:15.5px;letter-spacing:.2px}
+  #side .sub{color:var(--ink-dim);font-size:11.5px;margin-top:4px}
+  #closeSide{display:none;position:absolute;top:10px;right:10px;width:34px;height:34px;
+    place-items:center;background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+    border-radius:9px;font-size:15px;cursor:pointer}
+  #backdrop{position:fixed;inset:0;z-index:1150;background:rgba(6,10,16,.55);display:none}
+  .scroll{overflow-y:auto;flex:1;padding:11px 12px 44px}
+  .sec{margin:2px 0 7px;font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-dim)}
+
+  /* ---- scenario cards ---- */
+  .sc{border:1px solid var(--line);border-radius:10px;margin-bottom:7px;background:var(--panel2);
+    cursor:pointer;transition:.13s;overflow:hidden}
+  .sc:hover{border-color:#3c5573}
+  .sc.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  .sc.broken{opacity:.75}
+  .sc .h{display:flex;gap:9px;align-items:center;padding:9px 10px}
+  .sc .tag{flex:0 0 auto;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;
+    font-weight:800;font-size:12px;color:#0c1119}
+  .sc .nm{flex:1;min-width:0}
+  .sc .nm b{display:block;font-size:12.8px;font-weight:650}
+  .sc .nm span{display:block;color:var(--ink-dim);font-size:11px;margin-top:1px}
+  .risk{font-size:10px;padding:2px 6px;border-radius:20px;font-weight:700;white-space:nowrap}
+  .r0{background:#12352a;color:#6fdca4}.r1{background:#3a3218;color:#ecc75f}
+  .r2{background:#3d2a15;color:#f0995a}.r3{background:#3d1c1c;color:#eb7676}
+
+  /* ---- night ribbon ---- */
+  .ribbon{display:flex;gap:2px;padding:0 10px 10px}
+  .nite{flex:1;height:26px;border-radius:4px;position:relative;display:grid;place-items:center;
+    font-size:9px;font-weight:700;color:#0b1017;overflow:hidden}
+  .nite small{font-size:8.5px;opacity:.85}
+  .ribdays{display:flex;gap:2px;padding:0 10px 3px}
+  .ribdays span{flex:1;text-align:center;font-size:8.5px;color:var(--ink-dim)}
+
+  /* ---- impact ---- */
+  .imp{padding:0 10px 11px;font-size:12px}
+  .imp h4{margin:9px 0 4px;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-dim)}
+  .imp ul{margin:0;padding:0;list-style:none}
+  .imp li{padding:2.5px 0 2.5px 17px;position:relative;line-height:1.45}
+  .imp li:before{position:absolute;left:0;top:2.5px;font-size:11px}
+  .gain li:before{content:'✔';color:var(--ok)}
+  .loss li:before{content:'✕';color:var(--bad)}
+  .todo li:before{content:'✉';color:var(--mail)}
+  .stats{display:flex;gap:6px;margin:9px 0 2px}
+  .stat{flex:1;background:#141d2b;border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+  .stat b{display:block;font-size:15px;line-height:1.2}
+  .stat span{font-size:9.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.06em}
+
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+  .chip{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink-dim);
+    border-radius:8px;padding:4px 9px;font-size:11.5px;user-select:none;transition:.12s}
+  .chip:hover{border-color:var(--accent);color:var(--ink)}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#08131b;font-weight:600}
+
+  .note{color:var(--ink-dim);font-size:11.5px;border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+  .note b{color:var(--ink)}
+  .key{display:flex;align-items:center;gap:7px;padding:2px 0;font-size:11.5px}
+  .sw{width:11px;height:11px;border-radius:3px;flex:0 0 11px;border:1px solid rgba(255,255,255,.35)}
+
+  #mapwrap{flex:1;position:relative;min-width:0}
+  #map{position:absolute;inset:0;background:#dfe3e8}
+  #toggle{position:absolute;z-index:1000;top:10px;left:10px;display:none;background:var(--panel);
+    color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:13px;cursor:pointer}
+  #banner{position:absolute;z-index:1000;top:10px;left:50%;transform:translateX(-50%);
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:7px 14px;
+    font-size:12.5px;box-shadow:0 4px 18px rgba(0,0,0,.35);max-width:92%;white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #banner b{color:var(--accent)}
+
+  .leaflet-container{font:inherit}
+  .leaflet-popup-content-wrapper{background:var(--panel);color:var(--ink);border-radius:10px;
+    box-shadow:0 10px 34px rgba(0,0,0,.45)}
+  .leaflet-popup-tip{background:var(--panel)}
+  .leaflet-popup-content{margin:11px 13px;font-size:12.5px;line-height:1.5;max-width:250px}
+  .leaflet-popup-content h3{margin:0 0 2px;font-size:13.5px}
+  .leaflet-popup-content .ch{font-size:10.5px;font-weight:700;margin-bottom:5px;letter-spacing:.03em}
+  .leaflet-popup-content p{margin:0 0 5px;color:#c3ccdb;font-size:12px}
+  .leaflet-popup-content a{color:var(--accent)}
+  .leaflet-bar a{background:var(--panel);color:var(--ink);border-color:var(--line)}
+  .leaflet-control-attribution{background:rgba(255,255,255,.78)!important;font-size:10px}
+
+  .pin{display:grid;place-items:center;border-radius:50% 50% 50% 4px;transform:rotate(45deg);
+    border:2px solid #fff;box-shadow:0 2px 7px rgba(0,0,0,.45)}
+  .pin>span{transform:rotate(-45deg);font-size:12px;line-height:1}
+  .pin.camp{border-radius:8px;transform:none;border-width:3px}
+  .pin.camp>span{transform:none;font-size:14px}
+  .pin.dash{border-style:dashed}
+  .pin.ghost{opacity:.45;filter:grayscale(.85)}
+  .leaflet-tooltip.plab{margin:0;padding:1px 5px;box-shadow:0 1px 5px rgba(0,0,0,.45)}
+  .leaflet-tooltip.plab:before{display:none}
+  .plab{background:#111a26;color:#fff;border:1.5px solid #fff;border-radius:6px;padding:1px 5px;
+    font-size:10px;font-weight:700;white-space:nowrap;box-shadow:0 1px 5px rgba(0,0,0,.45)}
+  .plab.lost{color:#f0a0a0;border-color:#c86c6c;text-decoration:line-through;opacity:.8}
+  .nbadge{position:absolute;right:-6px;bottom:-4px;min-width:16px;height:15px;padding:0 3px;
+    background:#111a26;color:#fff;border:1.5px solid #fff;border-radius:8px;font-size:9px;
+    font-weight:800;line-height:12px;text-align:center}
+
+  .legend{background:rgba(17,26,38,.93);border:1px solid #33445c;border-radius:9px;padding:8px 10px;
+    font-size:11px;color:#c3ccdb;line-height:1.6;max-width:min(72vw,215px)}
+  .legend b{color:#fff;display:block;margin:0 0 4px;font-size:10px;text-transform:uppercase;letter-spacing:.1em}
+
+  @media (max-width:900px){
+    #side{position:fixed;z-index:1200;top:0;bottom:0;left:0;width:min(93vw,390px);
+      transform:translateX(-101%);transition:transform .22s}
+    #side.open{transform:none}
+    #closeSide{display:grid}#toggle{display:block}
+    #banner{top:auto;bottom:12px;font-size:11.5px;padding:6px 11px}
+    #app{display:block}#mapwrap{height:100%;height:100dvh}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <header>
+      <button id="closeSide" aria-label="Zavrieť">✕</button>
+      <h1>Čo teraz s juhom trasy?</h1>
+      <div class="sub">Erodios vypadol na 22.–25. 8. · 4 alternatívy a čo každá stojí ·
+        overené 12. 8. 2026</div>
+    </header>
+    <div class="scroll">
+      <div class="sec">Varianty <span style="text-transform:none;letter-spacing:0;color:#6d7c92">(klik = zobraz na mape)</span></div>
+      <div id="scList"></div>
+
+      <div class="sec" style="margin-top:14px">Zobraziť na mape</div>
+      <div class="chips" id="viewChips">
+        <div class="chip on" data-v="all">Všetky kempy v regióne</div>
+        <div class="chip on" data-v="lost">Čo strácame</div>
+      </div>
+
+      <div class="note">
+        <b>Ako čítať farby kempov</b>
+        <div class="key"><i class="sw" style="background:#67d39a"></i> zarezervované – Lefka Beach 16.–20. 8.</div>
+        <div class="key"><i class="sw" style="background:#4fb3d9"></i> overené online, dá sa kliknúť a zaplatiť</div>
+        <div class="key"><i class="sw" style="background:#e0b354"></i> len mail / formulár – dostupnosť sa online nedá zistiť</div>
+        <div class="key"><i class="sw" style="background:#ef7a26"></i> len telefón</div>
+        <div class="key"><i class="sw" style="background:#cf2f2f"></i> nedostupné alebo nedôveryhodné</div>
+        <br>
+        <b>Prečo je to celé v pohybe</b>
+        Erodios prišiel medzi 5. a 11. 8. o štyri noci. Prvý voľný karavanový termín má
+        až 26. 8. (B Zone, 46 €) a prvý 2–3-nočný blok 27.–30. 8.
+        (A&nbsp;Zone Large, 70–80 m², 49 €/noc – pre 5,95 m najlepšie miesto v kempe).
+        <br><br>
+        <b>Kempy bez online rezervácie</b> sú na mape žlté a oranžové. Ich dostupnosť
+        nikto nezverejňuje – jediný spôsob je mail alebo telefonát. V bublinách sú
+        kontakty overené priamo na ich stránkach. Práve tieto kempy sú jediné, čo drží
+        pokope varianty C a D.
+        <br><br>
+        <b>Koroni Camping</b> vyzerá, že má kalendár dostupnosti, ale za 16 mesiacov
+        vrátane špičky nemá ani jeden obsadený deň – nikto ho neudržiava. Preto je
+        červený, nie žltý.
+        <br><br>
+        Kilometre sú vzdušná vzdialenosť × 1,3, teda len orientačné.
+        Trasy sú spojnice, nie reálne cesty.
+      </div>
+    </div>
+  </aside>
+  <div id="backdrop"></div>
+  <div id="mapwrap">
+    <button id="toggle">☰ Varianty</button>
+    <div id="banner"></div>
+    <div id="map"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"
+        crossorigin="anonymous"></script>
+<script>
+/* ======================= KEMPY ======================= */
+/* ch: booked | online | mail | tel | dead
+   Súradnice: OpenStreetMap + vlastné stránky kempov (zhodné z dvoch zdrojov). */
+const CAMPS = {
+  lefka:    {n:'Lefka Beach Camping', sh:'LEF', pl:'Vivari, Argolida', ll:[37.5197,22.9058], ch:'booked',
+             av:'✔ ZAREZERVOVANÉ 16.–20. 8. (Large Spot Row A, 180 € za 4 noci)',
+             url:'https://camping-lefka.book-onlinenow.net'},
+  meltemi:  {n:'Camping Meltemi', sh:'MEL', pl:'Mavrovouni pri Gythiu', ll:[36.73111,22.55295], ch:'online',
+             av:'Zóna pre obytné autá voľná 20.–31. 8. Cca 45 €/noc. Pláž s hniezdami karety, stanica ARCHELON.',
+             url:'https://availabilityonline.com/availtable.php?un=campingmeltemi'},
+  gbay:     {n:'Camping Gythion Bay', sh:'GBAY', pl:'Mavrovouni', ll:[36.72751,22.54611], ch:'online',
+             av:'Voľná len Area B (9 × 6 m, bez tieňa) 22.–26. 8. Je to 3 km od Meltemi, ako presun nemá zmysel.',
+             url:'https://gythion.campsaround.com'},
+  erodios:  {n:'Camping Erodios', sh:'ERO', pl:'Gialova pri Voidokilii', ll:[36.95287,21.69675], ch:'online',
+             av:'VYPREDANÉ 22.–25. 8. Voľné od 26. 8. (B Zone 46 €), blok 27.–30. 8. v A Zone Large (70–80 m², 49 €/noc). Detské ihrisko, pri lagúne.',
+             url:'https://erodioscamping.reserve-online.net'},
+  navarino: {n:'Camping Navarino Beach', sh:'NAV', pl:'Gialova', ll:[36.9468,21.70742], ch:'mail',
+             av:'Dostupnosť sa online nedá zistiť. Priamo na pláži Gialova, 4 km od Voidokilie – plnohodnotná náhrada Erodiosu.',
+             mail:'info@navarino-beach.gr', tel:'+30 2723 022973, +30 2723 023512',
+             url:'https://www.navarino-beach.gr'},
+  proti:    {n:'Camping Proti', sh:'PRO', pl:'pri Marathopoli', ll:[37.06755,21.57844], ch:'mail',
+             av:'Dostupnosť len na dopyt. Na polceste medzi Gialovou a Kalo Nero, priamo pri mori oproti ostrovu Proti.',
+             mail:'info@camping-proti.gr', tel:'+30 27630 61211 (leto), +30 69 481 76 145',
+             url:'https://www.camping-proti.gr'},
+  thines:   {n:'Thines Camping', sh:'THI', pl:'Finikounda', ll:[36.80518,21.79557], ch:'mail',
+             av:'Dostupnosť len na dopyt. 50 m od pláže Makrinammos s modrou vlajkou, oproti ostrovčekom Oinousses.',
+             mail:'thines@otenet.gr', url:'https://www.camping-peloponnese.com'},
+  ammos:    {n:'Camping Ammos', sh:'AMM', pl:'Finikounda', ll:[36.80531,21.79138], ch:'mail',
+             av:'Susedí s Thines. Kontakt som neoveril – pýtajte sa cez Thines alebo na mieste.'},
+  finikes:  {n:'Camping Finikes ≈', sh:'FIN', pl:'Finikounda (poloha približná)', ll:[36.8075,21.8130], ch:'mail',
+             av:'⚠️ Presnú polohu som neoveril, značka je orientačná. Dostupnosť len na dopyt.',
+             mail:'info@finikescamping.gr', url:'http://www.finikescamping.gr'},
+  kalogria: {n:'Camping Kalogria', sh:'KAL', pl:'Stoupa, západná Mani', ll:[36.84874,22.25932], ch:'tel',
+             av:'Jediný licencovaný kemp v západnej Mani. Web je len vitrína, rezervácia iba telefonicky. Pláž, kde zo dna vyvierajú studené sladkovodné pramene.',
+             tel:'+30 27210 77319'},
+  manibeach:{n:'Mani Beach Camping', sh:'MANI', pl:'Mavrovouni', ll:[36.7285,22.5419], ch:'mail',
+             av:'Len formulár „booking request“, dostupnosť neukazuje.', url:'https://mani-beach.gr'},
+  koroni:   {n:'Koroni Camping', sh:'KOR', pl:'Koroni', ll:[36.79951,21.95094], ch:'dead',
+             av:'⚠️ Kalendár tvári sa ako živý, ale za 16 mesiacov vrátane júla a augusta nemá ani jeden obsadený deň – neudržiavaný. Ako dôkaz dostupnosti neplatí, treba mail.',
+             mail:'info@koronicamping.com', url:'https://www.koronicamping.com'},
+  kalonero: {n:'Kemp pri Kalo Nero ≈', sh:'K.NERO', pl:'zátoka Kyparissia (poloha približná)', ll:[37.3011,21.7025], ch:'mail',
+             av:'⚠️ Orientačná značka pre oblasť. Kilometre prázdnych pláží, hniezdiská karety, stanica ARCHELON.'},
+  olympia:  {n:'Kemp v Olympii ≈', sh:'OLYM', pl:'Olympia (poloha približná)', ll:[37.6425,21.6403], ch:'tel',
+             av:'⚠️ Orientačná značka. Alfeios nemá web vôbec, Diana web má, ale bez rezervačného systému – oboje len telefón.'},
+  diakopto: {n:'Kemp pri Diakopte ≈', sh:'DIAK', pl:'Diakopto (poloha približná)', ll:[38.1930,22.2010], ch:'mail',
+             av:'⚠️ Orientačná značka pre nástup na zubačku do Kalavryty.'}
+};
+
+/* ======================= ZAUJÍMAVOSTI ======================= */
+const POIS = {
+  diros:     {n:'Jaskyne Diros', ll:[36.6386,22.3808], i:'🕯', d:'Loďkou po podzemnej rieke medzi stalaktitmi.'},
+  vrak:      {n:'Vrak Dimitrios', ll:[36.7017,22.5525], i:'🚢', d:'Zrezavená loď leží na piesočnej pláži, dá sa k nej prebrodiť.'},
+  gythio:    {n:'Gythio a Kranai', ll:[36.7597,22.5678], i:'🏘', d:'Prístav, ostrovček s majákom, rybí trh.'},
+  kardamyli: {n:'Kardamyli a kaňon Viros', ll:[36.8883,22.2336], i:'🌿', d:'Vežové domy a vyschnuté kamenné riečisko medzi stenami.'},
+  stoupa:    {n:'Pláž Kalogria (Stoupa)', ll:[36.8478,22.2578], i:'🏖', d:'Zo dna vyvierajú ľadové sladkovodné pramene – deti sa s tým hrajú hodiny.'},
+  kalamata:  {n:'Železničný park Kalamata', ll:[37.0294,22.1131], i:'🚂', d:'Parné lokomotívy na liezanie, ihriská, tieň. Vstup voľný.'},
+  methoni:   {n:'Hrad Methoni', ll:[36.8181,21.7042], i:'🏛', d:'Obrovská prázdna venecianska pevnosť a veža stojaca v mori.'},
+  finikounda:{n:'Pláže Finikounda', ll:[36.8065,21.8100], i:'🏖', d:'Plytké piesočné zátoky oproti ostrovčekom.'},
+  voidokilia:{n:'Voidokilia', ll:[36.9575,21.6597], i:'🏖', d:'Dokonalý polkruh, duny, plytká teplá voda. Bez slnečníkov a barov.'},
+  nestor:    {n:'Nestorova jaskyňa', ll:[36.9556,21.6608], i:'🕯', d:'Hermes tu podľa mýtu skryl Apolónove kravy.'},
+  lagoon:    {n:'Lagúna Gialova', ll:[36.9558,21.6750], i:'🌿', d:'Plameniaky a chameleón – jediné miesto v Európe, kde žije.'},
+  polilimnio:{n:'Kaskády Polilimnio', ll:[37.0489,21.8250], i:'🌿', d:'Tyrkysové jazierka v lese, kúpanie v sladkej vode.'},
+  turtles:   {n:'Korytnačky Kalo Nero', ll:[37.2950,21.6980], i:'🐢', d:'Koniec augusta = liahnutie. Ranné kontroly hniezd s ARCHELONom.'},
+  olympiaP:  {n:'Antická Olympia', ll:[37.6383,21.6300], i:'🏛', d:'Beh 192 m od originálnej mramorovej štartovacej čiary.'},
+  vouraikos: {n:'Zubačka kaňonom Vouraikos', ll:[38.0322,22.1114], i:'🚂', d:'Úzkokoľajka tunelmi a mostíkmi divokým kaňonom do Kalavryty.'},
+  pefkias:   {n:'Borovicový les Pefkias', ll:[38.0776,22.6289], i:'🌿', d:'Borovice rastú až na oblázkovú pláž Korintského zálivu.'}
+};
+
+/* ======================= VARIANTY ======================= */
+/* nights: 13 nocí od 16. 8. do 29. 8., hodnota = kľúč kempu alebo null */
+/* pozor: nepomenovať premennú L – kolidovala by s Leafletom */
+const M = 'meltemi', E = 'erodios', LF = 'lefka';
+const SCEN = [
+{ id:'v5', label:'Pôvodný plán v5', tag:'✕', sub:'už neplatí – Erodios je 22.–25. 8. vypredaný',
+  risk:'padol', rc:'r3', broken:true,
+  nights:[LF,LF,LF,LF,M,M,E,E,'kalonero','kalonero','olympia','diakopto',null],
+  reach:['diros','vrak','gythio','kalamata','voidokilia','nestor','lagoon','polilimnio','turtles','olympiaP','vouraikos','pefkias'],
+  gain:[], loss:['Nedá sa uskutočniť – noci 22.–24. 8. v Erodiose neexistujú.'],
+  todo:[] },
+
+{ id:'A', label:'A · Istota', tag:'A', sub:'Meltemi 20.–26. · Erodios 26.–29.',
+  risk:'0 rizika', rc:'r0',
+  nights:[LF,LF,LF,LF,M,M,M,M,M,M,E,E,E],
+  reach:['diros','vrak','gythio','voidokilia','nestor','lagoon','kalamata'],
+  gain:['Všetko potvrdené online, nula telefonátov.','Voidokilia 3 noci v kuse.',
+        'Gythio ako základňa: Diros, Areopoli, Limeni, vrak, zátoky Mani.'],
+  loss:['Olympia a beh na antickom štadióne.','Zubačka kaňonom Vouraikos.',
+        'Korytnačky v Kalo Nero.','Kaskády Polilimnio.','Severné pobrežie a borovicové pláže.',
+        '6 nocí na jednom mieste – presne to, čomu ste sa chceli vyhnúť.'],
+  todo:[] },
+
+{ id:'B', label:'B · Jeden mail', tag:'B', sub:'Meltemi 20.–23. · Navarino 23.–26. · Erodios 26.–29.',
+  risk:'1 kemp mailom', rc:'r1',
+  nights:[LF,LF,LF,LF,M,M,M,'navarino','navarino','navarino',E,E,E],
+  reach:['diros','vrak','gythio','kalamata','voidokilia','nestor','lagoon','polilimnio','methoni'],
+  gain:['Messinia 6 nocí – Voidokilia, lagúna, Polilimnio aj hrad Methoni v pohode.',
+        'Gythio skrátené na 3 noci.',
+        'Navarino Beach je 1,5 km od Erodiosu – presun medzi nimi je 3 minúty.'],
+  loss:['Olympia a zubačka Vouraikos.','Korytnačky v Kalo Nero.','Severné pobrežie.'],
+  todo:['Napísať Camping Navarino Beach na 23.–26. 8.: info@navarino-beach.gr alebo +30 2723 022973.'] },
+
+{ id:'C', label:'C · Zachovaný okruh', tag:'C', sub:'celý pôvodný oblúk, tri kempy na dopyt',
+  risk:'3 kempy na dopyt', rc:'r2',
+  nights:[LF,LF,LF,LF,M,M,M,'navarino','navarino','navarino','kalonero','olympia','diakopto'],
+  reach:['diros','vrak','gythio','kalamata','voidokilia','nestor','lagoon','polilimnio','turtles','olympiaP','vouraikos'],
+  gain:['Zachová celý pôvodný oblúk vrátane Olympie, zubačky aj korytnačiek.',
+        'Žiadna zastávka z pôvodného plánu nevypadne.',
+        'Návrat do Atén je zo severu krátky, nie 4 hodiny z Gialovy.'],
+  loss:['Tri noclahy visia na tom, či odpíšu – bez potvrdenia sa nedá spoľahnúť.',
+        'Erodios úplne vynecháte, hoci od 27. 8. voľný je.'],
+  todo:['Navarino Beach 23.–26. 8. – info@navarino-beach.gr',
+        'Kemp pri Kalo Nero 26.–27. 8. – zistiť konkrétny kemp a napísať',
+        'Olympia 27.–28. 8. – Alfeios ☎ 2624022951 alebo Camping Diana',
+        'Diakopto 28.–29. 8. – na dopyt'] },
+
+{ id:'D', label:'D · Cez západnú Mani', tag:'D', sub:'Meltemi 20.–23. · Stoupa 23.–25. · Gialova 25.–29.',
+  risk:'2 kempy telefonicky', rc:'r2',
+  nights:[LF,LF,LF,LF,M,M,M,'kalogria','kalogria','navarino','navarino',E,E],
+  reach:['diros','vrak','gythio','stoupa','kardamyli','kalamata','voidokilia','nestor','lagoon','polilimnio'],
+  gain:['Najkrajší úsek Mani: Kardamyli, kaňon Viros, pramene na pláži Kalogria.',
+        'Presuny sú krátke a každý deň sa niekam ide – žiadne sedenie na jednom mieste.',
+        'Erodios stihnete v jeho voľnom termíne 27.–29. 8.'],
+  loss:['Olympia, zubačka a severné pobrežie.','Korytnačky v Kalo Nero.'],
+  todo:['Camping Kalogria, Stoupa 23.–25. 8. – ☎ +30 27210 77319 (len telefón, web nemá rezervácie)',
+        'Navarino Beach 25.–27. 8. – info@navarino-beach.gr'] }
+];
+
+const CHCOL = {booked:'#67d39a', online:'#4fb3d9', mail:'#e0b354', tel:'#ef7a26', dead:'#cf2f2f'};
+const CHTXT = {booked:'✔ ZAREZERVOVANÉ', online:'● OVERENÉ ONLINE', mail:'✉ LEN MAIL / FORMULÁR',
+               tel:'☎ LEN TELEFÓN', dead:'✕ NEDÔVERYHODNÉ'};
+const CHICON= {booked:'🔒', online:'⛺', mail:'✉', tel:'☎', dead:'✕'};
+const DATES = ['16.','17.','18.','19.','20.','21.','22.','23.','24.','25.','26.','27.','28.'];
+
+/* ======================= MAPA ======================= */
+const MAPOK = typeof L !== 'undefined';
+let map, layerCamps, layerRoute, layerPois;
+if (!MAPOK) {
+  document.getElementById('map').innerHTML =
+    '<div style="padding:26px;color:#0f1520;font:14px/1.6 system-ui;max-width:430px">' +
+    '<b>Mapu sa nepodarilo načítať.</b><br><br>Knižnica Leaflet sa sťahuje z internetu ' +
+    '(unpkg.com) – bez signálu sa mapa nevykreslí. <b>Zoznam variantov aj s dopadmi ' +
+    'funguje aj bez nej</b> – otvorte ho tlačidlom ☰ Varianty. Keď budete mať signál, ' +
+    'načítajte stránku znova.</div>';
+} else {
+  map = L.map('map', {zoomControl:true, scrollWheelZoom:true}).setView([37.2,22.0], 8);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+    {maxZoom:19, attribution:'&copy; Esri · kempy © OpenStreetMap'}).addTo(map);
+  layerCamps = L.layerGroup().addTo(map);
+  layerRoute = L.layerGroup().addTo(map);
+  layerPois  = L.layerGroup().addTo(map);
+}
+
+const dist = (a,b) => {
+  const R=6371, dLat=(b[0]-a[0])*Math.PI/180, dLon=(b[1]-a[1])*Math.PI/180;
+  const s=Math.sin(dLat/2)**2 + Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(s));
+};
+const campIcon = (key, ch, nights) => L.divIcon({
+  className:'', iconSize:[26,26], iconAnchor:[13,13], popupAnchor:[0,-13],
+  html:`<div style="position:relative"><div class="pin camp ${ch==='mail'||ch==='tel'?'dash':''}"
+        style="width:26px;height:26px;background:${CHCOL[ch]}"><span>${CHICON[ch]}</span></div>
+        ${nights?`<i class="nbadge">${nights}</i>`:''}</div>`});
+const poiIcon = (i, lost) => L.divIcon({className:'', iconSize:[22,22], iconAnchor:[11,22], popupAnchor:[0,-20],
+  html:`<div class="pin ${lost?'ghost':''}" style="width:22px;height:22px;background:${lost?'#7a8798':'#2f6f96'}"><span>${i}</span></div>`});
+
+let current = SCEN.find(s => s.id === 'B') || SCEN[1];
+const showAll = () => document.querySelector('[data-v="all"]').classList.contains('on');
+const showLost = () => document.querySelector('[data-v="lost"]').classList.contains('on');
+
+function render(){
+  const s = current;
+
+  // koľko nocí v ktorom kempe
+  const used = {};
+  s.nights.forEach(k => { if(k) used[k] = (used[k]||0)+1; });
+
+  // poradie kempov a orientačné kilometre (nezávislé od mapy)
+  const seq = [];
+  s.nights.forEach(k => { if (k && seq[seq.length-1] !== k) seq.push(k); });
+  const pts = seq.map(k => CAMPS[k].ll);
+  let km = 0;
+  for (let i=1;i<pts.length;i++) km += dist(pts[i-1], pts[i]) * 1.3;
+  if (pts.length) km += dist(pts[pts.length-1], [37.9364,23.9445]) * 1.3;   // návrat na letisko
+
+  const lostN = Object.keys(POIS).length - s.reach.length;
+  document.getElementById('banner').innerHTML =
+    `<b>${s.label}</b> · ${s.sub} · ~${Math.round(km/10)*10} km · ` +
+    (lostN ? `prídete o ${lostN} ${lostN===1?'zastávku':lostN<5?'zastávky':'zastávok'}` : 'nič nestrácate');
+  drawList(km);
+
+  if (!MAPOK) return;
+  layerCamps.clearLayers(); layerRoute.clearLayers(); layerPois.clearLayers();
+
+  // kempy
+  Object.entries(CAMPS).forEach(([key,c]) => {
+    const inScen = !!used[key];
+    if (!inScen && !showAll()) return;
+    const m = L.marker(c.ll, {icon: campIcon(key, c.ch, used[key]||0), opacity: inScen?1:0.72,
+                              zIndexOffset: inScen?600:0}).addTo(layerCamps);
+    const contact = [
+      c.mail ? `✉ <a href="mailto:${c.mail}">${c.mail}</a>` : '',
+      c.tel  ? `☎ ${c.tel}` : '',
+      c.url  ? `🔗 <a href="${c.url}" target="_blank" rel="noopener">${c.url.replace(/^https?:\/\//,'').slice(0,34)}</a>` : ''
+    ].filter(Boolean).join('<br>');
+    m.bindPopup(`<h3>${c.n}</h3><div class="ch" style="color:${CHCOL[c.ch]}">${CHTXT[c.ch]} · ${c.pl}</div>
+      <p>${c.av}</p>${inScen?`<p style="color:${CHCOL[c.ch]}"><b>V tomto variante: ${used[key]} ${used[key]===1?'noc':used[key]<5?'noci':'nocí'}</b></p>`:''}
+      ${contact?`<p style="font-size:11.5px">${contact}</p>`:''}`);
+    if (inScen) m.bindTooltip(c.n.replace(/^Camping |Kemp /,'').replace(' ≈',''),
+      {permanent:true, direction:'bottom', className:'plab', offset:[0,12]});
+  });
+
+  // trasa medzi po sebe idúcimi kempmi
+  if (pts.length>1) {
+    L.polyline(pts, {color:'#4fb3d9', weight:4, opacity:.9}).addTo(layerRoute);
+    L.polyline([pts[pts.length-1], [37.9364,23.9445]],
+      {color:'#4fb3d9', weight:3, opacity:.55, dashArray:'7,7'}).addTo(layerRoute);
+  }
+  L.marker([37.9364,23.9445], {icon: L.divIcon({className:'', iconSize:[22,22], iconAnchor:[11,11],
+    html:'<div class="pin" style="width:22px;height:22px;background:#8a5ec9"><span>✈</span></div>'})})
+    .bindPopup('<h3>Letisko Atény</h3><p>Návrat 29. 8.</p>').addTo(layerRoute);
+
+  // zaujímavosti – dosiahnuteľné vs. stratené
+  Object.entries(POIS).forEach(([key,p]) => {
+    const ok = s.reach.includes(key);
+    if (!ok && !showLost()) return;
+    const m = L.marker(p.ll, {icon: poiIcon(p.i, !ok), zIndexOffset: ok?200:100}).addTo(layerPois);
+    m.bindPopup(`<h3>${p.n}</h3><div class="ch" style="color:${ok?'#6fdca4':'#eb7676'}">${
+      ok?'✔ V tomto variante stihnete':'✕ O toto v tomto variante prídete'}</div><p>${p.d}</p>`);
+    if (!ok) m.bindTooltip(p.n, {permanent:true, direction:'bottom', className:'plab lost', offset:[0,2]});
+  });
+
+  if (pts.length) map.fitBounds(L.latLngBounds(pts.concat([[37.9364,23.9445]])), {padding:[55,55]});
+}
+
+/* ======================= SIDEBAR ======================= */
+function drawList(kmCur){
+  const box = document.getElementById('scList');
+  box.innerHTML = '';
+  SCEN.forEach(s => {
+    const on = s.id === current.id;
+    const el = document.createElement('div');
+    el.className = 'sc' + (on?' on':'') + (s.broken?' broken':'');
+    const nightsHtml = s.nights.map((k,i) => {
+      const c = k ? CAMPS[k] : null;
+      const col = c ? CHCOL[c.ch] : '#3a4457';
+      const nm = c ? c.sh : '–';
+      return `<div class="nite" style="background:${col};color:${c?'#0b1017':'#7d8798'}"
+                title="${DATES[i]}–${DATES[i+1]||'29.'} 8. · ${c?c.n:'nie je kde spať'}">${nm}</div>`;
+    }).join('');
+    el.innerHTML = `
+      <div class="h">
+        <div class="tag" style="background:${s.broken?'#cf2f2f':'#4fb3d9'};color:#0b1017">${s.tag}</div>
+        <div class="nm"><b>${s.label}</b><span>${s.sub}</span></div>
+        <div class="risk ${s.rc}">${s.risk}</div>
+      </div>
+      <div class="ribdays">${DATES.map(d=>`<span>${d}</span>`).join('')}</div>
+      <div class="ribbon">${nightsHtml}</div>
+      ${on ? impactHtml(s, kmCur) : ''}`;
+    el.onclick = () => { current = s; render(); };
+    box.appendChild(el);
+  });
+}
+function impactHtml(s, km){
+  const lostN = Object.keys(POIS).length - s.reach.length;
+  const req = s.todo.length;
+  return `<div class="imp">
+    <div class="stats">
+      <div class="stat"><b>${Math.round(km/10)*10}</b><span>km spolu</span></div>
+      <div class="stat"><b style="color:${lostN?'#eb7676':'#6fdca4'}">${lostN}</b><span>stratených zastávok</span></div>
+      <div class="stat"><b style="color:${req?'#ecc75f':'#6fdca4'}">${req}</b><span>dopytov mailom</span></div>
+    </div>
+    ${s.gain.length?`<h4>Získate</h4><ul class="gain">${s.gain.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+    ${s.loss.length?`<h4>Prídete o</h4><ul class="loss">${s.loss.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+    ${s.todo.length?`<h4>Treba vybaviť</h4><ul class="todo">${s.todo.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+  </div>`;
+}
+
+document.querySelectorAll('#viewChips .chip').forEach(c => {
+  c.onclick = () => { c.classList.toggle('on'); render(); };
+});
+
+/* legenda */
+if (MAPOK) {
+const leg = L.control({position:'bottomright'});
+leg.onAdd = () => { const d = L.DomUtil.create('div','legend');
+  d.innerHTML = '<b>Kempy podľa rezervácie</b>' +
+    Object.entries(CHTXT).map(([k,v]) =>
+      `<div style="display:flex;gap:6px;align-items:center"><i style="width:10px;height:10px;border-radius:3px;background:${CHCOL[k]};display:inline-block"></i>${v.replace(/^. /,'')}</div>`).join('') +
+    '<div style="margin-top:5px;border-top:1px solid #33445c;padding-top:4px">' +
+    '<span style="opacity:.5">sivá prečiarknutá</span> = o toto prídete<br>' +
+    'číslo pri kempe = počet nocí</div>';
+  L.DomEvent.disableClickPropagation(d); return d; };
+leg.addTo(map);
+}
+
+/* mobil */
+const side = document.getElementById('side'), bd = document.getElementById('backdrop');
+const openSide = o => { side.classList.toggle('open', o); bd.style.display = o?'block':'none'; };
+document.getElementById('toggle').onclick = () => openSide(true);
+document.getElementById('closeSide').onclick = () => openSide(false);
+bd.onclick = () => openSide(false);
+
+render();
+</script>
+</body>
+</html>
