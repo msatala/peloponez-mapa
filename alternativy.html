@@ -338,9 +338,9 @@ const SCEN = [
         'plytké zátoky – nikam sa nejde','presun cez hrad Methoni, večer Voidokilia','Voidokilia a lagúna – nikam sa nejde',
         'presun pobrežím Tholo, poobede Olympia','presun cez Korintský prieplav, potom upratovanie'],
   reach:['corinth','epidaurus','sunken','mycenae','nafplio','sparta','vrak','gythio','diros','areopoli','stoupa','kardamyli','kalamata','methoniC','finikounda','voidokilia','nestor','lagoon','turtles','olympiaP'],
-  rest:3, back:2,
-  gain:['Výlety tam-späť klesli zo siedmich na dva – a oba sú vynútené zaplatenou Lefkou.',
-        'Tri celé dni, keď sa vôbec nešoféruje. To sú skutočné oddychové dni.',
+  rest:4, back:3,
+  gain:['Výlety tam-späť klesli zo siedmich na tri – dva sú vynútené zaplatenou Lefkou, tretí je 15-minútový skok do Kardamyli.',
+        'Štyri celé dni, keď sa autom vôbec nehýbete – deň 2, 6, 10 a 12. To sú skutočné oddychové dni.',
         'Žiadny úsek sa neprechádza dvakrát, okruh sa uzatvára pri požičovni.',
         'Posledná noc priamo v areáli Rolling Turtles – upratovanie s výlevkami po ruke, ráno len prejdete pár metrov.'],
   loss:['Zubačka kaňonom Vouraikos sa nezmestila – je úplne na severe a jazda trvá 4 hodiny.'],
@@ -358,7 +358,7 @@ const SCEN = [
         'presun cez železničný park Kalamata','presun cez hrad Methoni, večer Voidokilia','Voidokilia a lagúna – nikam sa nejde',
         'presun pobrežím Tholo, poobede Olympia','presun cez Korintský prieplav, potom upratovanie'],
   reach:['corinth','epidaurus','sunken','mycenae','nafplio','sparta','vrak','gythio','diros','areopoli','kalamata','methoniC','finikounda','voidokilia','nestor','lagoon','turtles','olympiaP'],
-  rest:3, back:3,
+  rest:4, back:3,
   gain:['Obchádza jediné miesto plánu, ktoré nemá zálohu.',
         'V Messénskom zálive sú štyri kempy vedľa seba – Tsapi, Petalidi, Fare, Anemomilos.',
         'O jeden dopyt menej.'],
@@ -377,7 +377,7 @@ const SCEN = [
         'plytké zátoky – nikam sa nejde','presun cez hrad Methoni, večer Voidokilia','Voidokilia a lagúna – nikam sa nejde',
         'dlhý presun na sever, cestou zubačka z Diakopta','krátky presun cez prieplav, potom upratovanie'],
   reach:['corinth','epidaurus','sunken','mycenae','nafplio','sparta','vrak','gythio','diros','areopoli','stoupa','kardamyli','kalamata','methoniC','finikounda','voidokilia','nestor','lagoon','turtles','vouraikos'],
-  rest:3, back:2,
+  rest:4, back:3,
   gain:['Zubačka kaňonom Vouraikos – vláčik tunelmi a mostíkmi nad divokou riekou.',
         'Posledný presun k požičovni je najkratší zo všetkých variantov.'],
   loss:['Antická Olympia a beh na originálnej štartovacej čiare.',
@@ -544,10 +544,10 @@ function impactHtml(s, km){
     }).join('') + `</ol>` : '';
   return `<div class="imp">
     <div class="stats">
-      <div class="stat"><b>${Math.round(km/10)*10}</b><span>km</span></div>
-      <div class="stat"><b style="color:#6fdca4">${s.rest}</b><span>dni bez šoférovania</span></div>
-      <div class="stat"><b style="color:${s.back>2?'#eb7676':'#ecc75f'}">${s.back}</b><span>výlety tam-späť</span></div>
-      <div class="stat"><b style="color:${s.todo.length?'#ecc75f':'#6fdca4'}">${s.todo.length}</b><span>dopytov</span></div>
+      <div class="stat" title="Celková prejazdená vzdialenosť za 14 dní, vzdušná čiara × 1,3."><b>${Math.round(km/10)*10}</b><span>km</span></div>
+      <div class="stat" title="Dni, keď sa autom vôbec nepohnete: nič sa nebalí, markíza a stôl zostanú vonku, celý program je pešo z kempu."><b style="color:#6fdca4">${s.rest}</b><span>dni bez šoférovania</span></div>
+      <div class="stat" title="Dni, keď zbalíte celý dom, odídete a večer sa vrátite na to isté miesto – tú istú cestu idete dvakrát."><b style="color:${s.back>4?'#eb7676':'#ecc75f'}">${s.back}</b><span>výlety tam-späť</span></div>
+      <div class="stat" title="Kempy, ktoré ešte treba vybaviť mailom alebo telefónom."><b style="color:${s.todo.length?'#ecc75f':'#6fdca4'}">${s.todo.length}</b><span>dopytov</span></div>
     </div>
     ${s.gain.length?`<h4>Získate</h4><ul class="gain">${s.gain.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
     ${s.loss.length?`<h4>Prídete o</h4><ul class="loss">${s.loss.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
