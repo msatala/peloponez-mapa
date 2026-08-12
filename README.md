@@ -8,16 +8,27 @@ kempy, zastávky a trasy po dňoch. Statické HTML, Leaflet + OSM.
 - v4 – predchádzajúca verzia, 16.–30. 8.: https://msatala.github.io/peloponez-mapa/v4.html
 - v3 – pôvodná verzia: https://msatala.github.io/peloponez-mapa/
 
-## Alternatívy
+## Alternatívy – ktorý tvar trasy
 
-Camping Erodios v Gialove sa medzi 5. a 11. 8. vypredal na 22.–25. 8. a rozbil tým
-juh plánu v5. Táto stránka porovnáva štyri možnosti, ako to prekopať, a pri každej
-ukazuje, čo stojí: pás 13 nocí zafarbený podľa toho, ako sa dá kemp zabookovať,
-zoznam „získate / prídete o / treba vybaviť“ a na mape zošednuté a prečiarknuté
-zastávky, o ktoré v danom variante prichádzate.
+Rozhodovací nástroj, nie ďalšia mapa trasy. Porovnáva **14-nocový** okruh
+(16. 8. – 30. 8.) v štyroch tvaroch a pri každom ukazuje, čo stojí: pás nocí
+zafarbený podľa toho, ako sa dá kemp zabookovať, denný rozpis, počet dní bez
+šoférovania, a na mape prečiarknuté zastávky, o ktoré v danom variante prídete.
 
-Sú v nej aj kempy **bez online rezervácie** (žlté = mail, oranžové = telefón) aj
-s kontaktmi – práve tie držia pokope varianty C a D.
+Postavený je na dvoch zisteniach:
+
+- **S obytným autom je výlet z kempu drahší než presun.** Zbalíte a postavíte sa
+  rovnako, ale navyše prejdete tú istú cestu dvakrát. Preto tu nie sú základne
+  s výletmi, ale okruh, kde je zážitok vždy po ceste.
+- **Voľné státie prestalo byť zálohou.** Grécko v roku 2026 zakázalo voľné
+  kempovanie s pokutami od 300 €. Zálohou je vždy iný kemp – preto stránka
+  ukazuje, koľko kempov je v okolí každej nerezervovanej noci. Kritická je
+  Stoupa: Camping Kalogria je jediný licencovaný kemp v celej západnej Mani
+  a má na mape červený rám.
+
+Sú v nej aj kempy **bez online rezervácie** (žlté = mail, oranžové = telefón)
+s overenými kontaktmi, a posledná noc priamo v areáli požičovne Rolling Turtles,
+ktorá je zároveň camperstop 7 km od letiska.
 
 ## Sprievodca na čítanie nahlas
 
