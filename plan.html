@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f1520">
+<title>Peloponéz karavanom – zvyšok cesty 21. 8. – 30. 8. 2026 (verzia 7, aktualizovaná na mieste)</title>
+<style>
+  :root{
+    --bg:#0f1520; --panel:#161f2e; --panel2:#1d283a; --line:#2a3648;
+    --ink:#e8edf5; --dim:#9aa8bd; --accent:#4fb3d9; --gold:#e0b354; --fs:16px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:var(--fs)/1.62 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+
+  header{position:sticky;top:0;z-index:20;display:flex;gap:8px;align-items:center;
+    padding:9px 12px;background:rgba(15,21,32,.94);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line)}
+  header .ttl{flex:1;min-width:0;font-size:13px;font-weight:600;color:var(--dim);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  header button{background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+    border-radius:9px;min-width:38px;height:36px;font-size:15px;cursor:pointer}
+  header button:active{background:var(--accent);color:#08131b}
+  header .lnk{display:grid;place-items:center;background:var(--panel2);border:1px solid var(--line);
+    border-radius:9px;min-width:38px;height:36px;font-size:16px;text-decoration:none}
+
+  #toc{display:none;position:fixed;inset:52px 0 0;z-index:19;background:var(--panel);
+    overflow-y:auto;padding:10px 12px 40px;border-top:1px solid var(--line)}
+  #toc.on{display:block}
+  #toc a{display:block;padding:9px 10px;border-radius:9px;color:var(--ink);
+    text-decoration:none;border-bottom:1px solid var(--line)}
+  #toc a.i1{font-weight:700;margin-top:8px;color:var(--accent)}
+  #toc a.i2{padding-left:20px;font-size:.94em;color:var(--dim)}
+
+  main{max-width:820px;margin:0 auto;padding:6px 15px 70px}
+  h1{font-size:1.42em;line-height:1.28;margin:.6em 0 .3em}
+  h2{font-size:1.2em;margin:1.9em 0 .5em;padding-top:.7em;border-top:2px solid var(--line);
+    scroll-margin-top:56px}
+  h3{font-size:1.06em;margin:1.7em 0 .4em;color:var(--gold);scroll-margin-top:56px}
+  p,ul,ol{margin:.6em 0}
+  a{color:var(--accent)}
+  hr{border:0;border-top:1px solid var(--line);margin:1.6em 0}
+  blockquote{margin:.9em 0;padding:.55em .9em;background:var(--panel);
+    border-left:3px solid var(--accent);border-radius:0 9px 9px 0;color:#cfd9e8}
+  blockquote p{margin:.35em 0}
+  code{background:var(--panel2);padding:1px 5px;border-radius:5px;font-size:.9em}
+  em{color:#cfd9e8}
+  strong{color:#fff}
+
+  .tw{overflow-x:auto;margin:.9em -4px;padding:0 4px;-webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse;width:100%;font-size:.93em;min-width:min(100%,340px)}
+  th,td{text-align:left;vertical-align:top;padding:7px 9px;border-bottom:1px solid var(--line)}
+  thead th{background:var(--panel2);color:var(--dim);font-size:.86em;text-transform:uppercase;
+    letter-spacing:.06em;position:sticky;top:0}
+  tbody tr:nth-child(2n){background:rgba(255,255,255,.022)}
+  td:first-child{white-space:nowrap;color:var(--gold);font-variant-numeric:tabular-nums}
+  table td:first-child strong{color:var(--gold)}
+
+  #top{position:fixed;right:13px;bottom:13px;z-index:18;width:44px;height:44px;border-radius:50%;
+    background:var(--panel2);color:var(--ink);border:1px solid var(--line);font-size:17px;
+    cursor:pointer;display:none}
+  #top.on{display:block}
+  @media print{header,#toc,#top{display:none} body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<header>
+  <button id="bToc" aria-label="Obsah">☰</button>
+  <div class="ttl">Peloponéz · zvyšok cesty 21.–30. 8.</div>
+  <a class="lnk" href="https://msatala.github.io/peloponez-mapa/index.html">🗺</a>
+  <a class="lnk" href="https://msatala.github.io/peloponez-mapa/sprievodca.html">📖</a>
+  <button id="bMinus" aria-label="Menšie písmo">A−</button>
+  <button id="bPlus" aria-label="Väčšie písmo">A+</button>
+</header>
+
+<nav id="toc">
+<a class="i1" href="#nocľahy-potvrdený-sled">1. Nocľahy – potvrdený sled</a>
+<a class="i1" href="#plán-na-jednu-stranu">2. Plán na jednu stranu</a>
+<a class="i1" href="#deň-za-dňom">3. Deň za dňom</a><a class="i2" href="#piatok-21.-8.-dnes-večer-meltemi">Piatok 21. 8. · dnes večer · Meltemi</a><a class="i2" href="#sobota-22.-8.-bez-presunu-mavrovouni">Sobota 22. 8. · 🚫 bez presunu · Mavrovouni</a><a class="i2" href="#nedeľa-23.-8.-meltemi-stoupa-900-jaskyne-diros">Nedeľa 23. 8. · Meltemi → Stoupa · ⏰ 9:00 · 🏆 JASKYNE DIROS</a><a class="i2" href="#pondelok-24.-8.-bez-presunu-stoupa-a-kardamyli">Pondelok 24. 8. · 🚫 bez presunu · Stoupa a Kardamyli</a><a class="i2" href="#utorok-25.-8.-stoupa-finikounda-železničný-park-kalamata">Utorok 25. 8. · Stoupa → Finikounda · 🏆 ŽELEZNIČNÝ PARK KALAMATA</a><a class="i2" href="#streda-26.-8.-finikounda-gialova-hrad-methoni">Streda 26. 8. · Finikounda → Gialova · 🏆 HRAD METHONI</a><a class="i2" href="#štvrtok-27.-8.-voidokilia-nestorova-jaskyňa-a-lagúna">Štvrtok 27. 8. · 🚫 VOIDOKILIA, Nestorova jaskyňa a lagúna</a><a class="i2" href="#piatok-28.-8.-gialova-olympia-beh-na-antickom-štadióne">Piatok 28. 8. · Gialova → Olympia · 🏆 BEH NA ANTICKOM ŠTADIÓNE</a><a class="i2" href="#sobota-29.-8.-olympia-rolling-turtles-ponorný-most">Sobota 29. 8. · Olympia → Rolling Turtles · ponorný most</a><a class="i2" href="#nedeľa-30.-8.-odovzdanie-a-odlet">Nedeľa 30. 8. · Odovzdanie a odlet</a>
+<a class="i1" href="#overené-hodiny-a-ceny-august-2026">4. Overené hodiny a ceny (august 2026)</a>
+<a class="i1" href="#čo-treba-vybaviť-v-tomto-poradí">5. Čo treba vybaviť – v tomto poradí</a>
+<a class="i1" href="#nákupný-kalendár-na-zvyšok">6. Nákupný kalendár na zvyšok</a>
+<a class="i1" href="#praktické-veci-ktoré-platia-ďalej">7. Praktické veci, ktoré platia ďalej</a>
+<a class="i1" href="#čo-z-pôvodného-plánu-vypadlo-a-prečo">8. Čo z pôvodného plánu vypadlo a prečo</a>
+<a class="i1" href="#zvyšok-na-ktorý-budú-deti-spomínať">9. Zvyšok, na ktorý budú deti spomínať</a>
+<a class="i1" href="#rozpočet-na-zvyšok-9-nocí-orientačne">10. Rozpočet na zvyšok (9 nocí, orientačne)</a>
+</nav>
+
+<main>
+<h1 id="peloponéz-karavanom-zvyšok-cesty-21.-8.-30.-8.-2026-verzia-7-aktualizovaná-na-mieste">Peloponéz karavanom – zvyšok cesty <strong>21. 8. – 30. 8. 2026</strong> (verzia 7, aktualizovaná na mieste)</h1>
+<p><strong>Milan, Máťa, Jurko (7), Zuzka (5)</strong> · Sunlight A60 – <strong>5,95 × 2,32 × 3,14 m</strong> Späť: <strong>FR5888 ATH→BTS, nedeľa 30. 8., odlet 12:20</strong>, v Bratislave 13:45.</p>
+<p><strong>Kde sme:</strong> Camping Meltemi, Mavrovouni pri Gythiu – <strong>do nedele 23. 8.</strong> <strong>Za nami:</strong> Argolida, cesta na juh a <strong>vrak lode Dimitrios</strong> – ten už v pláne nie je. <strong>Pred nami:</strong> 9 nocí, <strong>5 presunov</strong> a <strong>3 dni bez presunu</strong> (22., 24. a 27. 8. – kemp zostáva stáť).</p>
+<blockquote>
+<p><strong>Režim, na ktorom celý zvyšok stojí:</strong> z kempu vyrážame <strong>o 10:00</strong> · 13:00–16:30 siesta v tieni alebo vo vode · pamiatky do okna <strong>16:30–18:45</strong> alebo priamo na presun, nikdy nie „o ôsmej pri bráne“ · <strong>o 20:00 sme navečeraní v kempe</strong> a deti idú spať · večeru pripravujeme dopoludnia, keď je chladno.</p>
+<p><strong>Jediný skorý odchod v celom zvyšku: nedeľa 23. 8., 9:00 – jaskyne Diros.</strong></p>
+</blockquote>
+<hr />
+<h2 id="nocľahy-potvrdený-sled">1. Nocľahy – potvrdený sled</h2>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Noci</th>
+<th style="text-align: left;">Dátum</th>
+<th style="text-align: left;">Kemp</th>
+<th style="text-align: left;">Región</th>
+<th style="text-align: left;">Poznámka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"><strong>do 23. 8.</strong></td>
+<td style="text-align: left;"><strong>Camping Meltemi</strong>, Mavrovouni</td>
+<td style="text-align: left;">východná Mani</td>
+<td style="text-align: left;">tu sme · 5 km piesku za kempom</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><strong>23.–25. 8.</strong></td>
+<td style="text-align: left;"><strong>Camping Kalogria</strong>, Stoupa</td>
+<td style="text-align: left;">západná Mani</td>
+<td style="text-align: left;">pláž so studenými prameňmi zo dna</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>25.–26. 8.</strong></td>
+<td style="text-align: left;"><strong>Camping Finikes</strong>, Finikounda</td>
+<td style="text-align: left;">Messénia</td>
+<td style="text-align: left;">2 km západne od Finikoundy, prirodzený tieň, mini-market, taverna, ihrisko</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><strong>26.–28. 8.</strong></td>
+<td style="text-align: left;"><strong>Camping Erodios</strong>, Gialova</td>
+<td style="text-align: left;">Messénia</td>
+<td style="text-align: left;">bazén, ihrisko, pri lagúne · 3 km od Voidokilie</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>28.–29. 8.</strong></td>
+<td style="text-align: left;"><strong>Camping Diana</strong>, Olympia</td>
+<td style="text-align: left;">Élida</td>
+<td style="text-align: left;">200 m od centra, <strong>800 m pešo k areálu</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>29.–30. 8.</strong></td>
+<td style="text-align: left;"><strong>Rolling Turtles</strong> camperstop</td>
+<td style="text-align: left;">Attika</td>
+<td style="text-align: left;">areál požičovne, <strong>7 km od letiska</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Päť presunov, teda päť balení</strong> – 23., 25., 26., 28. a 29. 8. Dva z nich sú krátke (26. 8. len 25 km, 23. 8. 90 km), jeden dlhý (29. 8.).</p>
+<p><strong>Rolling Turtles:</strong> 35. km cesty na Porto Rafti, 190 03 · 37.874541, 23.939037 · odovzdanie <strong>09:00–10:00</strong>, kancelária PO–SO 09:00–16:00. Na camperstope sú výlevky na šedú aj čiernu vodu, pitná voda, teplé sprchy, práčka so sušičkou, grill-lounge a stráženie 24/7 – preto sa tam upratuje už v sobotu a v deň letu sa nikam nešoféruje.</p>
+<hr />
+<h2 id="plán-na-jednu-stranu">2. Plán na jednu stranu</h2>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Deň</th>
+<th style="text-align: left;">Doobeda (10:00–13:00)</th>
+<th style="text-align: left;">Poobede a večer (16:30–18:45)</th>
+<th style="text-align: left;">Nocľah</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>pi 21. 8.</strong></td>
+<td style="text-align: left;"><em>(dnes)</em></td>
+<td style="text-align: left;">večer v kempe · <strong>odoslať mail Rolling Turtles</strong></td>
+<td style="text-align: left;">Meltemi</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>so 22. 8.</strong></td>
+<td style="text-align: left;">🚫 pláž Mavrovouni, hniezda karety</td>
+<td style="text-align: left;"><em>voliteľne</em> Gythio + Marathonisi · <strong>nákup na 3 dni</strong></td>
+<td style="text-align: left;">Meltemi</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ne 23. 8.</strong></td>
+<td style="text-align: left;">🚐 ⏰ <strong>9:00 · JASKYNE DIROS</strong> → Areopoli → Limeni</td>
+<td style="text-align: left;">príchod Stoupa, studené pramene priamo v pláži</td>
+<td style="text-align: left;"><strong>Kalogria</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>po 24. 8.</strong></td>
+<td style="text-align: left;">🚫 pláž s prameňmi, kanoe a SUP</td>
+<td style="text-align: left;"><strong>Kardamyli + kaňon Viros</strong> <em>(večer panigiri?)</em></td>
+<td style="text-align: left;">Kalogria</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ut 25. 8.</strong></td>
+<td style="text-align: left;">🚐 <strong>ŽELEZNIČNÝ PARK KALAMATA</strong> + veľký nákup</td>
+<td style="text-align: left;">príchod Finikounda, pláž pred kempom</td>
+<td style="text-align: left;"><strong>Finikes</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>st 26. 8.</strong></td>
+<td style="text-align: left;">🚐 <strong>hrad METHONI</strong> + kúpanie pod hradbami</td>
+<td style="text-align: left;">príchod Gialova, bazén, podvečer duny Voidokilie</td>
+<td style="text-align: left;"><strong>Erodios</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>št 27. 8.</strong></td>
+<td style="text-align: left;">🚫 <strong>VOIDOKILIA</strong> + Nestorova jaskyňa + lagúna</td>
+<td style="text-align: left;">bazén, <em>voliteľne</em> Niokastro v Pylose</td>
+<td style="text-align: left;">Erodios</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>pi 28. 8.</strong></td>
+<td style="text-align: left;">🚐 prázdne pláže Kalo Nero a Tholo</td>
+<td style="text-align: left;"><strong>antické roboty</strong> → 🏅 <strong>BEH NA ŠTADIÓNE V OLYMPII</strong></td>
+<td style="text-align: left;"><strong>Diana</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>so 29. 8.</strong></td>
+<td style="text-align: left;">🚐 Korintský prieplav + <strong>ponorný most v Isthmii</strong></td>
+<td style="text-align: left;">upratovanie karavanu na camperstope, kufre</td>
+<td style="text-align: left;"><strong>Rolling Turtles</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ne 30. 8.</strong></td>
+<td style="text-align: left;">odovzdanie <strong>09:00</strong> → letisko 7 km</td>
+<td style="text-align: left;"><strong>odlet 12:20</strong> → Bratislava 13:45</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table></div>
+<p>🚫 = bez presunu, kemp zostáva stáť <em>(24. a 27. 8. s krátkym výjazdom 10–20 min)</em> · 🚐 = presun, zážitok je po ceste · ⏰ = jediný skorší odchod · večera ~19:45 v kempe, ak nie je uvedené inak.</p>
+<hr />
+<h2 id="deň-za-dňom">3. Deň za dňom</h2>
+<h3 id="piatok-21.-8.-dnes-večer-meltemi">Piatok 21. 8. · dnes večer · Meltemi</h3>
+<p>Dnes už nič. <strong>Dve veci, ktoré sa dajú vyriešiť z telefónu pri večeri:</strong></p>
+<ol type="1">
+<li>📧 <strong>Rolling Turtles – dať si písomne potvrdiť odovzdanie v nedeľu 30. 8. o 09:00</strong> a spomenúť let 12:20. Ich kancelária má hodiny <strong>pondelok–sobota</strong>, odovzdanie inzerujú pondelok–nedeľa – tento rozpor treba mať vyriešený teraz, nie 29. 8. Rovno sa spýtať aj na <strong>odvoz na letisko</strong> (7 km) alebo na číslo miestneho taxíka.</li>
+<li>☎ <strong>Camping Kalogria</strong> (+30 27210 77319, campingkalogria@yahoo.gr) – potvrdiť príchod v <strong>nedeľu 23. 8. okolo 16:00</strong>. Kemp nemá online systém, potvrdenie existuje len ako mail alebo telefonát.</li>
+</ol>
+<p><strong>Ráno na recepcii sa spýtajte, kde sú označené hniezda karety</strong> a či je na pláži stanica ARCHELON – koniec augusta je čas liahnutia.</p>
+<hr />
+<h3 id="sobota-22.-8.-bez-presunu-mavrovouni">Sobota 22. 8. · 🚫 bez presunu · <strong>Mavrovouni</strong></h3>
+<blockquote>
+<p>Kemp zostáva stáť · dopoludnia program pešo z kempu, podvečer <strong>jediná jazda dňa: Gythio (7 min) – nákup a ostrovček v jednom</strong> <strong>Doobeda:</strong> 5 km piesku a hniezda korytnačiek · <strong>Poobede:</strong> siesta · <strong>Večer:</strong> nákup a <em>voliteľne</em> Gythio</p>
+</blockquote>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Čas</th>
+<th style="text-align: left;">Program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">10:00</td>
+<td style="text-align: left;"><strong>Pláž Mavrovouni</strong> hneď za kempom – 5 km piesku, mierny príboj, skákanie do vlniek. Je to <strong>hniezdisko karety (Caretta caretta)</strong>: hľadajte v piesku ohradené a označené hniezda a vysvetlite deťom, čo je vnútri. Pri Zuzke nech je vždy jeden dospelý vo vode.</td>
+</tr>
+<tr>
+<td style="text-align: left;">13:00</td>
+<td style="text-align: left;">Obed, siesta, tieň.</td>
+</tr>
+<tr>
+<td style="text-align: left;">17:00</td>
+<td style="text-align: left;">🛒 <strong>Nákup v Gythiu na tri dni – dnes to nie je voliteľné.</strong> Zajtra je nedeľa a veľké supermarkety budú zatvorené, v pondelok je v Stoupe a Kardamyli len malý obchod a pekáreň. Naplňte chladničku do utorka – v utorok 25. 8. je veľký nákup v Kalamate. <strong>A keďže je to jediná jazda dneška, vyťažte z nej aj to druhé:</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">17:45</td>
+<td style="text-align: left;"><strong>GYTHIO</strong> – farebné domy stúpajúce nad prístav, po hrádzi sa dá prejsť pešo na ostrovček <strong>Marathonisi</strong> (podľa mýtu tu Paris a Helena strávili prvú noc, kým odplávali do Tróje): borovice, malá pláž, veža s malým múzeom Mani, žiadne autá. Zmrzlina na promenáde. <em>(Ak sú deti po celom dni na pláži hotové, stačí nákup a späť – ostrovček nie je povinný.)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;">19:00</td>
+<td style="text-align: left;">Varíme, večera 19:45.</td>
+</tr>
+<tr>
+<td style="text-align: left;">20:30</td>
+<td style="text-align: left;"><strong>Zbaliť karavan na zajtra</strong> – zajtra sa vyráža o 9:00, čo je jediný skorý odchod v celom zvyšku. Na dohľad nechajte <strong>mikiny a zatvorené topánky pre všetkých štyroch</strong>: v jaskyni je 19 °C.</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Dnešný deň je zámerne prázdny. Zajtra je najnabitejší deň zvyšku dovolenky a začína o deviatej.</em></p>
+<hr />
+<h3 id="nedeľa-23.-8.-meltemi-stoupa-900-jaskyne-diros">Nedeľa 23. 8. · Meltemi → <strong>Stoupa</strong> · ⏰ 9:00 · 🏆 <strong>JASKYNE DIROS</strong></h3>
+<blockquote>
+<p>🚐 <strong>Presun</strong> 90 km / ~2 h 15 čistej jazdy + tri zastávky <strong>Doobeda:</strong> loďkou po podzemnej rieke · <strong>Napoludnie:</strong> kamenné Areopoli a tyrkysové Limeni · <strong>Poobede:</strong> príchod a pláž so studenými prameňmi</p>
+</blockquote>
+<p><strong>Pre deti pravdepodobne najlepší deň z celej dovolenky – a jediný, kde treba skorší budíček.</strong> Dôvod: jaskyňa otvára o 9:00 a autobusové zájazdy prichádzajú 10:30–12:00. Ak ste tam o 9:45, prejdete bez čakania; o 11:00 môžete stáť v rade na priamom slnku.</p>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Čas</th>
+<th style="text-align: left;">Program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">09:00</td>
+<td style="text-align: left;">Odchod z kempu (zbalené z večera). Smer Areopoli, 33 km.</td>
+</tr>
+<tr>
+<td style="text-align: left;">09:45</td>
+<td style="text-align: left;"><strong>JASKYNE DIROS (Vlychada).</strong> Otvorené <strong>09:00–17:00, kasa zatvára 16:15</strong> (overené). Vstup ~€13–15 dospelý, deti zľavnené.</td>
+</tr>
+<tr>
+<td style="text-align: left;">10:00</td>
+<td style="text-align: left;"><strong>Prehliadka na loďke po podzemnej rieke</strong> – prevozník vás asi 25 minút vezie kanálmi medzi stalaktitmi, ktoré sa dotýkajú hladiny, so stropom miestami pár desiatok centimetrov nad hlavou, v priezračnej vode. Potom krátky úsek pešo. <strong>Vnútri je 19 °C – mikiny a topánky.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">11:15</td>
+<td style="text-align: left;"><strong>AREOPOLI</strong> (15 min) – kamenné mesto Mani s vežovými domami. <strong>Do starého jadra karavanom nechoďte</strong>, zaparkujte pri hlavnej ceste. Frappé, koláč, obchodík s medom, deti sa preháňajú uličkami.</td>
+</tr>
+<tr>
+<td style="text-align: left;">12:30</td>
+<td style="text-align: left;"><strong>LIMENI</strong> (5 min dolu) – tyrkysová zátoka pod Areopoli, kúpanie v krištáľovej vode, obed v taverne priamo nad morom. ⚠️ <strong>Parkovanie dolu v zátoke je stiesnené – s 6-metrovým autom zaparkujte hore pri hlavnej ceste a zíďte 5 minút pešo.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">14:30</td>
+<td style="text-align: left;">Západným pobrežím Mani na sever (1 h 15) – jedna z najkrajších ciest v Grécku: more vľavo, Taÿgetos vpravo, zákruty, ale pri pomalej jazde bez problémov.</td>
+</tr>
+<tr>
+<td style="text-align: left;">16:00</td>
+<td style="text-align: left;"><strong>Camping Kalogria, Stoupa</strong> – check-in, postavenie.</td>
+</tr>
+<tr>
+<td style="text-align: left;">17:15</td>
+<td style="text-align: left;"><strong>Pláž Kalogria</strong> – piesočná plochá zátoka, v ktorej <strong>priamo zo dna vyvierajú studené sladkovodné pramene</strong>: deti plávajú a striedavo trafia na ľadový a teplý pás vody. Hrajú sa s tým hodiny. <em>(Tu naozaj žil predobraz Zorbu z Kazantzakisovho románu.)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;">19:00</td>
+<td style="text-align: left;">Varíme, večera 19:45.</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>Ak sa 9:00 nepodarí:</strong> vyrazte o 10:00 a poradie otočte – Limeni a obed najprv, <strong>Diros okolo 14:30</strong>, keď sú autobusy preč. Kasa zatvára 16:15, takže to vyjde, ale rezerva je hodina a pol, nie tri. Do Stoupy potom prídete okolo 17:30 a večera bude o 20:15.</p>
+</blockquote>
+<blockquote>
+<p><strong>Dnes je 23. 8. – „Enniamera tis Panagias“</strong>, deväť dní po sviatku Panny Márie, a v Mani sa v tento večer konajú dedinské <strong>panigiria</strong>: živá hudba, dlhé stoly, jedlo, tanec do noci. Spýtajte sa v kempe, či je niekde nablízku. Začínajú okolo 21:00, čiže by to bola vedomá výnimka z režimu (dajte deťom dlhšiu siestu) – ale je to zážitok, ktorý si za peniaze nekúpite. Raz za dovolenku sa to zniesť dá.</p>
+</blockquote>
+<hr />
+<h3 id="pondelok-24.-8.-bez-presunu-stoupa-a-kardamyli">Pondelok 24. 8. · 🚫 bez presunu · <strong>Stoupa a Kardamyli</strong></h3>
+<blockquote>
+<p>Kemp zostáva stáť · dopoludnia pešo z kempu, podvečer krátky výjazd 20 min <strong>Doobeda:</strong> pláž s prameňmi, kanoe a SUP · <strong>Poobede:</strong> siesta · <strong>Večer:</strong> vežové domy a kaňon Viros</p>
+</blockquote>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Čas</th>
+<th style="text-align: left;">Program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">10:00</td>
+<td style="text-align: left;"><strong>Kalogria / Ritsa</strong> priamo pri kempe – piesok, plocho, tieň aj ležadlá, <strong>požičovňa kanoe a SUP</strong> <em>(Jurko s tebou na SUP = zábava na dve hodiny)</em>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">13:00</td>
+<td style="text-align: left;">Obed, siesta. Chlieb kúpte ráno v dedinskej pekárni.</td>
+</tr>
+<tr>
+<td style="text-align: left;">16:45</td>
+<td style="text-align: left;"><strong>KARDAMYLI</strong> (20 min po pobrežnej ceste). <strong>Ano Kardamyli</strong> – staré horné mesto s vežovými domami rodu Mourtzinos, kostol sv. Spyridona, obnovené kamenné uličky, v ktorých nikto nie je: dokonalé „objavovanie hradu“. Do jadra sa autom takmer nedá, parkujte dolu.</td>
+</tr>
+<tr>
+<td style="text-align: left;">17:30</td>
+<td style="text-align: left;"><strong>Kaňon Viros</strong> – krátka pohodlná cesta k jeho ústiu: vyschnuté kamenné riečisko medzi stenami, <strong>v tieni platanov</strong>, plné okrúhlych bielych balvanov. 20–30 minút do kaňonu, deti skáču po kameňoch a hľadajú „skamenené kosti“.</td>
+</tr>
+<tr>
+<td style="text-align: left;">18:45</td>
+<td style="text-align: left;">Späť v kempe, varíme, večera 19:45.</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Alternatíva pre skorších: <strong>Foneas</strong> (8 min južne) – malá zátoka s obrovskou skalou v mori, z ktorej skáču deti aj dospelí. Nádherná, ale parkovanie pri ceste sa plní – buďte tam do 10:15, inak sa vráťte na Kalogriu.</em></p>
+<p>📧 <strong>Dnes je pondelok, kancelária Rolling Turtles má otvorené 09:00–16:00</strong> – ak sa cez víkend neozvali, dnes je deň na telefonát.</p>
+<hr />
+<h3 id="utorok-25.-8.-stoupa-finikounda-železničný-park-kalamata">Utorok 25. 8. · Stoupa → <strong>Finikounda</strong> · 🏆 <strong>ŽELEZNIČNÝ PARK KALAMATA</strong></h3>
+<blockquote>
+<p>🚐 <strong>Presun</strong> 120 km / 2 h 25 čistej jazdy <strong>Doobeda:</strong> lokomotívy, po ktorých sa dá liezť · <strong>Napoludnie:</strong> obed a veľký nákup · <strong>Poobede:</strong> príchod a pláž pred kempom</p>
+</blockquote>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Čas</th>
+<th style="text-align: left;">Program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">10:00</td>
+<td style="text-align: left;">Odchod na Kalamatu (1 h 10).</td>
+</tr>
+<tr>
+<td style="text-align: left;">11:15</td>
+<td style="text-align: left;"><strong>KALAMATA – Mestský železničný park.</strong> <strong>Otvorený nonstop, vstup zdarma</strong> (overené). Sedem parných lokomotív, vagóny a dreziny, <strong>po ktorých deti môžu liezť a chodiť dovnútra</strong>, k tomu jazierko, mostíky, niekoľko ihrísk, športoviská, <strong>veľa tieňa</strong> a kaviareň v starej stanici s toaletami. Vydržia tam dve až tri hodiny. Zaparkujete v okolitých uliciach.</td>
+</tr>
+<tr>
+<td style="text-align: left;">13:15</td>
+<td style="text-align: left;">Obed v Kalamate a 🛒 <strong>veľký nákup na tri dni</strong> – posledné veľké supermarkety pred Messéniou.</td>
+</tr>
+<tr>
+<td style="text-align: left;">14:30</td>
+<td style="text-align: left;">Do Finikoundy (1 h 15) cez Messini a Rizomylos.</td>
+</tr>
+<tr>
+<td style="text-align: left;">15:45</td>
+<td style="text-align: left;"><strong>Camping Finikes</strong> – 2 km západne od Finikoundy, priamo na širokej piesočnej pláži, prirodzený tieň, mini-market a taverna s domácou kuchyňou, ihrisko. Check-in, postavenie.</td>
+</tr>
+<tr>
+<td style="text-align: left;">17:00</td>
+<td style="text-align: left;"><strong>Pláž priamo pred kempom</strong> – piesok, plytká voda, oproti ostrovčeky Oinousses.</td>
+</tr>
+<tr>
+<td style="text-align: left;">19:00</td>
+<td style="text-align: left;">Varíme, večera 19:45 – alebo si dnes doprajte tavernu v kempe, je to jediná noc na tomto mieste.</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Hrad Methoni je odtiaľto <strong>len 12 minút</strong>. Ak by ste prišli skôr alebo mali deti nezvyčajne veľa energie, dá sa stihnúť už dnes o 17:00 (zatvára 19:00) a zajtra ísť rovno na pláž pod hradbami. Plán nižšie ho ale necháva na zajtra, kde sa doň zmestí bez naháňania.</em></p>
+<hr />
+<h3 id="streda-26.-8.-finikounda-gialova-hrad-methoni">Streda 26. 8. · Finikounda → <strong>Gialova</strong> · 🏆 <strong>HRAD METHONI</strong></h3>
+<blockquote>
+<p>🚐 <strong>Presun</strong> len 25 km / 30 min – najkrajší presun celého zvyšku <strong>Doobeda:</strong> venecianska pevnosť a veža stojaca v mori · <strong>Napoludnie:</strong> kúpanie pod hradbami · <strong>Poobede:</strong> príchod, bazén, duny Voidokilie</p>
+</blockquote>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Čas</th>
+<th style="text-align: left;">Program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">10:00</td>
+<td style="text-align: left;">Odchod (12 min).</td>
+</tr>
+<tr>
+<td style="text-align: left;">10:20</td>
+<td style="text-align: left;"><strong>HRAD METHONI. Ideálny hrad pre deti:</strong> obrovská, otvorená, takmer prázdna venecianska pevnosť, vchádza sa <strong>po kamennom moste nad priekopou</strong>, vnútri sú hektáre voľného priestoru, kde môžu behať kam chcú, hradby priamo nad morom – a najlepšie: <strong>zadnou bránou sa po úzkej hrádzi vojde do osemhrannej veže Bourtzi stojacej priamo v mori.</strong> Otvorené <strong>08:30–19:00</strong>, vstup <strong>€5</strong> dospelý, <strong>deti a mladí do 25 z EÚ zdarma</strong> (overené). Od mora fúka, takže sa to dá aj predpoludním – ale klobúky a plné flaše vody.</td>
+</tr>
+<tr>
+<td style="text-align: left;">12:00</td>
+<td style="text-align: left;"><strong>Pláž Methoni</strong> hneď za hradom – kúpanie s výhľadom na hradby a obed z chladiaceho boxu. Poludnie tak opäť skončí vo vode.</td>
+</tr>
+<tr>
+<td style="text-align: left;">14:15</td>
+<td style="text-align: left;">Do Gialovy (20 min).</td>
+</tr>
+<tr>
+<td style="text-align: left;">14:45</td>
+<td style="text-align: left;"><strong>Camping Erodios</strong> – check-in (miesto v A Zone Large je pre 6-metrové auto najlepšie), postavenie, bazén, ihrisko.</td>
+</tr>
+<tr>
+<td style="text-align: left;">17:30</td>
+<td style="text-align: left;">Podvečer prvá obhliadka <strong>Voidokilie</strong> z dún (10 min) – v podvečernom svetle a bez ľudí. Alebo pláž <strong>Divari</strong> pod lagúnou, plochá a chránená.</td>
+</tr>
+<tr>
+<td style="text-align: left;">19:00</td>
+<td style="text-align: left;">Varíme, večera 19:45.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="štvrtok-27.-8.-voidokilia-nestorova-jaskyňa-a-lagúna">Štvrtok 27. 8. · 🚫 <strong>VOIDOKILIA</strong>, Nestorova jaskyňa a lagúna</h3>
+<blockquote>
+<p>Karavan len 10 minút na oficiálne parkovisko a späť · <strong>žiadny presun</strong> <strong>Doobeda:</strong> kruhová pláž, jaskyňa a duny · <strong>Napoludnie:</strong> lávka okolo lagúny · <strong>Poobede:</strong> siesta a bazén</p>
+</blockquote>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Čas</th>
+<th style="text-align: left;">Program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">10:00</td>
+<td style="text-align: left;">Karavanom na <strong>oficiálne parkovisko od strany Gialovy/Divari</strong> (10 min). ⚠️ <strong>Po úzkej piesočnej cestičke k pláži nechoďte</strong> a nikde inde nestojte – je to Natura 2000 a státie mimo parkoviska sa pokutuje.</td>
+</tr>
+<tr>
+<td style="text-align: left;">10:20</td>
+<td style="text-align: left;"><strong>Nestorova jaskyňa</strong> najprv, kým nie je najhoršie teplo: 10–15 minút po kameňoch, Zuzku za ruku. Podľa mýtu tu Hermes skryl ukradnuté Apolónove kravy; vnútri sú stalaktity, ktoré vyzerajú ako zvieracie kože zavesené na strope.</td>
+</tr>
+<tr>
+<td style="text-align: left;">11:15</td>
+<td style="text-align: left;"><strong>VOIDOKILIA</strong> – pláž v tvare dokonalého kruhu, písmeno omega, piesočné duny, voda plochá a teplá ako vo vaničke, bez vĺn. <strong>Najkrajšia pláž Peloponézu.</strong> Prísna rezervácia: žiadne bary, žiadne slnečníky – <strong>jedlo, vodu a tieň so sebou.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">13:00</td>
+<td style="text-align: left;">Cestou späť <strong>drevená lávka okolo lagúny Gialova</strong> – chránená mokrina: vodné vtáky, korytnačky, pri prelete plameniaky, a chameleón obyčajný, ktorý tu má jediný európsky výskyt. Rovná cesta v tieni trstiny, ďalekohľad sa vyplatí.</td>
+</tr>
+<tr>
+<td style="text-align: left;">13:45</td>
+<td style="text-align: left;">Späť v kempe. Obed, siesta, bazén.</td>
+</tr>
+<tr>
+<td style="text-align: left;">17:00</td>
+<td style="text-align: left;"><em>Voliteľne:</em> <strong>pevnosť NIOKASTRO v Pylose</strong> (15 min) – veľká, otvorená, deti sa v nej vybehajú, a hneď vedľa je platanové námestie so zmrzlinou a ihrisko pri prístave. Ak dnes stačil bazén, je to úplne v poriadku – zajtra je nabitý deň.</td>
+</tr>
+<tr>
+<td style="text-align: left;">19:00</td>
+<td style="text-align: left;">Varíme, večera 19:45. Večer zbaliť, čo sa dá.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3 id="piatok-28.-8.-gialova-olympia-beh-na-antickom-štadióne">Piatok 28. 8. · Gialova → <strong>Olympia</strong> · 🏆 <strong>BEH NA ANTICKOM ŠTADIÓNE</strong></h3>
+<blockquote>
+<p>🚐 <strong>Presun</strong> 140 km / 2 h 20 · <strong>kemp je 800 m pešo od areálu, takže večer sa už nešoféruje</strong> <strong>Doobeda:</strong> kilometre prázdneho piesku · <strong>Poobede:</strong> antické roboty v klíme · <strong>Večer:</strong> olympiáda pre deti</p>
+</blockquote>
+<p>Najnabitejší deň zvyšku – večera bude okolo 20:00. Camping Diana je 200 m od centra mestečka, takže ak sa nechce variť, taverna je o dve ulice ďalej.</p>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Čas</th>
+<th style="text-align: left;">Program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">10:00</td>
+<td style="text-align: left;">Odchod na sever pobrežím cez Kyparissiu (1 h).</td>
+</tr>
+<tr>
+<td style="text-align: left;">11:15</td>
+<td style="text-align: left;"><strong>PLÁŽE THOLO A KALO NERO</strong> – kilometre úplne prázdneho piesku za borovicovým lesom, tiež hniezdiská karety. Kúpanie a obed z chladničky <strong>v tieni borovíc priamo za plážou</strong> – čo je v Grécku výnimka.</td>
+</tr>
+<tr>
+<td style="text-align: left;">13:45</td>
+<td style="text-align: left;">Odchod (1 h 20).</td>
+</tr>
+<tr>
+<td style="text-align: left;">15:00</td>
+<td style="text-align: left;"><strong>Camping Diana, Olympia</strong> – check-in, postavenie.</td>
+</tr>
+<tr>
+<td style="text-align: left;">15:45</td>
+<td style="text-align: left;"><strong>ARCHIMEDOVO (KOTSANASOVO) MÚZEUM ANTICKEJ TECHNOLÓGIE</strong>, 9 Praxitely Kondyli, pešo z kempu. <strong>Otvorené denne 10:00–18:00, vstup voľný s dobrovoľným darom</strong> (overené). Funkčné rekonštrukcie: antické automaty a „roboty“, katapulty, hydraulické hodiny, parná guľa, Antikythérsky mechanizmus, kladkostroje. Klimatizované, väčšina exponátov s videom, ako to funguje. <strong>Pre sedemročného najlepšie múzeum, aké v Grécku uvidí.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">17:15</td>
+<td style="text-align: left;"><strong>ANTICKÁ OLYMPIA</strong> – <strong>otvorené 08:00–20:00, posledný vstup 19:40</strong> (overené). Po piatej sú autobusy preč, kamene nepália, svetlo je zlaté a v údolí je tieň platanov a borovíc. Areál je <strong>800 m pešo z kempu</strong>, takže s 3,14 m alkovňou neriešite parkovanie pri pamiatke.</td>
+</tr>
+<tr>
+<td style="text-align: left;">19:30</td>
+<td style="text-align: left;">Späť pešo do kempu. Večera ~20:00 – dnes je to v pláne, nie výnimka.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Antická Olympia – trasa s deťmi:</strong> 1. <strong>Zeusov chrám</strong> – spadnuté stĺpy ako domino; vnútri stála 12-metrová socha zo zlata a slonoviny, jeden zo siedmich divov sveta. 2. <strong>Feidiova dielňa.</strong> 3. <strong>Klenutý vstupný tunel na štadión</strong> – ten istý, ktorým vbiehali antickí atléti. 4. 🏅 <strong>ŠTADIÓN: nechajte Jurka a Zuzku odbehnúť trať od pôvodnej kamennej štartovacej línie.</strong> 192 metrov, prázdny štadión pre 45 000 ľudí. Urobte im olympiádu: rozbehy, finále, veniec z olivovej vetvičky, medaila. <strong>Toto si z Grécka zapamätajú najviac.</strong> 5. Ak zvýši čas: <strong>Archeologické múzeum</strong> – Niké, Hermes, prilby, kamenná činka Bybóna, ktorú „uniesol jednou rukou“. Spýtajte sa na kase na <strong>kombinovaný lístok areál + múzeá</strong>, vyjde lacnejšie než dva samostatné; <strong>deti do 18 zdarma</strong>.</p>
+<hr />
+<h3 id="sobota-29.-8.-olympia-rolling-turtles-ponorný-most">Sobota 29. 8. · Olympia → <strong>Rolling Turtles</strong> · ponorný most</h3>
+<blockquote>
+<p>🚐 <strong>Presun</strong> ~350 km / 4 h čistej jazdy po diaľnici, mýto ~€30–40 pre kategóriu nad 2,7 m <strong>Doobeda:</strong> jazda po A9 a A8 · <strong>Napoludnie:</strong> most, ktorý sa potopí · <strong>Poobede a večer:</strong> upratovanie karavanu v pokoji</p>
+</blockquote>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Čas</th>
+<th style="text-align: left;">Program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">pred odchodom</td>
+<td style="text-align: left;"><strong>Ešte v Olympii:</strong> vyprázdniť chladničku a spotrebovať zásoby, vysypať smeti. Nádrže a kazetu netreba – výlevky sú na camperstope.</td>
+</tr>
+<tr>
+<td style="text-align: left;">10:00</td>
+<td style="text-align: left;">Odchod cez Pyrgos a Patras. <strong>V Pyrgose natankovať naftu do plna</strong> – auto sa odovzdáva s plnou nádržou.</td>
+</tr>
+<tr>
+<td style="text-align: left;">13:00</td>
+<td style="text-align: left;"><strong>KORINTSKÝ PRIEPLAV a PONORNÝ MOST V ISTHMII</strong> – 80 m hlboký zárez do skaly a pár sto metrov ďalej mostík, ktorý sa <strong>celý s vozovkou potopí 8 metrov pod vodu</strong>, aby preplávala loď, a potom sa vynorí. Pre deti väčší zážitok než pohľad z výšky. Kaviareň hneď vedľa: obed a čakanie na loď pri frappé. Zadarmo.</td>
+</tr>
+<tr>
+<td style="text-align: left;">14:45</td>
+<td style="text-align: left;">Ďalej po A7 a Attickej diaľnici na Markopoulo (1 h 15).</td>
+</tr>
+<tr>
+<td style="text-align: left;">16:00</td>
+<td style="text-align: left;"><strong>Rolling Turtles camperstop.</strong> Posledná noc v karavane.</td>
+</tr>
+<tr>
+<td style="text-align: left;">16:30</td>
+<td style="text-align: left;"><strong>Upratovanie na mieste, kde je všetko po ruke:</strong> výlevka na šedú aj čiernu vodu, hadica, práčka so sušičkou. Podľa podmienok požičovne treba: <strong>vyčistenú kazetu WC, prázdnu a umytú chladničku, žiadne smeti, vysaté a čisté vnútro.</strong> Karosériu umytú nechcú.</td>
+</tr>
+<tr>
+<td style="text-align: left;">18:30</td>
+<td style="text-align: left;"><strong>Kufre zbaliť dnes</strong>, nie ráno. Odfoťte si stav auta – zajtra to porovnáte s fotkami zo 16. 8.</td>
+</tr>
+<tr>
+<td style="text-align: left;">19:30</td>
+<td style="text-align: left;">Posledná grécka večera – grill-lounge priamo na camperstope, alebo taverna v Porto Rafti.</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Ak chcete pokojnejší večer, vyrazte z Olympie o 9:30 – na camperstope budete o 15:30.</em></p>
+<hr />
+<h3 id="nedeľa-30.-8.-odovzdanie-a-odlet">Nedeľa 30. 8. · Odovzdanie a odlet</h3>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Čas</th>
+<th style="text-align: left;">Program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">07:30</td>
+<td style="text-align: left;">Vstávanie, raňajky, posledné veci do kufrov.</td>
+</tr>
+<tr>
+<td style="text-align: left;">09:00</td>
+<td style="text-align: left;"><strong>ODOVZDANIE KARAVANU.</strong> Protokol, obhliadka, porovnanie s fotkami zo 16. 8. <strong>Rátajte 30–45 minút.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">09:50</td>
+<td style="text-align: left;">Transfer <strong>7 km na letisko</strong> – buď vás odvezú, alebo taxi (dohodnuté už z 21. 8.).</td>
+</tr>
+<tr>
+<td style="text-align: left;">10:15</td>
+<td style="text-align: left;">Na letisku. Ryanair zatvára podanie batožiny 40 minút pred odletom, čiže rezerva je slušná.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>12:20</strong></td>
+<td style="text-align: left;">Odlet <strong>FR5888 → Bratislava 13:45</strong>.</td>
+</tr>
+</tbody>
+</table></div>
+<p>⚠️ <strong>Toto je jediné miesto v celom zvyšku, kde neexistuje záložný plán</strong> – preto ten mail z 21. 8. Ak by Rolling Turtles nedeľný slot nepotvrdili, auto sa odovzdáva už v sobotu 29. 8. a poslednú noc treba posteľ pri letisku (Artemida, Markopoulo alebo Spata, 10–15 min taxíkom).</p>
+<hr />
+<h2 id="overené-hodiny-a-ceny-august-2026">4. Overené hodiny a ceny (august 2026)</h2>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Miesto</th>
+<th style="text-align: left;">Kedy</th>
+<th style="text-align: left;">Vstup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Jaskyne Diros</strong> (23. 8.)</td>
+<td style="text-align: left;"><strong>09:00–17:00</strong>, kasa zatvára <strong>16:15</strong></td>
+<td style="text-align: left;">~€13–15 dospelý, deti zľavnené</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Železničný park Kalamata</strong> (25. 8.)</td>
+<td style="text-align: left;"><strong>nonstop</strong></td>
+<td style="text-align: left;"><strong>zdarma</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hrad Methoni</strong> (26. 8.)</td>
+<td style="text-align: left;"><strong>08:30–19:00</strong> (V–IX)</td>
+<td style="text-align: left;"><strong>€5</strong>, do 25 rokov z EÚ zdarma</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Antická Olympia</strong> (28. 8.)</td>
+<td style="text-align: left;"><strong>08:00–20:00</strong>, posledný vstup <strong>19:40</strong></td>
+<td style="text-align: left;">~€12–20 dospelý, <strong>deti do 18 zdarma</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Archimedovo múzeum, Olympia</strong> (28. 8.)</td>
+<td style="text-align: left;"><strong>denne 10:00–18:00</strong></td>
+<td style="text-align: left;"><strong>voľný vstup / dobrovoľný dar</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Rolling Turtles</strong> – odovzdanie</td>
+<td style="text-align: left;"><strong>09:00–10:00</strong>, kancelária PO–SO 09:00–16:00</td>
+<td style="text-align: left;">v prenájme</td>
+</tr>
+</tbody>
+</table></div>
+<p>Oproti staršej verzii plánu sa opravilo dvoje: <strong>Methoni zatvára o 19:00, nie o 20:00, a stojí €5</strong> – a <strong>múzeum v Olympii je zdarma</strong>, nie €5–10.</p>
+<hr />
+<h2 id="čo-treba-vybaviť-v-tomto-poradí">5. Čo treba vybaviť – v tomto poradí</h2>
+<ol type="1">
+<li>📧 <strong>Rolling Turtles: písomné potvrdenie odovzdania v nedeľu 30. 8. o 09:00</strong> + odvoz na letisko. <strong>Dnes.</strong> Kancelária má hodiny PO–SO, takže sa to nedá odložiť na 29. 8.</li>
+<li>☎ <strong>Camping Kalogria</strong> (+30 27210 77319 · campingkalogria@yahoo.gr) – potvrdiť príchod <strong>ne 23. 8. ~16:00</strong>. Bez online systému.</li>
+<li>☎ <strong>Camping Finikes</strong> (+30 27230 28524 · info@finikescamping.gr) – potvrdiť <strong>25.–26. 8.</strong>, jedna noc.</li>
+<li>☎ <strong>Camping Diana, Olympia</strong> (+30 26240 22314, +30 6974145067) – potvrdiť <strong>28.–29. 8.</strong> Web nemá rezervačný systém a po odoslaní formulára vám neostane kópia, takže radšej telefón.</li>
+<li>🛒 <strong>Nákup v Gythiu v sobotu 22. 8.</strong> – v nedeľu sú veľké supermarkety zatvorené.</li>
+</ol>
+<p><strong>Do každého dopytu:</strong> obytné auto <strong>5,95 × 2,32 × 3,14 m</strong>, 2 dospelí + deti 5 a 7 rokov, elektrina, tieň preferovaný, príchod poobede 16:00–18:00 (do Olympie 15:00).</p>
+<hr />
+<h2 id="nákupný-kalendár-na-zvyšok">6. Nákupný kalendár na zvyšok</h2>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Kedy</th>
+<th style="text-align: left;">Kde</th>
+<th style="text-align: left;">Na čo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>so 22. 8.</strong></td>
+<td style="text-align: left;"><strong>Gythio</strong></td>
+<td style="text-align: left;">na 3 dni – nedeľa je zatvorená, v Stoupe je len malý obchod</td>
+</tr>
+<tr>
+<td style="text-align: left;">po 24. 8.</td>
+<td style="text-align: left;">Stoupa / Kardamyli</td>
+<td style="text-align: left;">pekáreň, doplnenie</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ut 25. 8.</strong></td>
+<td style="text-align: left;"><strong>Kalamata</strong></td>
+<td style="text-align: left;">veľký nákup na 3 dni, posledné veľké supermarkety pred Messéniou</td>
+</tr>
+<tr>
+<td style="text-align: left;">št 27. 8.</td>
+<td style="text-align: left;">Pylos alebo mini-market v Erodiose</td>
+<td style="text-align: left;">doplnenie</td>
+</tr>
+<tr>
+<td style="text-align: left;">pi 28. 8.</td>
+<td style="text-align: left;">Kyparissia po ceste alebo Olympia</td>
+<td style="text-align: left;">na posledné dva dni</td>
+</tr>
+<tr>
+<td style="text-align: left;">so 29. 8.</td>
+<td style="text-align: left;">Pyrgos</td>
+<td style="text-align: left;"><strong>nafta do plna</strong>, jedlo už netreba – chladnička musí byť prázdna</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Kľúčové pravidlo, ktoré platí ďalej:</strong> večeru priprav dopoludnia, keď je chladno – šalát, marináda, uvarené cestoviny alebo ryža. Poobedný výjazd sa vracia o 19:00 a v tom čase nikto nechce krájať cibuľu.</p>
+<hr />
+<h2 id="praktické-veci-ktoré-platia-ďalej">7. Praktické veci, ktoré platia ďalej</h2>
+<p><strong>Karavan – kam nechodiť</strong> - <strong>Výška 3,14 m</strong> – v gréckych kempoch visia konáre, pozor na markízy a prístrešky. - <strong>Nevhodné pre 6-metrové auto:</strong> staré jadrá <strong>Areopoli</strong> a <strong>Kardamyli</strong>, zátoka <strong>Limeni</strong> (parkujte hore pri hlavnej ceste), piesočná cestička k <strong>Voidokilii</strong> (len oficiálne parkovisko od Gialovy), parkovanie pri <strong>Foneas</strong> po 10:15. - <strong>Zákruty, ale v pohode pri pomalej jazde:</strong> západné pobrežie Mani (Areopoli–Stoupa).</p>
+<p><strong>Voľné státie nie je záloha.</strong> Grécko v roku 2026 zakázalo voľné kempovanie – na plážach, v lesoch, pri pamiatkach aj na odpočívadlách, pokuty od €300 na osobu. Legálne sú <strong>len licencované kempy a camperstopy</strong>. V oblastiach Natura (Voidokilia, Mavrovouni, lagúna Gialova) sa to kontroluje najviac.</p>
+<p><strong>Teplo.</strong> Absorpčná chladnička pri 38 °C nestíha: parkujte tak, aby na jej mriežku nesvietilo slnko, nechajte ju na 230 V a nevypínajte, kupujte vrecká ľadu. V karaváne vždy aspoň 10 l pitnej vody, klobúky, krém 50+, chladiaci box na výlety. <strong>Do vody deťom gumové sandále</strong> – ježovky sú v Limeni aj pod Methoni.</p>
+<p><strong>Peniaze.</strong> Malé taverny, kempy, pekárne a jaskyňa radšej v hotovosti – majte <strong>€150–250 cash</strong> na zvyšok.</p>
+<p><strong>Vstupy.</strong> <strong>Deti do 18 rokov majú vstup do všetkých štátnych gréckych pamiatok a múzeí zdarma</strong>, v Methoni platí zľava do 25 rokov pre občanov EÚ. Platíte len vy dvaja.</p>
+<hr />
+<h2 id="čo-z-pôvodného-plánu-vypadlo-a-prečo">8. Čo z pôvodného plánu vypadlo a prečo</h2>
+<ul>
+<li><strong>Monemvasia</strong> – pri skale neexistuje kemp; bol by to celodenný výlet autom a v novom slede kempov na ňu nie je deň.</li>
+<li><strong>Plytra</strong> (druhé potopené mesto) – hodinu na východ od Meltemi, do dňa bez šoférovania sa nezmestí a v nedeľu je na ceste Diros.</li>
+<li><strong>Mystras</strong> – 55 minút, veľký, strmý a bez tieňa; s päťročnou v augustovej horúčave je to zlá výmena za pokojný deň na pláži.</li>
+<li><strong>Koroni</strong> – hrad na druhej strane polostrova, 30 min z Finikoundy, ale 25. 8. je presunový deň a Methoni je bližšie, väčšie a pre deti lepšie.</li>
+<li><strong>Polylimnio</strong> – posledný kilometer je úzka cesta s malým parkoviskom, so 6-metrovým autom to neriskujte.</li>
+<li><strong>Zubačka kaňonom Vouraikos</strong> – úplne na severe, samotná jazda 4 hodiny, mimo osi trasy.</li>
+</ul>
+<hr />
+<h2 id="zvyšok-na-ktorý-budú-deti-spomínať">9. Zvyšok, na ktorý budú deti spomínať</h2>
+<ol type="1">
+<li><strong>Loďkou po podzemnej rieke v jaskyniach Diros</strong> (ne 23. 8.)</li>
+<li><strong>Beh po antickom štadióne v Olympii</strong> od originálnej štartovacej línie (pi 28. 8.)</li>
+<li><strong>Veža Bourtzi stojaca priamo v mori</strong> pod hradom Methoni (st 26. 8.)</li>
+<li><strong>Voidokilia a Nestorova jaskyňa</strong> – kruhová pláž s dunami (št 27. 8.)</li>
+<li><strong>Železničný park v Kalamate</strong> – lokomotívy na liezanie a ihriská (ut 25. 8.)</li>
+<li><strong>Ponorný most v Isthmii</strong>, ktorý sa potopí pod loď (so 29. 8.)</li>
+<li><strong>Studené pramene vyvierajúce zo dna pláže</strong> v Stoupe (23.–25. 8.)</li>
+</ol>
+<hr />
+<h2 id="rozpočet-na-zvyšok-9-nocí-orientačne">10. Rozpočet na zvyšok (9 nocí, orientačne)</h2>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Položka</th>
+<th style="text-align: left;">Suma</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Kempy (Kalogria 2, Finikes 1, Erodios 2, Diana 1; Rolling Turtles je v prenájme)</td>
+<td style="text-align: left;">€280–330</td>
+</tr>
+<tr>
+<td style="text-align: left;">Nafta (~750 km)</td>
+<td style="text-align: left;">€165–200</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mýto (najviac 29. 8.)</td>
+<td style="text-align: left;">€30–40</td>
+</tr>
+<tr>
+<td style="text-align: left;">Vstupy (2 dospelí; deti zdarma)</td>
+<td style="text-align: left;">€70–90</td>
+</tr>
+<tr>
+<td style="text-align: left;">Jedlo z obchodu</td>
+<td style="text-align: left;">€320–400</td>
+</tr>
+<tr>
+<td style="text-align: left;">Taverny, kaviarne, zmrzliny, kanoe/SUP</td>
+<td style="text-align: left;">€150–220</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Celkom</strong></td>
+<td style="text-align: left;"><strong>€1 015 – 1 280</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>Aktualizované 21. 8. 2026 na mieste, v Camping Meltemi. Hodiny a ceny overené v ten deň online: <code>diros-caves.gr</code>, <code>kotsanas.com</code>, <code>odysseus.culture.gr</code> (ministerstvo kultúry), <code>hh.gr</code>, <code>finikescamping.gr</code>, <code>visit.kalamata.gr</code>. Vzdialenosti sú odhady po ceste. Predošlé verzie plánu (v3–v6) zostávajú v repozitári ako samostatné súbory.</em></p>
+
+</main>
+
+<button id="top" aria-label="Na začiatok">↑</button>
+
+<script>
+  const toc = document.getElementById('toc');
+  document.getElementById('bToc').onclick = () => toc.classList.toggle('on');
+  toc.addEventListener('click', e => { if (e.target.tagName === 'A') toc.classList.remove('on'); });
+
+  const root = document.documentElement;
+  let fs = parseFloat(localStorage.getItem('planFs') || '16');
+  const apply = () => { root.style.setProperty('--fs', fs + 'px'); localStorage.setItem('planFs', fs); };
+  apply();
+  document.getElementById('bPlus').onclick  = () => { fs = Math.min(fs + 1, 24); apply(); };
+  document.getElementById('bMinus').onclick = () => { fs = Math.max(fs - 1, 13); apply(); };
+
+  const btnTop = document.getElementById('top');
+  btnTop.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
+  addEventListener('scroll', () => btnTop.classList.toggle('on', scrollY > 900), {passive: true});
+</script>
+</body>
+</html>

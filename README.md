@@ -3,10 +3,25 @@
 Interaktívna mapa rodinnej dovolenky po Peloponéze (august 2026):
 kempy, zastávky a trasy po dňoch. Statické HTML, Leaflet + OSM.
 
-- **Alternatívy – čo teraz s juhom trasy:** https://msatala.github.io/peloponez-mapa/alternativy.html
+## Aktuálne (v7 · zvyšok cesty 21.–30. 8. 2026)
+
+Dovolenka je rozbehnutá, plán sa 21. 8. prekopal podľa reálne dohodnutých kempov:
+Meltemi (do 23. 8.) → Kalogria, Stoupa → Finikes, Finikounda → Erodios, Gialova →
+Diana, Antická Olympia → Rolling Turtles camperstop pri letisku.
+
+- **Mapa zvyšku cesty (predvolená stránka):** https://msatala.github.io/peloponez-mapa/
+  (aj ako https://msatala.github.io/peloponez-mapa/v7.html)
+- **Plán deň za dňom:** https://msatala.github.io/peloponez-mapa/plan.html
+- **Sprievodca na čítanie nahlas:** https://msatala.github.io/peloponez-mapa/sprievodca.html
+
+Všetky tri stránky sa navzájom prelinkujú, takže stačí poslať jeden odkaz.
+
+### Staršie verzie
+
+- Alternatívy – rozhodovací nástroj k tvaru trasy: https://msatala.github.io/peloponez-mapa/alternativy.html
 - v5 – plán 16.–29. 8.: https://msatala.github.io/peloponez-mapa/v5.html
-- v4 – predchádzajúca verzia, 16.–30. 8.: https://msatala.github.io/peloponez-mapa/v4.html
-- v3 – pôvodná verzia: https://msatala.github.io/peloponez-mapa/
+- v4 – 16.–30. 8., variant s Monemvasiou: https://msatala.github.io/peloponez-mapa/v4.html
+- v3 – pôvodná verzia: https://msatala.github.io/peloponez-mapa/v3.html
 
 ## Alternatívy – ktorý tvar trasy
 
@@ -29,6 +44,17 @@ Postavený je na dvoch zisteniach:
 Sú v nej aj kempy **bez online rezervácie** (žlté = mail, oranžové = telefón)
 s overenými kontaktmi, a posledná noc priamo v areáli požičovne Rolling Turtles,
 ktorá je zároveň camperstop 7 km od letiska.
+
+## Plán deň za dňom
+
+Mobilná verzia plánu (`plan.html`) sa generuje z markdownu v privátnom repozitári
+skriptom `build-plan-web.py` – **nikdy sa needituje ručne**. Má obsah, nastaviteľnú
+veľkosť písma (pamätá si ju) a široké tabuľky sa posúvajú prstom.
+
+Overené hodiny a ceny k 21. 8. 2026: jaskyne Diros 09:00–17:00 (kasa do 16:15),
+hrad Methoni 08:30–19:00 a 5 €, Antická Olympia 08:00–20:00 s posledným vstupom
+19:40, Archimedovo múzeum v Olympii 10:00–18:00 a vstup voľný, železničný park
+v Kalamate nonstop a zdarma.
 
 ## Sprievodca na čítanie nahlas
 
