@@ -3,14 +3,20 @@
 Interaktívna mapa rodinnej dovolenky po Peloponéze (august 2026):
 kempy, zastávky a trasy po dňoch. Statické HTML, Leaflet + OSM.
 
-## Aktuálne (v7 · zvyšok cesty 21.–30. 8. 2026)
+## Aktuálne (v8 · zvyšok cesty 22.–30. 8. 2026)
 
 Dovolenka je rozbehnutá, plán sa 21. 8. prekopal podľa reálne dohodnutých kempov:
 Meltemi (do 23. 8.) → Kalogria, Stoupa → Finikes, Finikounda → Erodios, Gialova →
 Diana, Antická Olympia → Rolling Turtles camperstop pri letisku.
 
+**Verzia 8 pridáva posledný celý deň (so 29. 8.) v Aténach:** striedanie stráží pred
+Parlamentom, ihrisko pod borovicami v Národnej záhrade a Hefaistov chrám — najzachovalejší
+antický grécky chrám na svete. Všetko v jednom trojuholníku s hranou 1,5 km, takže celý
+večer má jediný presun: metrom tam a metrom späť. Upratovanie karavanu sa presunulo na
+nedeľné ráno pred odletom.
+
 - **Mapa zvyšku cesty (predvolená stránka):** https://msatala.github.io/peloponez-mapa/
-  (aj ako https://msatala.github.io/peloponez-mapa/v7.html)
+  (aj ako https://msatala.github.io/peloponez-mapa/v8.html)
 - **Plán deň za dňom:** https://msatala.github.io/peloponez-mapa/plan.html
 - **Sprievodca na čítanie nahlas:** https://msatala.github.io/peloponez-mapa/sprievodca.html
 
@@ -19,6 +25,7 @@ Všetky tri stránky sa navzájom prelinkujú, takže stačí poslať jeden odka
 ### Staršie verzie
 
 - Alternatívy – rozhodovací nástroj k tvaru trasy: https://msatala.github.io/peloponez-mapa/alternativy.html
+- v7 – zvyšok cesty bez aténskeho dňa: https://msatala.github.io/peloponez-mapa/v7.html
 - v5 – plán 16.–29. 8.: https://msatala.github.io/peloponez-mapa/v5.html
 - v4 – 16.–30. 8., variant s Monemvasiou: https://msatala.github.io/peloponez-mapa/v4.html
 - v3 – pôvodná verzia: https://msatala.github.io/peloponez-mapa/v3.html
@@ -59,7 +66,9 @@ v Kalamate nonstop a zdarma.
 ## Sprievodca na čítanie nahlas
 
 Sprievodca v štýle Lonely Planet ku každej zastávke aj ku každému presunu —
-44 kapitol, 5–12 minút čítania na kapitolu, na čítanie deťom v aute.
+47 kapitol, 5–12 minút čítania na kapitolu, na čítanie deťom v aute. Kapitoly 44–46
+sú aténske: Evzoni a striedanie stráží, Národná záhrada a Zappeion, Hefaistov chrám
+s ostrakami a klerotériom.
 
 - **Sprievodca:** https://msatala.github.io/peloponez-mapa/sprievodca.html
 
