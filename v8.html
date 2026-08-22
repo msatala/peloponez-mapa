@@ -569,7 +569,7 @@ function updateCampLabels(){
 }
 map.on('zoomend', updateCampLabels);
 
-function render(){
+var render = function render(){
   layers.forEach((L_, i) => {
     const on = activeDay === null || activeDay === i;
     L_.markers.forEach(({m, cat}) => {
@@ -743,7 +743,39 @@ legend.onAdd = () => {
 };
 legend.addTo(map);
 
-render(); fitAll();
+/* ============ ŠTART: dnešný deň, a odkazy nesú vybraný deň ================ */
+/* Mapa sa otvára rovno na aktuálnom dni. Konkrétny deň sa dá poslať odkazom
+   (#den-23-8), prehľad celej trasy cez #vsetko. Odkazy na plán a sprievodcu
+   si so sebou nesú práve vybraný deň, aby obe stránky otvorili to isté. */
+const dayKey = d => {
+  const m = d.date.match(/(\d{1,2})\.\s*(\d{1,2})\./);
+  return m ? 'den-' + (+m[1]) + '-' + (+m[2]) : null;
+};
+function syncLinks(){
+  const k = activeDay === null ? '' : (dayKey(DAYS[activeDay]) || '');
+  document.querySelectorAll('#links a').forEach(a => {
+    if (!a.dataset.base) a.dataset.base = a.getAttribute('href');
+    a.setAttribute('href', a.dataset.base + (k ? '#' + k : ''));
+  });
+}
+const _render = render;
+render = function(){ _render(); syncLinks(); };
+
+function startDay(){
+  const hash = (location.hash || '').replace('#', '');
+  if (hash === 'vsetko' || hash === 'prehlad') return null;
+  if (hash){
+    const i = DAYS.findIndex(d => dayKey(d) === hash);
+    if (i >= 0) return i;
+  }
+  const t = new Date(), key = 'den-' + t.getDate() + '-' + (t.getMonth() + 1);
+  const i = DAYS.findIndex(d => dayKey(d) === key);
+  return i >= 0 ? i : null;
+}
+
+const _start = startDay();
+if (_start === null) { render(); fitAll(); }
+else selectDay(_start);
 </script>
 </body>
 </html>

@@ -22,6 +22,16 @@ nedeľné ráno pred odletom.
 
 Všetky tri stránky sa navzájom prelinkujú, takže stačí poslať jeden odkaz.
 
+**Všetky tri sa otvárajú rovno na aktuálnom dni.** Mapa vyberie dnešný deň, plán
+a sprievodca doň odscrolujú a označia ho štítkom `DNES`. Keď sa na mapu prejde
+konkrétny deň a odtiaľ klikne na plán alebo sprievodcu, odkaz nesie ten deň so
+sebou (`plan.html#den-29-8`) a obe stránky otvoria to isté. Prehľad celej trasy
+sa dá vynútiť cez `#vsetko`.
+
+Kotvy majú tvar `#den-<deň>-<mesiac>`, napr. `#den-29-8`. V sprievodcovi jedna
+sekcia pokrýva aj dva dni (Methoni v stredu, Voidokilia vo štvrtok) — má vtedy
+obe kotvy.
+
 ### Staršie verzie
 
 - Alternatívy – rozhodovací nástroj k tvaru trasy: https://msatala.github.io/peloponez-mapa/alternativy.html
